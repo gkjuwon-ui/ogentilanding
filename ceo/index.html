@@ -54,7 +54,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:#000;font-family:'Je
   transform:perspective(500px) rotateX(35deg);transform-origin:center bottom}
 
 /* ═══════════ PEDESTAL ═══════════ */
-.ped-wrap{position:fixed;left:50%;top:62%;transform:translateX(-50%);z-index:2;pointer-events:none}
+.ped-wrap{position:fixed;left:50%;top:54%;transform:translateX(-50%);z-index:2;pointer-events:none}
 
 /* Glow ring on rim */
 .ped-ring{position:absolute;top:-5px;left:50%;transform:translateX(-50%);width:330px;height:58px;
@@ -118,12 +118,13 @@ html,body{width:100%;height:100%;overflow:hidden;background:#000;font-family:'Je
 /* Card 3D container */
 .card-3d{width:100%;height:100%;position:absolute;inset:0;
   transform-style:preserve-3d;-webkit-transform-style:preserve-3d;
-  transform:rotateX(8deg) rotateY(-18deg);will-change:transform}
+  transform:rotateX(8deg) rotateY(-18deg);will-change:transform;
+  border-radius:14px;
+  box-shadow:0 30px 90px rgba(0,0,0,.75),0 10px 30px rgba(0,0,0,.5),0 0 50px rgba(232,101,32,.1)}
 
 /* ── Card Faces ── */
 .card-front,.card-back{position:absolute;inset:0;
-  -webkit-backface-visibility:hidden;backface-visibility:hidden;border-radius:14px;
-  box-shadow:0 30px 90px rgba(0,0,0,.75),0 10px 30px rgba(0,0,0,.5),0 0 50px rgba(232,101,32,.1),inset 0 1px 0 rgba(255,255,255,.08)}
+  -webkit-backface-visibility:hidden;backface-visibility:hidden;border-radius:14px;}
 .card-front{transform:translateZ(4px)}
 .card-back{transform:rotateY(180deg) translateZ(4px)}
 
@@ -154,11 +155,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:#000;font-family:'Je
 .edge-l{width:8px;height:100%;top:0;left:0;transform-origin:left center;transform:rotateY(-90deg);background:linear-gradient(180deg,#141414,#2a2a2a,#141414)}
 .edge-r{width:8px;height:100%;top:0;right:0;transform-origin:right center;transform:rotateY(90deg);background:linear-gradient(180deg,#0e0e0e,#1e1e1e,#0e0e0e)}
 
-/* ── Edge glow (OUTSIDE 3D hierarchy — safe) ── */
-.card-glow{position:fixed;left:50%;top:38%;width:600px;height:352px;
-  transform:translate(-50%,-50%);border-radius:20px;pointer-events:none;z-index:4;
-  border:1px solid rgba(232,101,32,0);box-shadow:0 0 0 rgba(232,101,32,0);
-  transition:border-color .3s,box-shadow .3s}
+/* ── Edge glow: applied as box-shadow on .card-3d (safe — no flattening unlike filter) ── */
 
 /* ── Hint ── */
 .hint{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);
@@ -193,9 +190,6 @@ html,body{width:100%;height:100%;overflow:hidden;background:#000;font-family:'Je
 <!-- Card underlight & shadow plane -->
 <div class="card-underlight"></div>
 <div class="shadow-plane"></div>
-
-<!-- Edge glow (outside 3D context) -->
-<div class="card-glow" id="cg"></div>
 
 <!-- 3D Card -->
 <div class="scene" id="scene">
@@ -272,7 +266,6 @@ html,body{width:100%;height:100%;overflow:hidden;background:#000;font-family:'Je
   const hint=document.getElementById('hint');
   const sf=document.getElementById('sf');
   const sb=document.getElementById('sb');
-  const cg=document.getElementById('cg');
 
   let rx=8,ry=-18,drag=false,lx=0,ly=0,vx=0,vy=0;
   let auto=true,coast=false,hintOn=true;
@@ -283,11 +276,13 @@ html,body{width:100%;height:100%;overflow:hidden;background:#000;font-family:'Je
     const n=((ry%360)+360)%360,p=(n/360)*280;
     sf.style.backgroundPosition=`${p}% 0`;
     sb.style.backgroundPosition=`${280-p}% 0`;
-    /* Edge glow — based on rotation speed */
+    /* Edge glow on the card itself — box-shadow is safe on preserve-3d, follows rotation */
     const spd=Math.abs(vx)+Math.abs(vy);
-    const eg=Math.min(spd/7,.55);
-    cg.style.borderColor=`rgba(232,101,32,${eg})`;
-    cg.style.boxShadow=`0 0 ${eg*35}px rgba(232,101,32,${eg*.6}),inset 0 0 ${eg*18}px rgba(232,101,32,${eg*.3})`;
+    const eg=Math.min(spd/5,.7);
+    const base='0 30px 90px rgba(0,0,0,.75),0 10px 30px rgba(0,0,0,.5),0 0 50px rgba(232,101,32,.1)';
+    card.style.boxShadow=eg>0.04
+      ? `${base},0 0 ${eg*40}px rgba(232,101,32,${eg*.85}),0 0 ${eg*80}px rgba(232,101,32,${eg*.35})`
+      : base;
   }
 
   function dn(cx2,cy2){drag=true;auto=false;coast=false;lx=cx2;ly=cy2;vx=0;vy=0;
