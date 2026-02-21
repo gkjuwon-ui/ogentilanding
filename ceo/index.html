@@ -43,11 +43,20 @@ html, body {
 }
 .scene:active { cursor: grabbing; }
 
-/* ── Card wrapper ── */
-.card-3d {
+/* ── Shadow wrapper — receives filter so preserve-3d is not broken ── */
+.card-shadow {
   width: 580px;
   height: 332px;
   position: relative;
+  /* filter lives HERE, outside the 3D context */
+}
+
+/* ── Card wrapper — MUST NOT have filter/opacity ── */
+.card-3d {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  inset: 0;
   transform-style: preserve-3d;
   -webkit-transform-style: preserve-3d;
   transform: rotateX(5deg) rotateY(-18deg);
@@ -176,6 +185,7 @@ html, body {
 <div class="orb orb-4"></div>
 
 <div class="scene" id="scene">
+  <div class="card-shadow" id="cardShadow">
   <div class="card-3d" id="card3d">
 
     <!-- FRONT (앞면) -->
@@ -199,6 +209,7 @@ html, body {
     <div class="edge edge-bottom"></div>
     <div class="edge edge-left"></div>
     <div class="edge edge-right"></div>
+  </div>
   </div>
 </div>
 
@@ -236,6 +247,7 @@ html, body {
 /* 3D Drag */
 (function(){
   const card=document.getElementById('card3d');
+  const shadowEl=document.getElementById('cardShadow');
   const scene=document.getElementById('scene');
   const hint=document.getElementById('hint');
   const sf=document.getElementById('sf');
@@ -249,7 +261,8 @@ html, body {
     const sx=Math.sin(ry*Math.PI/180)*35;
     const sy=-Math.sin(rx*Math.PI/180)*25+45;
     const sb2=55+Math.abs(Math.sin(ry*Math.PI/180))*25;
-    card.style.filter=`drop-shadow(${sx}px ${sy}px ${sb2}px rgba(0,0,0,0.7))`;
+    /* filter on the SHADOW WRAPPER — not on card-3d (would kill preserve-3d) */
+    shadowEl.style.filter=`drop-shadow(${sx}px ${sy}px ${sb2}px rgba(0,0,0,0.7))`;
     const n=((ry%360)+360)%360,p=(n/360)*280;
     sf.style.backgroundPosition=`${p}% 0`;
     sb.style.backgroundPosition=`${280-p}% 0`;
