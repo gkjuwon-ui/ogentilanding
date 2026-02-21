@@ -31,8 +31,9 @@ html, body {
 .orb-2 { width: 4px; height: 4px; top: 68%; right: 18%; background: rgba(255,255,255,0.15); animation-delay: -3s; }
 .orb-3 { width: 5px; height: 5px; top: 33%; right: 10%; background: rgba(232,101,32,0.22); animation-delay: -5s; }
 .orb-4 { width: 3px; height: 3px; bottom: 22%; left: 28%; background: rgba(255,255,255,0.12); animation-delay: -2s; }
-@keyframes orbFloat { 0% { transform: translateY(0) translateX(0); } 100% { transform: translateY(-22px) translateX(12px); } }
+@keyframes orbFloat { 0% { transform: translateY(0); } 100% { transform: translateY(-22px); } }
 
+/* ── Scene ── */
 .scene {
   position: fixed; inset: 0;
   display: flex; align-items: center; justify-content: center;
@@ -42,76 +43,119 @@ html, body {
 }
 .scene:active { cursor: grabbing; }
 
+/* ── Card wrapper ── */
 .card-3d {
-  width: 580px; height: 332px;
+  width: 580px;
+  height: 332px;
   position: relative;
-  -webkit-transform-style: preserve-3d;
   transform-style: preserve-3d;
+  -webkit-transform-style: preserve-3d;
   transform: rotateX(5deg) rotateY(-18deg);
   will-change: transform;
 }
 
-.card-face {
-  position: absolute; inset: 0;
+/* ─────────────────────────────────────
+   CRITICAL: each face must have:
+   1. backface-visibility hidden (both prefixes)
+   2. NO overflow:hidden (breaks 3D in Chrome)
+   3. NO transform-style:flat
+   ───────────────────────────────────── */
+.card-front,
+.card-back {
+  position: absolute;
+  inset: 0;
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
   border-radius: 14px;
-  overflow: hidden;
-  box-shadow: 0 30px 80px rgba(0,0,0,0.75), 0 10px 24px rgba(0,0,0,0.5);
-  /* ensure GPU layer */
-  -webkit-transform-style: flat;
-  transform-style: flat;
+  /* shadow on the card itself */
+  box-shadow:
+    0 35px 90px rgba(0,0,0,0.8),
+    0 10px 30px rgba(0,0,0,0.5),
+    inset 0 1px 0 rgba(255,255,255,0.06);
 }
 
-.card-front { transform: translateZ(5px); }
-.card-back  { transform: rotateY(180deg) translateZ(5px); }
+.card-front { transform: translateZ(4px); }
+.card-back  { transform: rotateY(180deg) translateZ(4px); }
 
-.card-face img {
-  width: 100%; height: 100%;
-  object-fit: cover; display: block; border-radius: 14px;
+/* ── Image fills the face, border-radius clips it ── */
+.card-front img,
+.card-back img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 14px;
+  display: block;
   pointer-events: none;
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
 }
 
-/* Gloss + specular */
-.gloss {
-  position: absolute; inset: 0; border-radius: 14px;
-  pointer-events: none; z-index: 10;
+/* ── Gloss overlay — static highlight ── */
+.face-gloss {
+  position: absolute; inset: 0;
+  border-radius: 14px;
+  pointer-events: none;
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
-  background: linear-gradient(135deg,
-    rgba(255,255,255,0.13) 0%, rgba(255,255,255,0.05) 20%,
-    transparent 45%, rgba(255,255,255,0.02) 70%, rgba(255,255,255,0.07) 100%);
+  background: linear-gradient(
+    135deg,
+    rgba(255,255,255,0.11) 0%,
+    rgba(255,255,255,0.04) 25%,
+    transparent 50%,
+    rgba(255,255,255,0.01) 75%,
+    rgba(255,255,255,0.05) 100%
+  );
+  z-index: 2;
 }
-.specular {
-  position: absolute; inset: 0; border-radius: 14px;
-  pointer-events: none; z-index: 11;
+
+/* ── Specular sweep ── */
+.face-spec {
+  position: absolute; inset: 0;
+  border-radius: 14px;
+  pointer-events: none;
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
-  background: linear-gradient(105deg,
-    transparent 20%, rgba(255,255,255,0.04) 35%,
-    rgba(255,255,255,0.20) 47%, rgba(255,255,255,0.24) 50%,
-    rgba(255,255,255,0.20) 53%, rgba(255,255,255,0.04) 65%, transparent 80%);
+  z-index: 3;
+  background: linear-gradient(
+    105deg,
+    transparent 22%,
+    rgba(255,255,255,0.03) 36%,
+    rgba(255,255,255,0.18) 48%,
+    rgba(255,255,255,0.22) 50%,
+    rgba(255,255,255,0.18) 52%,
+    rgba(255,255,255,0.03) 64%,
+    transparent 78%
+  );
   background-size: 300% 100%;
   background-position: 120% 0;
   transition: background-position 0.12s linear;
 }
-.glass-edge {
-  position: absolute; inset: 0; border-radius: 14px;
+
+/* ── Glass border ── */
+.face-border {
+  position: absolute; inset: 0;
+  border-radius: 14px;
   border: 1px solid rgba(255,255,255,0.07);
-  pointer-events: none; z-index: 12;
+  pointer-events: none;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  z-index: 4;
+}
+
+/* ── Card edges (thickness illusion) ── */
+.edge {
+  position: absolute;
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
 }
+.edge-top    { width: 100%; height: 8px; top: 0;    left: 0;  transform-origin: top center;    transform: rotateX(90deg);  background: linear-gradient(90deg,#141414,#252525,#141414); }
+.edge-bottom { width: 100%; height: 8px; bottom: 0; left: 0;  transform-origin: bottom center; transform: rotateX(-90deg); background: linear-gradient(90deg,#0e0e0e,#1c1c1c,#0e0e0e); }
+.edge-left   { width: 8px; height: 100%; top: 0; left: 0;     transform-origin: left center;   transform: rotateY(-90deg); background: linear-gradient(180deg,#141414,#252525,#141414); }
+.edge-right  { width: 8px; height: 100%; top: 0; right: 0;    transform-origin: right center;  transform: rotateY(90deg);  background: linear-gradient(180deg,#0e0e0e,#1c1c1c,#0e0e0e); }
 
-/* Card thickness */
-.edge { position: absolute; }
-.edge-top    { width: 100%; height: 8px; top: 0;    left: 0;  transform-origin: top center;    transform: rotateX(90deg);  background: linear-gradient(90deg,#111,#222,#111); }
-.edge-bottom { width: 100%; height: 8px; bottom: 0; left: 0;  transform-origin: bottom center; transform: rotateX(-90deg); background: linear-gradient(90deg,#0d0d0d,#1a1a1a,#0d0d0d); }
-.edge-left   { width: 8px; height: 100%; top: 0;    left: 0;  transform-origin: left center;   transform: rotateY(-90deg); background: linear-gradient(180deg,#111,#222,#111); }
-.edge-right  { width: 8px; height: 100%; top: 0;    right: 0; transform-origin: right center;  transform: rotateY(90deg);  background: linear-gradient(180deg,#0d0d0d,#1a1a1a,#0d0d0d); }
-
+/* ── Hint ── */
 .hint {
   position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%);
   font-size: 10px; color: rgba(255,255,255,0.18);
@@ -126,29 +170,31 @@ html, body {
 <div class="bg-glow bg-glow-1"></div>
 <div class="bg-glow bg-glow-2"></div>
 <div class="bg-glow bg-glow-3"></div>
-<div class="orb orb-1"></div><div class="orb orb-2"></div>
-<div class="orb orb-3"></div><div class="orb orb-4"></div>
+<div class="orb orb-1"></div>
+<div class="orb orb-2"></div>
+<div class="orb orb-3"></div>
+<div class="orb orb-4"></div>
 
 <div class="scene" id="scene">
   <div class="card-3d" id="card3d">
 
-    <!-- FRONT — front.png -->
-    <div class="card-face card-front">
-      <img src="front.png" alt="ogenti card front" draggable="false" />
-      <div class="gloss"></div>
-      <div class="specular" id="sf"></div>
-      <div class="glass-edge"></div>
+    <!-- FRONT (앞면) -->
+    <div class="card-front">
+      <img src="front.png" alt="front" />
+      <div class="face-gloss"></div>
+      <div class="face-spec" id="sf"></div>
+      <div class="face-border"></div>
     </div>
 
-    <!-- BACK — back.png -->
-    <div class="card-face card-back">
-      <img src="back.png" alt="ogenti card back" draggable="false" />
-      <div class="gloss"></div>
-      <div class="specular" id="sb"></div>
-      <div class="glass-edge"></div>
+    <!-- BACK (뒷면) -->
+    <div class="card-back">
+      <img src="back.png" alt="back" />
+      <div class="face-gloss"></div>
+      <div class="face-spec" id="sb"></div>
+      <div class="face-border"></div>
     </div>
 
-    <!-- thickness -->
+    <!-- Edges -->
     <div class="edge edge-top"></div>
     <div class="edge edge-bottom"></div>
     <div class="edge edge-left"></div>
@@ -159,71 +205,66 @@ html, body {
 <div class="hint" id="hint">Drag to rotate &nbsp;·&nbsp; Double-click to flip</div>
 
 <script>
-/* ── Particles ── */
-(function () {
-  const cv = document.getElementById('particle-canvas');
-  const cx = cv.getContext('2d');
-  let W, H, pts = [];
-  function resize() { W = cv.width = window.innerWidth; H = cv.height = window.innerHeight; }
-  function init() {
-    pts = [];
-    const n = Math.floor((W * H) / 18000);
-    for (let i = 0; i < n; i++) pts.push({
-      x: Math.random()*W, y: Math.random()*H,
-      r: Math.random()*1.4+0.3,
-      vx: (Math.random()-.5)*.28, vy: (Math.random()-.5)*.28,
-      a: Math.random()*.35+.05, acc: Math.random()<.18
-    });
+/* Particles */
+(function(){
+  const cv=document.getElementById('particle-canvas'), cx=cv.getContext('2d');
+  let W,H,pts=[];
+  function resize(){ W=cv.width=window.innerWidth; H=cv.height=window.innerHeight; }
+  function init(){
+    pts=[];
+    const n=Math.floor(W*H/18000);
+    for(let i=0;i<n;i++) pts.push({x:Math.random()*W,y:Math.random()*H,r:Math.random()*1.4+.3,vx:(Math.random()-.5)*.28,vy:(Math.random()-.5)*.28,a:Math.random()*.35+.05,acc:Math.random()<.18});
   }
-  function draw() {
+  function draw(){
     cx.clearRect(0,0,W,H);
-    for (let i=0;i<pts.length;i++) for (let j=i+1;j<pts.length;j++) {
-      const dx=pts[i].x-pts[j].x, dy=pts[i].y-pts[j].y, d=Math.hypot(dx,dy);
-      if (d<140) { cx.strokeStyle=`rgba(232,101,32,${(1-d/140)*.055})`; cx.lineWidth=.5; cx.beginPath(); cx.moveTo(pts[i].x,pts[i].y); cx.lineTo(pts[j].x,pts[j].y); cx.stroke(); }
+    for(let i=0;i<pts.length;i++) for(let j=i+1;j<pts.length;j++){
+      const dx=pts[i].x-pts[j].x,dy=pts[i].y-pts[j].y,d=Math.hypot(dx,dy);
+      if(d<140){cx.strokeStyle=`rgba(232,101,32,${(1-d/140)*.055})`;cx.lineWidth=.5;cx.beginPath();cx.moveTo(pts[i].x,pts[i].y);cx.lineTo(pts[j].x,pts[j].y);cx.stroke();}
     }
-    for (const p of pts) {
-      p.x+=p.vx; p.y+=p.vy;
-      if(p.x<0)p.x=W; if(p.x>W)p.x=0; if(p.y<0)p.y=H; if(p.y>H)p.y=0;
-      cx.beginPath(); cx.arc(p.x,p.y,p.r,0,Math.PI*2);
-      cx.fillStyle=p.acc?`rgba(232,101,32,${p.a})`:`rgba(255,255,255,${p.a*.55})`; cx.fill();
+    for(const p of pts){
+      p.x+=p.vx;p.y+=p.vy;
+      if(p.x<0)p.x=W;if(p.x>W)p.x=0;if(p.y<0)p.y=H;if(p.y>H)p.y=0;
+      cx.beginPath();cx.arc(p.x,p.y,p.r,0,Math.PI*2);
+      cx.fillStyle=p.acc?`rgba(232,101,32,${p.a})`:`rgba(255,255,255,${p.a*.55})`;cx.fill();
     }
     requestAnimationFrame(draw);
   }
-  resize(); init(); draw();
+  resize();init();draw();
   window.addEventListener('resize',()=>{resize();init();});
 })();
 
-/* ── 3D drag ── */
-(function () {
-  const card = document.getElementById('card3d');
-  const scene = document.getElementById('scene');
-  const hint  = document.getElementById('hint');
-  const sf = document.getElementById('sf');
-  const sb = document.getElementById('sb');
+/* 3D Drag */
+(function(){
+  const card=document.getElementById('card3d');
+  const scene=document.getElementById('scene');
+  const hint=document.getElementById('hint');
+  const sf=document.getElementById('sf');
+  const sb=document.getElementById('sb');
 
-  let rx=5, ry=-18, drag=0, lx=0, ly=0, vx=0, vy=0;
-  let auto=true, coast=false, hintOn=true;
+  let rx=5,ry=-18,drag=false,lx=0,ly=0,vx=0,vy=0;
+  let auto=true,coast=false,hintOn=true;
 
-  function apply() {
-    card.style.transform = `rotateX(${rx}deg) rotateY(${ry}deg)`;
-    const sx=Math.sin(ry*Math.PI/180)*35, sy=-Math.sin(rx*Math.PI/180)*25+45;
+  function apply(){
+    card.style.transform=`rotateX(${rx}deg) rotateY(${ry}deg)`;
+    const sx=Math.sin(ry*Math.PI/180)*35;
+    const sy=-Math.sin(rx*Math.PI/180)*25+45;
     const sb2=55+Math.abs(Math.sin(ry*Math.PI/180))*25;
-    card.style.filter=`drop-shadow(${sx}px ${sy}px ${sb2}px rgba(0,0,0,0.65))`;
-    const n=((ry%360)+360)%360, p=(n/360)*280;
+    card.style.filter=`drop-shadow(${sx}px ${sy}px ${sb2}px rgba(0,0,0,0.7))`;
+    const n=((ry%360)+360)%360,p=(n/360)*280;
     sf.style.backgroundPosition=`${p}% 0`;
     sb.style.backgroundPosition=`${280-p}% 0`;
   }
 
-  function dn(cx2,cy2){drag=1;auto=false;coast=false;lx=cx2;ly=cy2;vx=0;vy=0;if(hintOn){hint.style.opacity='0';hintOn=false;}}
+  function dn(cx2,cy2){drag=true;auto=false;coast=false;lx=cx2;ly=cy2;vx=0;vy=0;if(hintOn){hint.style.opacity='0';hintOn=false;}}
   function mv(cx2,cy2){if(!drag)return;const dx=cx2-lx,dy=cy2-ly;ry+=dx*.55;rx-=dy*.55;rx=Math.max(-80,Math.min(80,rx));vx=dx*.55;vy=-dy*.55;lx=cx2;ly=cy2;apply();}
-  function up(){drag=0;coast=true;}
+  function up(){drag=false;coast=true;}
 
-  scene.addEventListener('mousedown', e=>dn(e.clientX,e.clientY));
+  scene.addEventListener('mousedown',e=>dn(e.clientX,e.clientY));
   window.addEventListener('mousemove',e=>mv(e.clientX,e.clientY));
-  window.addEventListener('mouseup',  up);
+  window.addEventListener('mouseup',up);
   scene.addEventListener('touchstart',e=>dn(e.touches[0].clientX,e.touches[0].clientY),{passive:true});
-  window.addEventListener('touchmove', e=>mv(e.touches[0].clientX,e.touches[0].clientY),{passive:true});
-  window.addEventListener('touchend', up);
+  window.addEventListener('touchmove',e=>mv(e.touches[0].clientX,e.touches[0].clientY),{passive:true});
+  window.addEventListener('touchend',up);
   scene.addEventListener('dblclick',()=>{auto=false;coast=false;ry+=180;vx=0;apply();});
 
   function tick(){
@@ -233,7 +274,7 @@ html, body {
     }
     requestAnimationFrame(tick);
   }
-  apply(); tick();
+  apply();tick();
 })();
 </script>
 </body>
