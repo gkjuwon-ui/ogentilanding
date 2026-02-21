@@ -53,61 +53,9 @@ html,body{width:100%;height:100%;overflow:hidden;background:#000;font-family:'Je
   mask-image:linear-gradient(180deg,transparent 0%,rgba(0,0,0,.12) 25%,rgba(0,0,0,.25) 55%,transparent 95%);
   transform:perspective(500px) rotateX(35deg);transform-origin:center bottom}
 
-/* ═══════════ PEDESTAL ═══════════ */
-/* ped-wrap is in-flow inside .stage */
-.ped-wrap{position:relative;pointer-events:none;flex-shrink:0;margin-top:-16px;z-index:2;
-  width:440px;height:140px}
-
-/* Glow ring on rim */
-.ped-ring{position:absolute;top:0;left:50%;transform:translateX(-50%);width:330px;height:58px;
-  border-radius:50%;border:1.5px solid rgba(232,101,32,.3);z-index:5;
-  box-shadow:0 0 18px rgba(232,101,32,.35),0 0 50px rgba(232,101,32,.18),inset 0 0 18px rgba(232,101,32,.12);
-  animation:rp 3s ease-in-out infinite alternate}
-@keyframes rp{0%{opacity:.55;box-shadow:0 0 14px rgba(232,101,32,.25),0 0 40px rgba(232,101,32,.12),inset 0 0 14px rgba(232,101,32,.08)}
-  100%{opacity:1;box-shadow:0 0 22px rgba(232,101,32,.45),0 0 65px rgba(232,101,32,.22),inset 0 0 22px rgba(232,101,32,.15)}}
-
-/* Top surface */
-.ped-top{width:320px;height:52px;position:absolute;top:5px;left:50%;transform:translateX(-50%);border-radius:50%;z-index:4;
-  background:radial-gradient(ellipse at 36% 32%,#707070 0%,#585858 22%,#404040 48%,#2a2a2a 72%,#1a1a1a 100%);
-  box-shadow:0 0 70px rgba(232,101,32,.22),0 0 140px rgba(232,101,32,.08),inset 0 -3px 10px rgba(0,0,0,.5),inset 0 2px 5px rgba(255,255,255,.09)}
-
-/* Metallic body */
-.ped-body{width:296px;height:65px;position:absolute;top:31px;left:50%;transform:translateX(-50%);z-index:3;
-  background:linear-gradient(90deg,
-    #080808 0%,#1a1a1a 5%,#333 13%,#4d4d4d 24%,#5e5e5e 35%,#6e6e6e 44%,#787878 48%,#7c7c7c 50%,#787878 52%,#6e6e6e 56%,#5e5e5e 65%,#4d4d4d 76%,#333 87%,#1a1a1a 95%,#080808 100%);
-  border-left:1px solid rgba(255,255,255,.04);border-right:1px solid rgba(255,255,255,.04)}
-
-/* Subtle vertical highlight stripe */
-.ped-body::after{content:'';position:absolute;top:0;left:47%;width:6%;height:100%;
-  background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,.02));pointer-events:none}
-
-/* Bottom ellipse */
-.ped-bottom{width:320px;height:52px;position:absolute;top:70px;left:50%;transform:translateX(-50%);border-radius:50%;z-index:2;
-  background:radial-gradient(ellipse,#121212 0%,#080808 65%,#040404 100%);
-  box-shadow:0 10px 50px rgba(0,0,0,.9)}
-
-/* Floor glow from pedestal */
-.ped-glow{width:440px;height:100px;position:absolute;top:75px;left:50%;transform:translateX(-50%);border-radius:50%;z-index:1;
-  background:radial-gradient(ellipse,rgba(232,101,32,.09) 0%,transparent 65%);filter:blur(22px)}
-
-/* ═══════════ CARD AREA ═══════════ */
-
-/* Orange underlight — inside .ped-wrap, bleeds upward */
-.card-underlight{position:absolute;top:-70px;left:50%;transform:translateX(-50%);
-  width:520px;height:130px;border-radius:50%;pointer-events:none;z-index:3;
-  background:radial-gradient(ellipse,rgba(232,101,32,.22) 0%,rgba(232,101,32,.07) 35%,transparent 65%);
-  filter:blur(28px);animation:up 4s ease-in-out infinite alternate}
-@keyframes up{0%{opacity:.55}100%{opacity:1}}
-
-/* Shadow plane — inside .ped-wrap, at junction */
-.shadow-plane{position:absolute;top:-18px;left:50%;transform:translateX(-50%);
-  width:460px;height:35px;border-radius:50%;pointer-events:none;z-index:4;
-  background:radial-gradient(ellipse,rgba(0,0,0,.55) 0%,transparent 65%);filter:blur(18px)}
-
-/* ═══════════ STAGE ═══════════ */
-/* Single flex container — centers the whole composition in viewport */
+/* ── Stage ── */
 .stage{position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;
-  justify-content:center;z-index:2;pointer-events:none;padding-bottom:3vh}
+  justify-content:center;z-index:2;pointer-events:none}
 
 /* ═══════════ 3D CARD ═══════════ */
 
@@ -185,7 +133,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:#000;font-family:'Je
 <!-- Floor -->
 <div class="floor"><div class="floor-grid"></div></div>
 
-<!-- Stage: centers card + pedestal together as one unit -->
+<!-- Stage -->
 <div class="stage">
 
 <!-- 3D Card -->
@@ -210,17 +158,6 @@ html,body{width:100%;height:100%;overflow:hidden;background:#000;font-family:'Je
       <div class="edge edge-r"></div>
     </div>
   </div>
-</div>
-
-<!-- Pedestal — in-flow after card inside stage -->
-<div class="ped-wrap">
-  <div class="card-underlight"></div>
-  <div class="shadow-plane"></div>
-  <div class="ped-ring"></div>
-  <div class="ped-top"></div>
-  <div class="ped-body"></div>
-  <div class="ped-bottom"></div>
-  <div class="ped-glow"></div>
 </div>
 
 </div><!-- /stage -->
