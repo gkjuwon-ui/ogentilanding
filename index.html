@@ -1253,6 +1253,28 @@
       }
     }
 
+    /* ═══════════════════════════════════════
+       Reduced motion for accessibility
+       ═══════════════════════════════════════ */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+      .hero-aurora, #particle-canvas, .mouse-spotlight,
+      .floating-particle, .beam-divider::after {
+        display: none !important;
+      }
+      .reveal { opacity: 1; transform: none; }
+    }
+
+    /* Prevent layout shift when scrollbar hides */
+    html.modal-open {
+      overflow: hidden;
+      padding-right: var(--scrollbar-width, 0px);
+    }
+
     @media (max-width: 480px) {
       .container { padding: 0 16px; }
       .container-wide { padding: 0 16px; }
@@ -1287,18 +1309,24 @@
        Beta Apply Modal
        ═══════════════════════════════════════ */
     .modal-overlay {
-      display: none;
       position: fixed;
       inset: 0;
       z-index: 20000;
       background: rgba(0,0,0,0.75);
       backdrop-filter: blur(8px);
       -webkit-backdrop-filter: blur(8px);
+      display: flex;
       align-items: center;
       justify-content: center;
       padding: 24px;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s ease, visibility 0.3s ease;
     }
-    .modal-overlay.active { display: flex; }
+    .modal-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
     .modal-box {
       background: #0a0a0a;
       border: 1px solid var(--border-secondary);
@@ -1309,6 +1337,13 @@
       position: relative;
       max-height: 90vh;
       overflow-y: auto;
+      transform: translateY(16px) scale(0.97);
+      opacity: 0;
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
+    }
+    .modal-overlay.active .modal-box {
+      transform: translateY(0) scale(1);
+      opacity: 1;
     }
     .modal-close {
       position: absolute;
@@ -1476,10 +1511,10 @@
           <a href="#gallery">Gallery</a>
           <a href="#compare">Compare</a>
         </div>
-        <a href="#" onclick="openBetaModal();return false;" class="nav-cta">
+        <button onclick="openBetaModal()" class="nav-cta">
           Apply for Beta
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2L11 13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
-        </a>
+        </button>
         <button class="nav-mobile-toggle" id="mobile-toggle" aria-label="Menu">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
         </button>
@@ -1521,10 +1556,10 @@
         and <strong>get smarter</strong> — all on their own.
       </p>
       <div class="hero-actions reveal reveal-delay-3">
-        <a href="#" onclick="openBetaModal();return false;" class="btn-primary">
+        <button onclick="openBetaModal()" class="btn-primary">
           Apply for Beta
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2L11 13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
-        </a>
+        </button>
       </div>
     </div>
 
@@ -1873,10 +1908,10 @@
           Apply now and we'll send you access.
         </p>
         <div class="hero-actions reveal reveal-delay-2">
-          <a href="#" onclick="openBetaModal();return false;" class="btn-primary">
+          <button onclick="openBetaModal()" class="btn-primary">
             Apply for Beta Access
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2L11 13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
-          </a>
+          </button>
           <a href="mailto:ceo@ogenti.com" class="btn-secondary">
             Contact CEO Directly
           </a>
@@ -2076,11 +2111,17 @@
     // ═════════════════════════════════════════
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
       anchor.addEventListener('click', function (e) {
-        const target = document.querySelector(this.getAttribute('href'));
-        if (target) {
-          e.preventDefault();
-          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
+        const href = this.getAttribute('href');
+        if (!href || href === '#') return; // skip bare # links
+        try {
+          const target = document.querySelector(href);
+          if (target) {
+            e.preventDefault();
+            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            // Close mobile nav if open
+            if (window.innerWidth <= 768 && navLinks) navLinks.style.display = '';
+          }
+        } catch (_) { /* invalid selector */ }
       });
     });
 
@@ -2262,13 +2303,17 @@
   </div>
 
   <script>
+    // Calculate scrollbar width to prevent layout shift
+    const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
+    document.documentElement.style.setProperty('--scrollbar-width', scrollbarWidth + 'px');
+
     function openBetaModal() {
       document.getElementById('beta-modal').classList.add('active');
-      document.body.style.overflow = 'hidden';
+      document.documentElement.classList.add('modal-open');
     }
     function closeBetaModal() {
       document.getElementById('beta-modal').classList.remove('active');
-      document.body.style.overflow = '';
+      document.documentElement.classList.remove('modal-open');
     }
     // Close on overlay click
     document.getElementById('beta-modal').addEventListener('click', function(e) {
