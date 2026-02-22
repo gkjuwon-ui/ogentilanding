@@ -108,13 +108,14 @@ html,body{width:100%;height:100%;overflow:hidden;background:#000;font-family:'Je
   -webkit-backface-visibility:hidden;backface-visibility:hidden}
 
 /* ── Card Edges (thickness) ──
-   translateZ(4px) first so edge starts flush with front face (also at translateZ(4px)),
-   then rotate so it spans the full 8px depth toward the back face */
-.edge{position:absolute;-webkit-backface-visibility:hidden;backface-visibility:hidden}
-.edge-t{width:100%;height:8px;top:0;left:0;transform-origin:top center;transform:translateZ(4px) rotateX(90deg);background:linear-gradient(90deg,#141414,#2a2a2a,#141414);border-radius:14px 14px 0 0}
-.edge-b{width:100%;height:8px;bottom:0;left:0;transform-origin:bottom center;transform:translateZ(4px) rotateX(-90deg);background:linear-gradient(90deg,#0e0e0e,#1e1e1e,#0e0e0e);border-radius:0 0 14px 14px}
-.edge-l{width:8px;height:100%;top:0;left:0;transform-origin:left center;transform:translateZ(4px) rotateY(-90deg);background:linear-gradient(180deg,#141414,#2a2a2a,#141414);border-radius:14px 0 0 14px}
-.edge-r{width:8px;height:100%;top:0;right:0;transform-origin:right center;transform:translateZ(4px) rotateY(90deg);background:linear-gradient(180deg,#0e0e0e,#1e1e1e,#0e0e0e);border-radius:0 14px 14px 0}
+   Each strip is 8px deep, centered on the card outline with a -4px offset
+   so after rotation the strip spans exactly Z-4→Z+4 (flush with both faces).
+   No border-radius — the front/back faces handle the visual rounding. */
+.edge{position:absolute}
+.edge-t{width:100%;height:8px;top:-4px;left:0;transform:rotateX(90deg);background:linear-gradient(90deg,#141414,#2a2a2a,#141414)}
+.edge-b{width:100%;height:8px;bottom:-4px;left:0;transform:rotateX(-90deg);background:linear-gradient(90deg,#0e0e0e,#1e1e1e,#0e0e0e)}
+.edge-l{width:8px;height:100%;top:0;left:-4px;transform:rotateY(-90deg);background:linear-gradient(180deg,#141414,#2a2a2a,#141414)}
+.edge-r{width:8px;height:100%;top:0;right:-4px;transform:rotateY(90deg);background:linear-gradient(180deg,#0e0e0e,#1e1e1e,#0e0e0e)}
 
 /* ── Edge glow: applied as box-shadow on .card-3d (safe — no flattening unlike filter) ── */
 
