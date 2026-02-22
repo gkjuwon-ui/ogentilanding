@@ -1313,19 +1313,21 @@
       inset: 0;
       z-index: 20000;
       background: rgba(0,0,0,0.75);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
       display: flex;
       align-items: center;
       justify-content: center;
       padding: 24px;
       opacity: 0;
       visibility: hidden;
+      pointer-events: none;
       transition: opacity 0.3s ease, visibility 0.3s ease;
     }
     .modal-overlay.active {
       opacity: 1;
       visibility: visible;
+      pointer-events: auto;
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
     }
     .modal-box {
       background: #0a0a0a;
@@ -2212,14 +2214,18 @@
       const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
           if (entry.isIntersecting) {
-            visual.classList.add('typing');
-            // Wrap each <br> separated line in a type-line span
-            const html = visual.innerHTML;
-            const lines = html.split('<br>');
-            visual.innerHTML = lines.map((line, i) =>
-              `<span class="type-line" style="display:block;animation-delay:${i * 0.15}s">${line}</span>`
-            ).join('');
             observer.disconnect();
+            // Hide during DOM manipulation to prevent flash
+            visual.style.visibility = 'hidden';
+            requestAnimationFrame(() => {
+              visual.classList.add('typing');
+              const html = visual.innerHTML;
+              const lines = html.split('<br>');
+              visual.innerHTML = lines.map((line, i) =>
+                `<span class="type-line" style="display:block;animation-delay:${i * 0.15}s">${line}</span>`
+              ).join('');
+              requestAnimationFrame(() => { visual.style.visibility = ''; });
+            });
           }
         });
       }, { threshold: 0.3 });
