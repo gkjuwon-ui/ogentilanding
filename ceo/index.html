@@ -107,14 +107,11 @@ html,body{width:100%;height:100%;overflow:hidden;background:#000;font-family:'Je
   border:1px solid rgba(255,255,255,.09);
   -webkit-backface-visibility:hidden;backface-visibility:hidden}
 
-/* ── Card Edges (thickness) ──
-   Centered at -4px offset → spans Z-4 to Z+4 (flush with both faces).
-   border-radius:14px on each strip → curves match the 14px rounded faces. */
-.edge{position:absolute}
-.edge-t{width:100%;height:8px;top:-4px;left:0;transform:rotateX(90deg);background:linear-gradient(90deg,#141414,#2a2a2a,#141414);border-radius:14px}
-.edge-b{width:100%;height:8px;bottom:-4px;left:0;transform:rotateX(-90deg);background:linear-gradient(90deg,#0e0e0e,#1e1e1e,#0e0e0e);border-radius:14px}
-.edge-l{width:8px;height:100%;top:0;left:-4px;transform:rotateY(-90deg);background:linear-gradient(180deg,#141414,#2a2a2a,#141414);border-radius:14px}
-.edge-r{width:8px;height:100%;top:0;right:-4px;transform:rotateY(90deg);background:linear-gradient(180deg,#0e0e0e,#1e1e1e,#0e0e0e);border-radius:14px}
+/* ── Card Edge Layers ──
+   Stack of thin full-size layers between Z-3 and Z+3.
+   Each has border-radius:14px identical to front/back faces,
+   so corners curve smoothly with no gaps. */
+.edge-layer{position:absolute;inset:0;border-radius:14px;background:#1a1a1a}
 
 /* ── Edge glow: applied as box-shadow on .card-3d (safe — no flattening unlike filter) ── */
 
@@ -166,10 +163,13 @@ html,body{width:100%;height:100%;overflow:hidden;background:#000;font-family:'Je
         <div class="face-spec" id="sb"></div>
         <div class="face-border"></div>
       </div>
-      <div class="edge edge-t"></div>
-      <div class="edge edge-b"></div>
-      <div class="edge edge-l"></div>
-      <div class="edge edge-r"></div>
+      <div class="edge-layer" style="transform:translateZ(3px)"></div>
+      <div class="edge-layer" style="transform:translateZ(2px)"></div>
+      <div class="edge-layer" style="transform:translateZ(1px)"></div>
+      <div class="edge-layer" style="transform:translateZ(0)"></div>
+      <div class="edge-layer" style="transform:translateZ(-1px)"></div>
+      <div class="edge-layer" style="transform:translateZ(-2px)"></div>
+      <div class="edge-layer" style="transform:translateZ(-3px)"></div>
     </div>
   </div>
 </div>
