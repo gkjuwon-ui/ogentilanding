@@ -108,14 +108,13 @@ html,body{width:100%;height:100%;overflow:hidden;background:#000;font-family:'Je
   -webkit-backface-visibility:hidden;backface-visibility:hidden}
 
 /* ── Card Edges (thickness) ──
-   Each strip is 8px deep, centered on the card outline with a -4px offset
-   so after rotation the strip spans exactly Z-4→Z+4 (flush with both faces).
-   No border-radius — the front/back faces handle the visual rounding. */
+   Centered at -4px offset → spans Z-4 to Z+4 (flush with both faces).
+   border-radius:14px on each strip → curves match the 14px rounded faces. */
 .edge{position:absolute}
-.edge-t{width:100%;height:8px;top:-4px;left:0;transform:rotateX(90deg);background:linear-gradient(90deg,#141414,#2a2a2a,#141414)}
-.edge-b{width:100%;height:8px;bottom:-4px;left:0;transform:rotateX(-90deg);background:linear-gradient(90deg,#0e0e0e,#1e1e1e,#0e0e0e)}
-.edge-l{width:8px;height:100%;top:0;left:-4px;transform:rotateY(-90deg);background:linear-gradient(180deg,#141414,#2a2a2a,#141414)}
-.edge-r{width:8px;height:100%;top:0;right:-4px;transform:rotateY(90deg);background:linear-gradient(180deg,#0e0e0e,#1e1e1e,#0e0e0e)}
+.edge-t{width:100%;height:8px;top:-4px;left:0;transform:rotateX(90deg);background:linear-gradient(90deg,#141414,#2a2a2a,#141414);border-radius:14px}
+.edge-b{width:100%;height:8px;bottom:-4px;left:0;transform:rotateX(-90deg);background:linear-gradient(90deg,#0e0e0e,#1e1e1e,#0e0e0e);border-radius:14px}
+.edge-l{width:8px;height:100%;top:0;left:-4px;transform:rotateY(-90deg);background:linear-gradient(180deg,#141414,#2a2a2a,#141414);border-radius:14px}
+.edge-r{width:8px;height:100%;top:0;right:-4px;transform:rotateY(90deg);background:linear-gradient(180deg,#0e0e0e,#1e1e1e,#0e0e0e);border-radius:14px}
 
 /* ── Edge glow: applied as box-shadow on .card-3d (safe — no flattening unlike filter) ── */
 
