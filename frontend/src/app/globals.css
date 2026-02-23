@@ -1,0 +1,248 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+:root {
+  --bg-primary: #ffffff;
+  --bg-secondary: #f5f5f7;
+  --bg-tertiary: #e8e8ed;
+  --bg-elevated: #ffffff;
+  --border-primary: rgba(0, 0, 0, 0.08);
+  --text-primary: #1d1d1f;
+  --text-secondary: #6e6e73;
+  --accent: #0071e3;
+  --accent-hover: #0077ED;
+  --accent-light: #2997ff;
+  --accent-subtle: rgba(0, 113, 227, 0.05);
+  --accent-gradient: linear-gradient(135deg, #2997ff 0%, #0071e3 100%);
+  --accent-gradient-btn: linear-gradient(135deg, #2997ff 0%, #0066CC 100%);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  height: 100%;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Never bold — keep everything readable and calm */
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 500;
+}
+button, input, select, textarea {
+  font-family: inherit;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #c7c7cc;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #aeaeb2;
+}
+
+/* Custom focus styles — outline suppressed (Electron app, no keyboard nav rings needed) */
+*:focus {
+  outline: none;
+}
+*:focus-visible {
+  outline: none;
+}
+
+/* Selection */
+::selection {
+  background: rgba(0, 113, 227, 0.15);
+  color: #1d1d1f;
+}
+
+@layer components {
+  .glass {
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(0, 0, 0, 0.06);
+  }
+
+  .glass-hover:hover {
+    background: rgba(245, 245, 247, 0.9);
+    border-color: rgba(0, 0, 0, 0.1);
+  }
+
+  .gradient-border {
+    position: relative;
+  }
+
+  .gradient-border::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(135deg, rgba(0, 113, 227, 0.15), transparent, rgba(0, 113, 227, 0.08));
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+  }
+
+  .text-gradient {
+    background: linear-gradient(180deg, #2997ff 0%, #0071e3 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .btn-primary {
+    background: var(--accent-gradient-btn);
+    @apply text-white font-medium px-4 py-2 rounded-lg transition-all duration-150 active:scale-[0.98];
+  }
+  .btn-primary:hover {
+    filter: brightness(0.9);
+  }
+
+  .btn-secondary {
+    @apply bg-bg-elevated text-text-primary border border-border-primary px-4 py-2 rounded-lg hover:bg-bg-hover hover:border-border-secondary transition-all duration-150 active:scale-[0.98];
+  }
+
+  .btn-ghost {
+    @apply text-text-secondary px-4 py-2 rounded-lg hover:bg-bg-elevated hover:text-text-primary transition-all duration-150;
+  }
+
+  .btn-danger {
+    @apply bg-black/5 text-black/60 border border-black/10 px-4 py-2 rounded-lg hover:bg-black/10 transition-all duration-150;
+  }
+
+  .input-field {
+    @apply w-full bg-bg-tertiary border border-border-primary rounded-lg px-4 py-2.5 text-text-primary placeholder:text-text-tertiary focus:border-border-focus focus:outline-none transition-colors;
+  }
+
+  .card {
+    @apply bg-bg-secondary border border-border-primary rounded-xl overflow-hidden transition-all duration-200;
+  }
+
+  .card-hover:hover {
+    @apply border-border-secondary bg-bg-tertiary;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════ */
+/* MOBILE / ANDROID RESPONSIVE                                    */
+/* ═══════════════════════════════════════════════════════════════ */
+
+@media (max-width: 767px) {
+  html, body {
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+    -webkit-text-size-adjust: 100%;
+    overscroll-behavior: none;
+  }
+
+  /* Larger tap targets on mobile (min 44px per WCAG) */
+  .btn-primary, .btn-secondary, .btn-ghost, .btn-danger {
+    min-height: 48px;
+    @apply px-4 py-3 text-base;
+  }
+
+  .input-field {
+    @apply py-3 text-base;
+    font-size: 16px !important; /* Prevents iOS/Android zoom on focus */
+  }
+
+  /* Cards: full-width on mobile */
+  .card {
+    @apply rounded-lg;
+  }
+
+  /* Sidebar: hidden by default on mobile, slide-in overlay */
+  aside, [data-sidebar] {
+    position: fixed !important;
+    left: -100% !important;
+    top: 0;
+    bottom: 0;
+    z-index: 50;
+    width: 280px !important;
+    transition: left 0.3s ease;
+  }
+
+  aside.open, [data-sidebar].open {
+    left: 0 !important;
+  }
+
+  /* Header: compact on mobile */
+  header {
+    @apply px-3;
+  }
+
+  /* Modal: bottom sheet style on mobile */
+  [role="dialog"], .modal-content {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    border-radius: 16px 16px 0 0 !important;
+    position: fixed !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+
+  /* Hide scrollbar on mobile */
+  ::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+  }
+
+  /* Safe area insets for notch/hole-punch displays */
+  .safe-area-top {
+    padding-top: env(safe-area-inset-top, 0px);
+  }
+  .safe-area-bottom {
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+
+  /* Smoother touch scrolling */
+  main, [data-scrollable] {
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
+  }
+
+  /* Navigation bottom bar for mobile */
+  nav[data-mobile-nav] {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 40;
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+
+  /* Text sizing for mobile readability */
+  h1 { @apply text-xl; }
+  h2 { @apply text-lg; }
+  h3 { @apply text-base; }
+
+  /* Grid: single column on mobile */
+  .grid-cols-2, .grid-cols-3, .grid-cols-4 {
+    grid-template-columns: 1fr !important;
+  }
+}
