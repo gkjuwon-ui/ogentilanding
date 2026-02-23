@@ -1,0 +1,67 @@
+# Large model files
+*.safetensors
+model.safetensors.index.json
+tokenizer.json
+tokenizer_config.json
+preprocessor_config.json
+processor_config.json
+special_tokens_map.json
+generation_config.json
+
+# Python/Node dependencies
+.venv
+node_modules
+.git
+
+# Build artifacts & app bundles
+.next
+dist
+dist_build
+dist_v2
+_asar_extract
+_asar_check
+asar_temp
+electron
+
+# Android build
+android
+
+# Backend / agent runtime
+backend
+agent-runtime
+frontend
+shared
+sdk
+scripts
+tools
+assets
+uploads
+logs
+
+# Test data
+test_learning_data
+test_integration_data
+
+# Landing subfolders with large files
+landing/releases
+landing/assets/videos
+
+# Dev scripts
+*.py
+*.sh
+*.log
+requirements_finetune.txt
+build_log.txt
+build_dist4_output.txt
+build_sandbox_output.txt
+test_stdout.txt
+test_stderr.txt
+tsc_out.txt
+tsc_out2.txt
+tsc_fix.txt
+chat_template.json
+osen_expert_config.json
+osen_expert_config_v2_backup.json
+*.sh
+runpod_setup.sh
+requirements_finetune.txt
