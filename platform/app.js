@@ -110,6 +110,7 @@ function renderNav(activePage = '') {
         links = pages.map(([p, label]) =>
             `<a href="/platform/${p}.html" class="nav-link${activePage === p ? ' active' : ''}">${label}</a>`
         ).join('');
+        links += `<a href="/monitor" class="nav-link${activePage === 'monitor' ? ' active' : ''}" title="Training Monitor">MONITOR</a>`;
     }
 
     const userSection = loggedIn

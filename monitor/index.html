@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OGENTI — Protocol Monitor</title>
+    <meta name="description" content="Real-time monitoring dashboard for Ogenti's AI-to-AI communication protocol training.">
+    <meta property="og:title" content="OGENTI — Protocol Monitor">
+    <meta property="og:description" content="Watch your AI training run in real-time with Ogenti's Protocol Monitor.">
+    <meta property="og:type" content="website">
+    <meta name="theme-color" content="#0a0a1a">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect x='4' y='4' width='8' height='8' fill='%2300f0ff'/%3E%3Crect x='6' y='6' width='4' height='4' fill='%230a0a1a'/%3E%3C/svg%3E">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Silkscreen:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4/dist/chart.umd.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- CRT Overlays -->
+    <div class="scanlines"></div>
+    <div class="crt"></div>
+    <div class="pixel-grid"></div>
+
+    <!-- Loading Screen -->
+    <div id="loader" class="loader">
+        <svg class="loader-logo" viewBox="0 0 48 48" width="48" height="48" style="image-rendering:pixelated">
+            <rect x="16" y="8" width="16" height="4" fill="#00f0ff"/>
+            <rect x="12" y="12" width="4" height="4" fill="#00f0ff"/>
+            <rect x="32" y="12" width="4" height="4" fill="#00f0ff"/>
+            <rect x="8" y="16" width="4" height="16" fill="#00f0ff"/>
+            <rect x="36" y="16" width="4" height="16" fill="#00f0ff"/>
+            <rect x="12" y="32" width="4" height="4" fill="#00f0ff"/>
+            <rect x="32" y="32" width="4" height="4" fill="#00f0ff"/>
+            <rect x="16" y="36" width="16" height="4" fill="#00f0ff"/>
+            <rect x="20" y="20" width="8" height="8" fill="#00f0ff"/>
+        </svg>
+        <span class="loader-text">OGENTI</span>
+        <span class="loader-sub">SYSTEM BOOT...</span>
+    </div>
+
+    <!-- ═══ KEY SEARCH OVERLAY ═══ -->
+    <div id="keyOverlay" class="key-overlay">
+        <div class="key-modal">
+            <svg class="key-logo" viewBox="0 0 48 48" width="64" height="64" style="image-rendering:pixelated">
+                <rect x="16" y="8" width="16" height="4" fill="#00f0ff"/>
+                <rect x="12" y="12" width="4" height="4" fill="#00f0ff"/>
+                <rect x="32" y="12" width="4" height="4" fill="#00f0ff"/>
+                <rect x="8" y="16" width="4" height="16" fill="#00f0ff"/>
+                <rect x="36" y="16" width="4" height="16" fill="#00f0ff"/>
+                <rect x="12" y="32" width="4" height="4" fill="#00f0ff"/>
+                <rect x="32" y="32" width="4" height="4" fill="#00f0ff"/>
+                <rect x="16" y="36" width="16" height="4" fill="#00f0ff"/>
+                <rect x="20" y="20" width="8" height="8" fill="#00f0ff"/>
+            </svg>
+            <h1 class="key-title">PROTOCOL MONITOR</h1>
+            <p class="key-subtitle">ENTER YOUR DASHBOARD KEY TO VIEW TRAINING PROGRESS</p>
+            <div class="key-input-wrap">
+                <input type="text" id="keyInput" class="key-input" placeholder="ENTER DASHBOARD KEY" maxlength="12" autocomplete="off" spellcheck="false">
+                <button id="keyBtn" class="key-btn" onclick="submitKey()">CONNECT →</button>
+            </div>
+            <div id="keyError" class="key-error"></div>
+            <div class="key-hint">
+                <span style="color:var(--text-dim);font-size:7px;">DASHBOARD KEY IS PROVIDED WHEN YOU LAUNCH A TRAINING JOB</span>
+                <br>
+                <a href="/platform/training.html" style="color:var(--cyan);font-size:7px;text-decoration:none;">LAUNCH TRAINING →</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══ JOB INFO BAR ═══ -->
+    <div id="jobInfoBar" class="job-info-bar" style="display:none;">
+        <span class="job-info-model" id="jobModel">—</span>
+        <span class="job-info-sep">×</span>
+        <span class="job-info-dataset" id="jobDataset">—</span>
+        <span class="job-info-sep">|</span>
+        <span class="job-info-status" id="jobStatus">—</span>
+        <span class="job-info-sep">|</span>
+        <span class="job-info-progress" id="jobProgress">0%</span>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="nav" id="nav">
+        <div class="nav-left">
+            <svg class="nav-logo" viewBox="0 0 24 24" width="24" height="24" style="image-rendering:pixelated">
+                <rect x="8" y="4" width="8" height="2" fill="#00f0ff"/>
+                <rect x="6" y="6" width="2" height="2" fill="#00f0ff"/>
+                <rect x="16" y="6" width="2" height="2" fill="#00f0ff"/>
+                <rect x="4" y="8" width="2" height="8" fill="#00f0ff"/>
+                <rect x="18" y="8" width="2" height="8" fill="#00f0ff"/>
+                <rect x="6" y="16" width="2" height="2" fill="#00f0ff"/>
+                <rect x="16" y="16" width="2" height="2" fill="#00f0ff"/>
+                <rect x="8" y="18" width="8" height="2" fill="#00f0ff"/>
+                <rect x="10" y="10" width="4" height="4" fill="#00f0ff"/>
+            </svg>
+            <span class="nav-brand">OGENTI</span>
+            <span class="nav-tag">PROTOCOL MONITOR</span>
+        </div>
+        <div class="nav-right">
+            <span class="connection-badge connecting" id="connectionBadge">... CONNECTING</span>
+            <div class="status-indicator">
+                <span class="status-dot"></span>
+                <span class="status-text" id="statusText">Waiting</span>
+            </div>
+            <a href="/platform/training.html" class="nav-link" title="Back to Platform">
+                <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor">
+                    <path d="M8 1l-7 7h4v7h6v-7h4z"/>
+                </svg>
+                <span>Platform</span>
+            </a>
+        </div>
+    </nav>
+
+    <main class="main">
+
+        <!-- Metrics Row -->
+        <section class="metrics">
+            <div class="metric-card pixel-border">
+                <span class="metric-label">PHASE</span>
+                <div class="metric-value-row">
+                    <span class="metric-value" id="metricPhase">0</span>
+                </div>
+                <span class="metric-sub" id="metricPhaseName">Warmup</span>
+            </div>
+            <div class="metric-card pixel-border">
+                <span class="metric-label">COMPRESSION</span>
+                <div class="metric-value-row">
+                    <span class="metric-value" id="metricCompression">1.0</span>
+                    <span class="metric-unit">x</span>
+                </div>
+                <span class="metric-sub">NL / protocol tokens</span>
+            </div>
+            <div class="metric-card pixel-border">
+                <span class="metric-label">FIDELITY</span>
+                <div class="metric-value-row">
+                    <span class="metric-value" id="metricFidelity">0.0</span>
+                    <span class="metric-unit">%</span>
+                </div>
+                <span class="metric-sub">semantic accuracy</span>
+            </div>
+            <div class="metric-card pixel-border">
+                <span class="metric-label">EPISODES</span>
+                <div class="metric-value-row">
+                    <span class="metric-value" id="metricEpisodes">0</span>
+                </div>
+                <span class="metric-sub" id="metricRate">-- ep/s</span>
+            </div>
+        </section>
+
+        <!-- Agent Communication Visualizer -->
+        <section class="viz-section">
+            <div class="viz-container pixel-border">
+                <canvas id="agentCanvas"></canvas>
+            </div>
+            <div class="viz-labels">
+                <div class="viz-label">
+                    <span class="agent-name">Encoder a</span>
+                    <span class="agent-role">NL -> Protocol</span>
+                </div>
+                <div class="viz-label viz-label-center">
+                    <span class="viz-token-count pixel-border-cyan" id="vizTokenCount">30 tokens</span>
+                </div>
+                <div class="viz-label">
+                    <span class="agent-name">Decoder b</span>
+                    <span class="agent-role">Protocol -> Action</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Phase Timeline -->
+        <section class="phase-section">
+            <div class="phase-timeline">
+                <div class="phase-item active current" data-phase="0">
+                    <div class="phase-dot"></div>
+                    <div class="phase-info">
+                        <span class="phase-name">Phase 0</span>
+                        <span class="phase-desc">Warmup</span>
+                    </div>
+                </div>
+                <div class="phase-connector"></div>
+                <div class="phase-item" data-phase="1">
+                    <div class="phase-dot"></div>
+                    <div class="phase-info">
+                        <span class="phase-name">Phase 1</span>
+                        <span class="phase-desc">Simple</span>
+                    </div>
+                </div>
+                <div class="phase-connector"></div>
+                <div class="phase-item" data-phase="2">
+                    <div class="phase-dot"></div>
+                    <div class="phase-info">
+                        <span class="phase-name">Phase 2</span>
+                        <span class="phase-desc">Complex</span>
+                    </div>
+                </div>
+                <div class="phase-connector"></div>
+                <div class="phase-item" data-phase="3">
+                    <div class="phase-dot"></div>
+                    <div class="phase-info">
+                        <span class="phase-name">Phase 3</span>
+                        <span class="phase-desc">Generalize</span>
+                    </div>
+                </div>
+                <div class="phase-connector"></div>
+                <div class="phase-item" data-phase="4">
+                    <div class="phase-dot"></div>
+                    <div class="phase-info">
+                        <span class="phase-name">Phase 4</span>
+                        <span class="phase-desc">Universalize</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Dashboard: Chart + Feed -->
+        <section class="dashboard">
+            <div class="card pixel-border">
+                <div class="card-header">
+                    <h2 class="card-title">Training Progress</h2>
+                    <div class="card-legend">
+                        <span class="legend-item"><span class="legend-dot" style="background:#00f0ff"></span>Compression</span>
+                        <span class="legend-item"><span class="legend-dot" style="background:#00ff88"></span>Fidelity</span>
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <canvas id="trainingChart"></canvas>
+                </div>
+            </div>
+            <div class="card pixel-border">
+                <div class="card-header">
+                    <h2 class="card-title">Protocol Feed</h2>
+                    <span class="feed-indicator">
+                        <span class="feed-dot"></span>LIVE
+                    </span>
+                </div>
+                <div class="feed-container" id="protocolFeed"></div>
+            </div>
+        </section>
+
+        <!-- Bottom: Budget + Vocabulary -->
+        <section class="dashboard">
+            <div class="card pixel-border">
+                <div class="card-header">
+                    <h2 class="card-title">Token Budget Decay</h2>
+                </div>
+                <div class="chart-container">
+                    <canvas id="budgetChart"></canvas>
+                </div>
+            </div>
+            <div class="card pixel-border">
+                <div class="card-header">
+                    <h2 class="card-title">Emergent Vocabulary</h2>
+                    <span class="vocab-count" id="vocabCount">0 tokens</span>
+                </div>
+                <div class="vocab-container" id="vocabGrid"></div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-inner">
+            <span>OGENTI v0.1</span>
+            <span class="footer-dot">/</span>
+            <span>AI-to-AI Protocol</span>
+            <span class="footer-dot">/</span>
+            <span>MARL + Qwen2.5 + LoRA</span>
+        </div>
+        <div class="footer-sub">
+            Press <kbd>SPACE</kbd> to pause simulation
+        </div>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>
