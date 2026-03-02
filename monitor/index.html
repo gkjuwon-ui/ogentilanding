@@ -43,103 +43,40 @@
 
     <!-- ═══ KEY SEARCH OVERLAY ═══ -->
     <div id="keyOverlay" class="key-overlay">
-        <!-- Floating pixel particles background -->
-        <div class="key-particles">
-            <div class="kp kp1"></div><div class="kp kp2"></div><div class="kp kp3"></div>
-            <div class="kp kp4"></div><div class="kp kp5"></div><div class="kp kp6"></div>
-            <div class="kp kp7"></div><div class="kp kp8"></div>
-        </div>
-
-        <div class="key-panel pixel-border">
-            <!-- Color accent top bar -->
-            <div class="key-color-bar">
-                <span class="kcb" style="background:var(--accent)"></span>
-                <span class="kcb" style="background:var(--purple)"></span>
-                <span class="kcb" style="background:var(--green)"></span>
-                <span class="kcb" style="background:var(--amber)"></span>
-                <span class="kcb" style="background:var(--pink)"></span>
-                <span class="kcb" style="background:var(--orange)"></span>
+        <div class="key-terminal">
+            <div class="key-term-bar">
+                <span class="key-term-dots">
+                    <span class="td"></span><span class="td"></span><span class="td"></span>
+                </span>
+                <span class="key-term-title">ogenti-monitor — auth</span>
+                <span class="key-term-x">×</span>
             </div>
+            <div class="key-term-body">
+                <div class="key-line"><span class="kl-dim">OGENTI PROTOCOL MONITOR v0.1</span></div>
+                <div class="key-line"><span class="kl-dim">═══════════════════════════════════════</span></div>
+                <div class="key-line">&nbsp;</div>
+                <div class="key-line"><span class="kl-green">✓</span> <span class="kl-dim">System initialized</span></div>
+                <div class="key-line"><span class="kl-green">✓</span> <span class="kl-dim">Connection secured</span></div>
+                <div class="key-line"><span class="kl-cyan">⟩</span> <span class="kl-dim">Awaiting authentication...</span></div>
+                <div class="key-line">&nbsp;</div>
+                <div class="key-line"><span class="kl-white">ENTER DASHBOARD KEY TO CONTINUE:</span></div>
+                <div class="key-line">&nbsp;</div>
 
-            <!-- Mini two-agent protocol sprite (from landing) -->
-            <div class="key-sprite-row">
-                <svg class="key-agent-svg" viewBox="0 0 120 40" width="200" height="66" style="image-rendering:pixelated">
-                    <!-- Agent A (cyan) -->
-                    <rect x="4" y="8" width="4" height="4" fill="#00f0ff"/>
-                    <rect x="12" y="8" width="4" height="4" fill="#00f0ff"/>
-                    <rect x="0" y="12" width="20" height="4" fill="#00f0ff"/>
-                    <rect x="4" y="16" width="4" height="4" fill="#fff"/>
-                    <rect x="12" y="16" width="4" height="4" fill="#fff"/>
-                    <rect x="0" y="20" width="20" height="8" fill="#00f0ff"/>
-                    <rect x="4" y="28" width="4" height="4" fill="#00f0ff"/>
-                    <rect x="12" y="28" width="4" height="4" fill="#00f0ff"/>
-                    <!-- Beam -->
-                    <rect x="28" y="22" width="8" height="4" fill="#b060ff" opacity="0.8"/>
-                    <rect x="40" y="22" width="8" height="4" fill="#00ff88" opacity="0.8"/>
-                    <rect x="52" y="22" width="8" height="4" fill="#ffe040" opacity="0.8"/>
-                    <rect x="64" y="22" width="8" height="4" fill="#ff60a0" opacity="0.8"/>
-                    <rect x="76" y="22" width="8" height="4" fill="#00f0ff" opacity="0.8"/>
-                    <!-- sparkle -->
-                    <rect x="34" y="16" width="4" height="4" fill="#ffe040" opacity="0.6"/>
-                    <rect x="58" y="14" width="4" height="4" fill="#ff60a0" opacity="0.5"/>
-                    <rect x="74" y="16" width="4" height="4" fill="#b060ff" opacity="0.6"/>
-                    <!-- Agent B (green) -->
-                    <rect x="96" y="8" width="4" height="4" fill="#00ff88"/>
-                    <rect x="104" y="8" width="4" height="4" fill="#00ff88"/>
-                    <rect x="92" y="12" width="20" height="4" fill="#00ff88"/>
-                    <rect x="96" y="16" width="4" height="4" fill="#fff"/>
-                    <rect x="104" y="16" width="4" height="4" fill="#fff"/>
-                    <rect x="92" y="20" width="20" height="8" fill="#00ff88"/>
-                    <rect x="96" y="28" width="4" height="4" fill="#00ff88"/>
-                    <rect x="104" y="28" width="4" height="4" fill="#00ff88"/>
-                    <!-- Labels -->
-                    <text x="10" y="6" font-size="4" fill="#00f0ff" text-anchor="middle" font-family="monospace">SRC</text>
-                    <text x="56" y="18" font-size="3.5" fill="#fff" text-anchor="middle" font-family="monospace" opacity="0.5">TOKENS</text>
-                    <text x="102" y="6" font-size="4" fill="#00ff88" text-anchor="middle" font-family="monospace">DST</text>
-                </svg>
-            </div>
-
-            <div class="key-header">
-                <span class="key-tag">[ <span style="color:var(--purple)">PROTOCOL</span> MONITOR ]</span>
-            </div>
-
-            <h1 class="key-title">DASHBOARD<br><span class="glow">ACCESS</span></h1>
-
-            <!-- Mini status cells (landing page stats-bar style) -->
-            <div class="key-stats-bar pixel-border">
-                <div class="key-stat"><span class="key-stat-val" style="color:var(--green)">●</span><span class="key-stat-lbl">READY</span></div>
-                <div class="key-stat"><span class="key-stat-val" style="color:var(--purple)">◆</span><span class="key-stat-lbl">SECURE</span></div>
-                <div class="key-stat"><span class="key-stat-val" style="color:var(--amber)">▲</span><span class="key-stat-lbl">LIVE</span></div>
-            </div>
-
-            <p class="key-desc">ENTER YOUR <span style="color:var(--green)">DASHBOARD KEY</span> TO VIEW<br>REAL-TIME <span style="color:var(--purple)">TRAINING PROGRESS</span></p>
-
-            <div class="key-input-group">
-                <div class="key-input-box pixel-border">
-                    <span class="key-input-prefix">&gt;_</span>
-                    <input type="text" id="keyInput" class="key-input" placeholder="DASHBOARD KEY" maxlength="12" autocomplete="off" spellcheck="false">
+                <div class="key-input-row">
+                    <span class="key-prompt">$</span>
+                    <input type="text" id="keyInput" class="key-input" placeholder="paste-key-here" maxlength="12" autocomplete="off" spellcheck="false">
+                    <span class="key-cursor"></span>
                 </div>
-                <button id="keyBtn" class="btn-retro primary key-btn" onclick="submitKey()">
-                    <span style="margin-right:6px">▶</span> CONNECT
-                </button>
-            </div>
 
-            <div id="keyError" class="key-error"></div>
+                <div id="keyError" class="key-error"></div>
 
-            <div class="key-footer">
-                <div class="key-footer-line"></div>
-                <span class="key-footer-text">KEY IS PROVIDED WHEN YOU <span style="color:var(--amber)">LAUNCH TRAINING</span></span>
-                <a href="/platform/training" class="key-footer-link">→ LAUNCH TRAINING</a>
-            </div>
+                <div class="key-line">&nbsp;</div>
+                <button id="keyBtn" class="key-submit" onclick="submitKey()">[ AUTHENTICATE ]</button>
 
-            <!-- Bottom color accent -->
-            <div class="key-color-bar bottom">
-                <span class="kcb" style="background:var(--orange)"></span>
-                <span class="kcb" style="background:var(--pink)"></span>
-                <span class="kcb" style="background:var(--amber)"></span>
-                <span class="kcb" style="background:var(--green)"></span>
-                <span class="kcb" style="background:var(--purple)"></span>
-                <span class="kcb" style="background:var(--accent)"></span>
+                <div class="key-line">&nbsp;</div>
+                <div class="key-line"><span class="kl-dim">───────────────────────────────────────</span></div>
+                <div class="key-line"><span class="kl-dim">Key is generated when you launch training.</span></div>
+                <div class="key-line"><a href="/platform/training" class="key-link">→ Launch Training</a></div>
             </div>
         </div>
     </div>
