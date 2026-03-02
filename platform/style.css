@@ -2,56 +2,47 @@
    OGENTI PLATFORM — RETRO 16-BIT STYLE
    ═══════════════════════════════════════════════ */
 
-@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Silkscreen:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
 
 /* ── Reset ── */
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+*,\*::before,\*::after{box-sizing:border-box;margin:0;padding:0;border-radius: 0 !important;}
 
 :root {
-    --bg:        #0a0a1a;
-    --bg2:       #0f0f2a;
-    --bg3:       #12122a;
-    --cyan:      #00f0ff;
-    --cyan-dim:  #007088;
-    --pink:      #ff60a0;
-    --purple:    #b060ff;
-    --green:     #00ff88;
-    --yellow:    #ffe040;
-    --red:       #ff4060;
-    --orange:    #ff8830;
-    --text:      #c8c8e0;
-    --text-dim:  #6a6a8a;
-    --text-muted:#3a3a5a;
-    --border:    #1a1a3a;
-    --border-hi: #2a2a5a;
-    --pixel-border: 4px solid var(--cyan);
+    --bg: #000; /* DOS BLACK */ /* DOS BLACK */
+    --bg2: #0000aa; /* C64 BLUE */ /* C64 BLUE */
+    --bg3: #0000aa; /* C64 BLUE */ /* C64 BLUE */
+    --cyan: #55ffff;
+    --cyan-dim: #00aaaa;
+    --pink: #ff55ff;
+    --purple: #ff55ff;
+    --green: #55ff55;
+    --yellow: #ffff55;
+    --red: #ff5555;
+    --orange: #ffaa55;
+    --text: #fff;
+    --text-dim: #aaaaaa;
+    --text-muted: #555555;
+    --border: #fff;
+    --border-hi: #aaa;
+    --pixel-border: 4px solid #fff;
     --px: 4px;
 }
 
-html { font-size: 16px; }
+html { font-size: 16px; background: #000; }
 body {
-    font-family: 'Silkscreen', monospace;
+    font-family: Consolas, 'Cascadia Code', monospace;
     background: var(--bg);
     color: var(--text);
     min-height: 100vh;
     image-rendering: pixelated;
     line-height: 1.6;
-    cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16'%3E%3Crect x='0' y='0' width='4' height='4' fill='%2300f0ff'/%3E%3Crect x='4' y='4' width='4' height='4' fill='%2300f0ff'/%3E%3Crect x='8' y='8' width='4' height='4' fill='%2300f0ff'/%3E%3C/svg%3E") 0 0, auto;
+    cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16'%3E%3Crect x='0' y='0' width='8' height='12' fill='%2355ffff'/%3E%3C/svg%3E") 0 0, auto;
 }
 
 ::selection { background: var(--cyan); color: var(--bg); }
 
 /* ── CRT Overlay ── */
-body::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    background: repeating-linear-gradient(
-        0deg, transparent, transparent 2px, rgba(0,0,0,0.08) 2px, rgba(0,0,0,0.08) 4px
-    );
-    pointer-events: none;
-    z-index: 9999;
-}
+
 
 /* ── Navigation ── */
 .nav {
@@ -80,14 +71,14 @@ body::before {
     color: var(--purple);
     background: var(--bg);
     padding: 2px 6px;
-    border: 2px solid var(--purple);
+    border: 4px solid var(--purple);
 }
 .nav-links {
     display: flex;
     gap: 4px;
 }
 .nav-link {
-    font-family: 'Silkscreen', monospace;
+    font-family: Consolas, 'Cascadia Code', monospace;
     font-size: 11px;
     color: var(--text-dim);
     text-decoration: none;
@@ -140,12 +131,10 @@ body::before {
 /* ── Cards ── */
 .card {
     background: var(--bg2);
-    border: var(--px) solid var(--border);
+    border: 4px solid var(--border);
     padding: 24px;
     margin-bottom: 16px;
-    box-shadow:
-        inset calc(-1 * var(--px)) calc(-1 * var(--px)) 0 0 var(--border-hi),
-        inset var(--px) var(--px) 0 0 rgba(0,0,0,0.3);
+    box-shadow: 4px 4px 0 #333;
 }
 .card-title {
     font-family: 'Press Start 2P', monospace;
@@ -179,15 +168,12 @@ body::before {
 }
 .auth-box {
     background: var(--bg2);
-    border: var(--px) solid var(--cyan);
+    border: 4px solid var(--cyan);
     padding: 40px;
     width: 100%;
     max-width: 420px;
     text-align: center;
-    box-shadow:
-        inset calc(-1 * var(--px)) calc(-1 * var(--px)) 0 0 rgba(0,240,255,0.4),
-        inset var(--px) var(--px) 0 0 rgba(0,0,0,0.4),
-        8px 8px 0 rgba(0,0,0,0.5);
+    box-shadow: 4px 4px 0 #333;
 }
 .auth-logo {
     font-family: 'Press Start 2P', monospace;
@@ -220,20 +206,27 @@ body::before {
     margin-bottom: 6px;
     letter-spacing: 1px;
 }
+
 .form-input {
     width: 100%;
-    padding: 10px 14px;
-    background: var(--bg);
-    border: var(--px) solid var(--border);
-    color: var(--text);
-    font-family: 'Silkscreen', monospace;
-    font-size: 13px;
-    outline: none;
+    padding: 12px;
+    background: #000;
+    border: 4px solid #fff;
+    color: #fff;
+    font-family: Consolas, 'Cascadia Code', monospace;
+    font-size: 14px;
+    box-shadow: 4px 4px 0 #333;
 }
+.form-input:focus {
+    outline: none;
+    border-color: #55ffff;
+    background: #0000aa;
+}
+
 .form-input:focus {
     border-color: var(--cyan);
 }
-.form-input::placeholder { color: var(--text-dim); opacity: 0.5; }
+.form-input::placeholder { color: var(--text-dim);  }
 
 .verification-input {
     text-align: center;
@@ -244,51 +237,55 @@ body::before {
 }
 
 /* ── Buttons ── */
+
 .btn {
     display: inline-block;
     padding: 12px 24px;
     font-family: 'Press Start 2P', monospace;
     font-size: 10px;
-    border: var(--px) solid;
-    cursor: pointer;
+    border: 4px solid #fff;
+    background: #000;
+    color: #fff;
+    cursor: inherit;
     text-decoration: none;
     text-align: center;
     letter-spacing: 1px;
     width: 100%;
-    box-shadow:
-        var(--px) var(--px) 0 0 rgba(0,0,0,0.5),
-        calc(var(--px)*2) calc(var(--px)*2) 0 0 rgba(0,0,0,0.2);
+    box-shadow: 4px 4px 0 #333;
+    
 }
 .btn:hover {
-    transform: translate(var(--px), var(--px));
-    box-shadow: var(--px) var(--px) 0 0 rgba(0,0,0,0.3);
+    transform: translate(4px, 4px);
+    box-shadow: 0 0 0 #333;
+    background: #fff;
+    color: #000;
 }
 .btn-primary {
-    background: var(--cyan);
-    color: var(--bg);
-    border-color: var(--cyan);
+    background: #55ffff;
+    color: #000;
+    border-color: #fff;
 }
 .btn-primary:hover {
-    background: var(--bg);
-    color: var(--cyan);
+    background: #fff;
+    color: #000;
 }
 .btn-secondary {
     background: transparent;
-    color: var(--purple);
-    border-color: var(--purple);
+    color: #ff55ff;
+    border-color: #ff55ff;
 }
 .btn-secondary:hover {
-    background: var(--purple);
-    color: var(--bg);
+    background: #ff55ff;
+    color: #000;
 }
 .btn-green {
-    background: var(--green);
-    color: var(--bg);
-    border-color: var(--green);
+    background: #55ff55;
+    color: #000;
+    border-color: #55ff55;
 }
 .btn-green:hover {
-    background: transparent;
-    color: var(--green);
+    background: #fff;
+    color: #000;
 }
 .btn-small {
     padding: 6px 14px;
@@ -297,15 +294,15 @@ body::before {
 }
 .btn-danger {
     background: transparent;
-    color: var(--red);
-    border-color: var(--red);
+    color: #ff5555;
+    border-color: #ff5555;
 }
 .btn-danger:hover {
-    background: var(--red);
+    background: #ff5555;
     color: #fff;
 }
 .btn:disabled {
-    opacity: 0.4;
+    
     cursor: not-allowed;
 }
 
@@ -373,21 +370,16 @@ tr:hover td { background: var(--bg3); }
 }
 .pricing-card {
     background: var(--bg2);
-    border: var(--px) solid var(--border);
+    border: 4px solid var(--border);
     padding: 20px;
     text-align: center;
-    cursor: pointer;
-    box-shadow:
-        inset calc(-1 * var(--px)) calc(-1 * var(--px)) 0 0 var(--border-hi),
-        inset var(--px) var(--px) 0 0 rgba(0,0,0,0.3);
+    cursor: inherit;
+    box-shadow: 4px 4px 0 #333;
 }
 .pricing-card:hover, .pricing-card.selected {
     border-color: var(--cyan);
     transform: translate(-2px, -2px);
-    box-shadow:
-        inset calc(-1 * var(--px)) calc(-1 * var(--px)) 0 0 var(--border-hi),
-        inset var(--px) var(--px) 0 0 rgba(0,0,0,0.3),
-        6px 6px 0 rgba(0,0,0,0.4);
+    box-shadow: 4px 4px 0 #333;
 }
 .pricing-card.selected { background: var(--bg3); }
 .pricing-credits {
@@ -416,20 +408,15 @@ tr:hover td { background: var(--bg3); }
 }
 .model-card {
     background: var(--bg2);
-    border: var(--px) solid var(--border);
+    border: 4px solid var(--border);
     padding: 16px;
-    cursor: pointer;
-    box-shadow:
-        inset calc(-1 * var(--px)) calc(-1 * var(--px)) 0 0 var(--border-hi),
-        inset var(--px) var(--px) 0 0 rgba(0,0,0,0.3);
+    cursor: inherit;
+    box-shadow: 4px 4px 0 #333;
 }
 .model-card:hover, .model-card.selected {
     border-color: var(--purple);
     transform: translate(-2px, -2px);
-    box-shadow:
-        inset calc(-1 * var(--px)) calc(-1 * var(--px)) 0 0 var(--border-hi),
-        inset var(--px) var(--px) 0 0 rgba(0,0,0,0.3),
-        6px 6px 0 rgba(0,0,0,0.4);
+    box-shadow: 4px 4px 0 #333;
 }
 .model-card.selected { background: var(--bg3); }
 .model-name {
@@ -458,14 +445,12 @@ tr:hover td { background: var(--bg3); }
 }
 .stat-item {
     background: var(--bg2);
-    border: var(--px) solid var(--border);
+    border: 4px solid var(--border);
     padding: 16px 20px;
     flex: 1;
     min-width: 120px;
     text-align: center;
-    box-shadow:
-        inset calc(-1 * var(--px)) calc(-1 * var(--px)) 0 0 var(--border-hi),
-        inset var(--px) var(--px) 0 0 rgba(0,0,0,0.3);
+    box-shadow: 4px 4px 0 #333;
 }
 .stat-number {
     font-family: 'Press Start 2P', monospace;
@@ -490,9 +475,7 @@ tr:hover td { background: var(--bg3); }
     word-break: break-all;
     margin: 12px 0;
     position: relative;
-    box-shadow:
-        inset calc(-1 * var(--px)) calc(-1 * var(--px)) 0 0 rgba(0,255,136,0.3),
-        inset var(--px) var(--px) 0 0 rgba(0,0,0,0.3);
+    box-shadow: 4px 4px 0 #333;
 }
 .key-warning {
     font-size: 9px;
@@ -503,7 +486,7 @@ tr:hover td { background: var(--bg3); }
 /* ── Progress Bar ── */
 .progress-wrap {
     background: var(--bg);
-    border: var(--px) solid var(--border);
+    border: 4px solid var(--border);
     height: 24px;
     position: relative;
     overflow: hidden;
@@ -511,7 +494,7 @@ tr:hover td { background: var(--bg3); }
 .progress-bar {
     height: 100%;
     background: var(--cyan);
-    transition: width .3s;
+    
     position: relative;
 }
 .progress-bar::after {
@@ -519,7 +502,7 @@ tr:hover td { background: var(--bg3); }
     position: absolute;
     inset: 0;
     background: repeating-linear-gradient(
-        90deg, transparent, transparent 4px, rgba(0,0,0,0.2) 4px, rgba(0,0,0,0.2) 8px
+        90deg, transparent, transparent 4px, transparent 4px, transparent 8px
     );
 }
 .progress-text {
@@ -530,7 +513,7 @@ tr:hover td { background: var(--bg3); }
     font-size: 9px;
     font-family: 'Press Start 2P', monospace;
     color: var(--text);
-    text-shadow: 1px 1px 0 var(--bg);
+    text-shadow: 2px 2px 0 #000;
 }
 
 /* ── Badge ── */
@@ -658,7 +641,7 @@ tr:hover td { background: var(--bg3); }
     width: 100%;
     height: 8px;
     background: var(--bg);
-    border: var(--px) solid var(--border);
+    border: 4px solid var(--border);
     outline: none;
 }
 .range-input::-webkit-slider-thumb {
@@ -667,8 +650,8 @@ tr:hover td { background: var(--bg3); }
     height: 24px;
     background: var(--cyan);
     border: var(--px) solid var(--bg);
-    cursor: pointer;
-    box-shadow: 2px 2px 0 rgba(0,0,0,0.5);
+    cursor: inherit;
+    box-shadow: 4px 4px 0 #333;
 }
 .range-labels {
     display: flex;
@@ -683,7 +666,7 @@ tr:hover td { background: var(--bg3); }
     display: inline-block;
     width: 16px;
     height: 16px;
-    border: var(--px) solid var(--border);
+    border: 4px solid var(--border);
     border-top-color: var(--cyan);
     animation: spin .6s linear infinite;
 }
@@ -692,12 +675,10 @@ tr:hover td { background: var(--bg3); }
 /* ── Estimate Box ── */
 .estimate-box {
     background: var(--bg3);
-    border: var(--px) solid var(--cyan);
+    border: 4px solid var(--cyan);
     padding: 20px;
     margin: 20px 0;
-    box-shadow:
-        inset calc(-1 * var(--px)) calc(-1 * var(--px)) 0 0 rgba(0,240,255,0.3),
-        inset var(--px) var(--px) 0 0 rgba(0,0,0,0.3);
+    box-shadow: 4px 4px 0 #333;
 }
 .estimate-row {
     display: flex;
@@ -715,17 +696,7 @@ tr:hover td { background: var(--bg3); }
 }
 
 /* ── Pixel Grid Background ── */
-body::after {
-    content: '';
-    position: fixed;
-    inset: 0;
-    z-index: -1;
-    pointer-events: none;
-    background-image:
-        linear-gradient(rgba(255,255,255,0.008) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,0.008) 1px, transparent 1px);
-    background-size: var(--px) var(--px);
-}
+
 
 /* ── Retro Scrollbar ── */
 ::-webkit-scrollbar { width: 12px; }
@@ -738,8 +709,64 @@ body::after {
 
 /* ── Retro pixel-border util ── */
 .pixel-border {
-    border: var(--px) solid var(--border);
-    box-shadow:
-        inset calc(-1 * var(--px)) calc(-1 * var(--px)) 0 0 var(--border-hi),
-        inset var(--px) var(--px) 0 0 rgba(0,0,0,0.3);
+    border: 4px solid var(--border);
+    box-shadow: 4px 4px 0 #333;
+}
+
+
+
+/* ==============================================================
+   8-BIT DOS/C64 OVERRIDES
+============================================================== */
+
+/* Inputs / Selects */
+.input-box, select, textarea, .form-input, .verification-input {
+    background: #0000aa !important;
+    color: #fff !important;
+    border: 2px solid #fff !important;
+    box-shadow: 4px 4px 0 #333;
+    outline: none !important;
+    font-family: Consolas, 'Cascadia Code', monospace !important;
+}
+.input-box:focus, select:focus, textarea:focus, .form-input:focus, .verification-input:focus {
+    background: #000 !important;
+    border-color: #55ffff !important;
+}
+
+/* Cards / Boxes / Panels */
+.card, .auth-box, .console-wrapper, .pricing-card, .model-card, .stat-item, .estimate-box {
+    border: 4px solid #fff !important;
+    background: #0000aa !important;
+    box-shadow: 4px 4px 0 #333;
+    
+}
+
+.auth-box {
+    background: #000 !important;
+}
+
+.console-wrapper {
+    background: #000 !important;
+}
+
+.card:hover, .pricing-card:hover, .model-card:hover {
+    box-shadow: 4px 4px 0 #333;
+}
+
+/* Ensure no soft shadows exist anywhere else */
+* {
+    border-radius: 0 !important;
+}
+
+@keyframes blink { 0%, 49% { opacity: 1; } 50%, 100% { opacity: 0; } }
+.blink { animation: blink 1s step-end infinite; }
+.crt::before {
+    content: " ";
+    display: block;
+    position: fixed;
+    top: 0; left: 0; bottom: 0; right: 0;
+    background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+    z-index: 9999;
+    background-size: 100% 2px, 3px 100%;
+    pointer-events: none;
 }
