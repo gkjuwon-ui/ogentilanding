@@ -944,179 +944,151 @@ kbd {
 .loader.hidden { animation:none; opacity:0; visibility:hidden; pointer-events:none; }
 
 /* ═══════════════════════════════════════════════════
-   KEY OVERLAY — 16-BIT RETRO GATE
+   KEY OVERLAY — 8-BIT RETRO TERMINAL
 ═══════════════════════════════════════════════════ */
 
 .key-overlay {
     position: fixed;
     inset: 0;
     z-index: 9990;
-    background: #0c0c0c;
+    background: #000;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-/* ── Terminal Window ── */
-.key-terminal {
-    width: 520px;
-    max-width: 94vw;
-    border: 2px solid #3a3a3a;
-    background: #0c0c0c;
+/* ── 8-Bit Box ── */
+.eb-box {
+    width: 500px;
+    max-width: 90vw;
+    background: #0000aa; /* Classic C64/DOS Blue */
+    border: 4px solid #fff;
+    box-shadow: 
+        inset -4px -4px 0 0 rgba(0,0,0,0.5),
+        8px 8px 0 0 #333; /* Hard pixel shadow */
+    padding: 4px; /* Space for inner layout */
 }
 
-.key-term-bar {
-    display: flex;
-    align-items: center;
-    padding: 6px 12px;
-    background: #1a1a1a;
-    border-bottom: 1px solid #333;
-    gap: 10px;
-}
-
-.key-term-dots {
-    display: flex;
-    gap: 6px;
-}
-.td {
-    width: 8px;
-    height: 8px;
-    border: 1px solid #555;
-}
-.td:nth-child(1) { background: #ff5f56; border-color: #e0443e; }
-.td:nth-child(2) { background: #ffbd2e; border-color: #dea123; }
-.td:nth-child(3) { background: #27c93f; border-color: #1aab29; }
-
-.key-term-title {
-    flex: 1;
-    font-family: var(--font-pixel, 'Press Start 2P', monospace);
-    font-size: 0.35rem;
-    color: #666;
+.eb-header {
+    background: #fff;
+    color: #0000aa;
     text-align: center;
-    letter-spacing: 0.05em;
-}
-
-.key-term-x {
-    font-family: monospace;
-    color: #555;
+    padding: 6px;
+    font-family: var(--font-pixel, 'Press Start 2P', monospace);
     font-size: 14px;
-    cursor: default;
 }
 
-.key-term-body {
-    padding: 20px 24px;
-    font-family: 'SFMono-Regular', 'Cascadia Code', 'Fira Code', 'Consolas', monospace;
-    font-size: 13px;
-    line-height: 1.7;
+.eb-blink-fast {
+    animation: eb-fast-blink 0.5s step-end infinite;
+}
+@keyframes eb-fast-blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+
+.eb-body {
+    padding: 24px;
+    font-family: var(--font-pixel, 'Press Start 2P', monospace);
+    font-size: 12px;
+    line-height: 2;
+    color: #aaaaff;
 }
 
-.key-line {
-    color: #888;
+.eb-line {
+    color: #fff;
+    text-shadow: 2px 2px 0 #000;
     white-space: pre;
 }
-
-.kl-dim { color: #555; }
-.kl-green { color: #27c93f; }
-.kl-cyan { color: #00f0ff; }
-.kl-white { color: #ccc; }
+.eb-cyan { color: #55ffff; }
+.eb-dim { color: #aaaaaa; }
 
 /* ── Input Row ── */
-.key-input-row {
+.eb-input-row {
     display: flex;
     align-items: center;
-    gap: 8px;
-    padding: 8px 0;
+    gap: 12px;
+    margin-top: 8px;
 }
 
-.key-prompt {
-    color: #27c93f;
-    font-family: 'SFMono-Regular', 'Cascadia Code', 'Consolas', monospace;
+.eb-prompt {
+    color: #55ffff;
     font-size: 14px;
-    font-weight: bold;
-    flex-shrink: 0;
+    text-shadow: 2px 2px 0 #000;
 }
 
-.key-input {
-    flex: 1;
+.eb-input {
     background: transparent;
     border: none;
-    border-bottom: 1px solid #333;
     color: #fff;
-    font-family: 'SFMono-Regular', 'Cascadia Code', 'Consolas', monospace;
+    font-family: var(--font-pixel, 'Press Start 2P', monospace);
     font-size: 14px;
-    letter-spacing: 0.08em;
     outline: none;
-    padding: 4px 0;
-    caret-color: #27c93f;
-}
-.key-input:focus {
-    border-bottom-color: #27c93f;
-}
-.key-input::placeholder {
-    color: #333;
-    font-style: italic;
+    text-transform: uppercase;
+    width: 200px; /* enough for 12 chars */
+    text-shadow: 2px 2px 0 #000;
 }
 
-.key-cursor {
+.eb-cursor {
     display: inline-block;
-    width: 8px;
+    width: 12px;
     height: 14px;
-    background: #27c93f;
-    animation: cursor-blink 1s step-end infinite;
+    background: #55ffff;
+    animation: eb-blink 0.8s step-end infinite;
 }
-@keyframes cursor-blink {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0; }
-}
+@keyframes eb-blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
 
 /* ── Submit Button ── */
-.key-submit {
+.eb-submit {
     display: block;
     width: 100%;
-    padding: 10px;
-    background: transparent;
-    border: 1px solid #444;
-    color: #00f0ff;
-    font-family: 'SFMono-Regular', 'Cascadia Code', 'Consolas', monospace;
-    font-size: 13px;
-    letter-spacing: 0.1em;
-    cursor: pointer;
-    text-align: center;
-}
-.key-submit:hover {
-    background: #111;
-    border-color: #00f0ff;
+    margin-top: 16px;
+    padding: 14px;
+    background: #ff5555;
+    border: 4px solid #fff;
     color: #fff;
+    font-family: var(--font-pixel, 'Press Start 2P', monospace);
+    font-size: 12px;
+    text-align: center;
+    cursor: pointer;
+    box-shadow: inset -4px -4px 0 0 rgba(0,0,0,0.3);
+    text-shadow: 2px 2px 0 #000;
 }
-.key-submit:disabled {
-    opacity: 0.3;
+.eb-submit:hover {
+    background: #ffaaaa;
+    color: #000;
+    text-shadow: none;
+}
+.eb-submit:active {
+    box-shadow: inset 4px 4px 0 0 rgba(0,0,0,0.5);
+}
+.eb-submit:disabled {
+    background: #555;
+    color: #aaa;
     cursor: not-allowed;
+    border-color: #aaa;
 }
 
 /* ── Error ── */
-.key-error {
-    font-family: 'SFMono-Regular', 'Cascadia Code', 'Consolas', monospace;
-    font-size: 12px;
-    color: #ff5f56;
-    min-height: 18px;
-    padding: 4px 0;
+.eb-error {
+    color: #ff5555;
+    font-family: var(--font-pixel, 'Press Start 2P', monospace);
+    font-size: 10px;
+    min-height: 14px;
+    margin-top: 8px;
+    text-shadow: 1px 1px 0 #000;
 }
 
 /* ── Link ── */
-.key-link {
-    color: #00f0ff;
+.eb-link {
+    color: #ffff55;
     text-decoration: none;
-    font-family: 'SFMono-Regular', 'Cascadia Code', 'Consolas', monospace;
-    font-size: 13px;
 }
-.key-link:hover {
+.eb-link:hover {
     color: #fff;
-    text-decoration: underline;
+    background: #5555ff;
 }
 
 /* ── Mobile ── */
 @media (max-width: 480px) {
-    .key-term-body { padding: 16px; font-size: 11px; }
-    .key-input { font-size: 12px; }
-    .key-submit { font-size: 11px; }
+    .eb-box { border-width: 2px; }
+    .eb-submit { border-width: 2px; box-shadow: inset -2px -2px 0 0 rgba(0,0,0,0.3); }
+    .eb-body { padding: 16px; font-size: 10px; }
+    .eb-input { font-size: 12px; width: 150px; }
 }

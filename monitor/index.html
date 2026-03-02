@@ -43,40 +43,32 @@
 
     <!-- ═══ KEY SEARCH OVERLAY ═══ -->
     <div id="keyOverlay" class="key-overlay">
-        <div class="key-terminal">
-            <div class="key-term-bar">
-                <span class="key-term-dots">
-                    <span class="td"></span><span class="td"></span><span class="td"></span>
-                </span>
-                <span class="key-term-title">ogenti-monitor — auth</span>
-                <span class="key-term-x">×</span>
+        <div class="eb-box">
+            <div class="eb-header">
+                <span class="eb-blink-fast">*** SECURE LOGIN ***</span>
             </div>
-            <div class="key-term-body">
-                <div class="key-line"><span class="kl-dim">OGENTI PROTOCOL MONITOR v0.1</span></div>
-                <div class="key-line"><span class="kl-dim">═══════════════════════════════════════</span></div>
-                <div class="key-line">&nbsp;</div>
-                <div class="key-line"><span class="kl-green">✓</span> <span class="kl-dim">System initialized</span></div>
-                <div class="key-line"><span class="kl-green">✓</span> <span class="kl-dim">Connection secured</span></div>
-                <div class="key-line"><span class="kl-cyan">⟩</span> <span class="kl-dim">Awaiting authentication...</span></div>
-                <div class="key-line">&nbsp;</div>
-                <div class="key-line"><span class="kl-white">ENTER DASHBOARD KEY TO CONTINUE:</span></div>
-                <div class="key-line">&nbsp;</div>
+            <div class="eb-body">
+                <div class="eb-line eb-cyan">OGENTI OS SYSTEM V8.0</div>
+                <div class="eb-line">64K RAM SYSTEM  38911 BYTES FREE</div>
+                <div class="eb-line">&nbsp;</div>
+                <div class="eb-line">READY.</div>
+                <div class="eb-line">ENTER DASHBOARD KEY:</div>
+                <div class="eb-line">&nbsp;</div>
 
-                <div class="key-input-row">
-                    <span class="key-prompt">$</span>
-                    <input type="text" id="keyInput" class="key-input" placeholder="paste-key-here" maxlength="12" autocomplete="off" spellcheck="false">
-                    <span class="key-cursor"></span>
+                <div class="eb-input-row">
+                    <span class="eb-prompt">]</span>
+                    <input type="text" id="keyInput" class="eb-input" maxlength="12" autocomplete="off" spellcheck="false">
+                    <span class="eb-cursor"></span>
                 </div>
 
-                <div id="keyError" class="key-error"></div>
+                <div id="keyError" class="eb-error"></div>
 
-                <div class="key-line">&nbsp;</div>
-                <button id="keyBtn" class="key-submit" onclick="submitKey()">[ AUTHENTICATE ]</button>
+                <div class="eb-line">&nbsp;</div>
+                <button id="keyBtn" class="eb-submit" onclick="submitKey()">PRESS START</button>
 
-                <div class="key-line">&nbsp;</div>
-                <div class="key-line"><span class="kl-dim">───────────────────────────────────────</span></div>
-                <div class="key-line"><span class="kl-dim">Key is generated when you launch training.</span></div>
-                <div class="key-line"><a href="/platform/training" class="key-link">→ Launch Training</a></div>
+                <div class="eb-line">&nbsp;</div>
+                <div class="eb-line"><span class="eb-dim">------------------------------------</span></div>
+                <div class="eb-line">=> <a href="/platform/training" class="eb-link">GET KEY STIMULUS</a></div>
             </div>
         </div>
     </div>
