@@ -43,29 +43,46 @@
 
     <!-- ═══ KEY SEARCH OVERLAY ═══ -->
     <div id="keyOverlay" class="key-overlay">
-        <div class="key-modal">
-            <svg class="key-logo" viewBox="0 0 48 48" width="64" height="64" style="image-rendering:pixelated">
-                <rect x="16" y="8" width="16" height="4" fill="#00f0ff"/>
-                <rect x="12" y="12" width="4" height="4" fill="#00f0ff"/>
-                <rect x="32" y="12" width="4" height="4" fill="#00f0ff"/>
-                <rect x="8" y="16" width="4" height="16" fill="#00f0ff"/>
-                <rect x="36" y="16" width="4" height="16" fill="#00f0ff"/>
-                <rect x="12" y="32" width="4" height="4" fill="#00f0ff"/>
-                <rect x="32" y="32" width="4" height="4" fill="#00f0ff"/>
-                <rect x="16" y="36" width="16" height="4" fill="#00f0ff"/>
-                <rect x="20" y="20" width="8" height="8" fill="#00f0ff"/>
-            </svg>
-            <h1 class="key-title">PROTOCOL MONITOR</h1>
-            <p class="key-subtitle">ENTER YOUR DASHBOARD KEY TO VIEW TRAINING PROGRESS</p>
-            <div class="key-input-wrap">
-                <input type="text" id="keyInput" class="key-input" placeholder="ENTER DASHBOARD KEY" maxlength="12" autocomplete="off" spellcheck="false">
-                <button id="keyBtn" class="key-btn" onclick="submitKey()">CONNECT →</button>
+        <div class="key-panel pixel-border">
+            <!-- Pixel robot sprite -->
+            <div class="key-sprite">
+                <svg viewBox="0 0 48 48" width="80" height="80" style="image-rendering:pixelated">
+                    <rect x="16" y="4" width="16" height="4" fill="#00f0ff"/>
+                    <rect x="12" y="8" width="4" height="4" fill="#00f0ff"/>
+                    <rect x="32" y="8" width="4" height="4" fill="#00f0ff"/>
+                    <rect x="8" y="12" width="4" height="20" fill="#00f0ff"/>
+                    <rect x="36" y="12" width="4" height="20" fill="#00f0ff"/>
+                    <rect x="12" y="32" width="4" height="4" fill="#00f0ff"/>
+                    <rect x="32" y="32" width="4" height="4" fill="#00f0ff"/>
+                    <rect x="16" y="36" width="16" height="4" fill="#00f0ff"/>
+                    <rect x="18" y="16" width="4" height="4" fill="#00ff88"/>
+                    <rect x="26" y="16" width="4" height="4" fill="#00ff88"/>
+                    <rect x="20" y="24" width="8" height="4" fill="#00f0ff"/>
+                </svg>
             </div>
+
+            <div class="key-header">
+                <span class="key-tag">[ PROTOCOL MONITOR ]</span>
+            </div>
+
+            <h1 class="key-title">DASHBOARD<br><span class="glow">ACCESS</span></h1>
+
+            <p class="key-desc">ENTER YOUR KEY TO VIEW<br>REAL-TIME TRAINING PROGRESS</p>
+
+            <div class="key-input-group">
+                <div class="key-input-box pixel-border">
+                    <span class="key-input-prefix">&gt;_</span>
+                    <input type="text" id="keyInput" class="key-input" placeholder="DASHBOARD KEY" maxlength="12" autocomplete="off" spellcheck="false">
+                </div>
+                <button id="keyBtn" class="btn-retro primary key-btn" onclick="submitKey()">CONNECT</button>
+            </div>
+
             <div id="keyError" class="key-error"></div>
-            <div class="key-hint">
-                <span style="color:var(--text-dim);font-size:7px;">DASHBOARD KEY IS PROVIDED WHEN YOU LAUNCH A TRAINING JOB</span>
-                <br>
-                <a href="/platform/training.html" style="color:var(--cyan);font-size:7px;text-decoration:none;">LAUNCH TRAINING →</a>
+
+            <div class="key-footer">
+                <div class="key-footer-line"></div>
+                <span class="key-footer-text">KEY IS PROVIDED WHEN YOU LAUNCH TRAINING</span>
+                <a href="/platform/training" class="key-footer-link">→ LAUNCH TRAINING</a>
             </div>
         </div>
     </div>

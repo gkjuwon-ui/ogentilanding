@@ -1,4 +1,4 @@
-/* ============================================================
+﻿/* ============================================================
    OGENTI Protocol Monitor — 16-bit Retro Dashboard
    Matching the landing page pixel aesthetic
    ============================================================ */
@@ -948,136 +948,207 @@ kbd {
     }
 }
 
+/* ── loader auto-hide safety ── */
+@keyframes loaderAutoHide { to { opacity:0; visibility:hidden; pointer-events:none; } }
+.loader { animation: loaderAutoHide 0.5s 2s forwards; }
+.loader.hidden { animation:none; opacity:0; visibility:hidden; pointer-events:none; }
+
 /* ═══════════════════════════════════════════════════
-   KEY OVERLAY — Full-screen cyberpunk gate
+   KEY OVERLAY — 16-BIT RETRO GATE
 ═══════════════════════════════════════════════════ */
 
 .key-overlay {
     position: fixed;
     inset: 0;
-    z-index: 9999;
-    background: #0a0a1a;
+    z-index: 9990;
+    background: var(--bg, #0a0a1a);
     display: flex;
     align-items: center;
     justify-content: center;
-    flex-direction: column;
 }
 
-.key-modal {
+.key-panel {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 18px;
-    padding: 48px 56px;
-    border: 1px solid rgba(0, 240, 255, 0.25);
-    background: rgba(0, 0, 20, 0.9);
-    box-shadow: 0 0 60px rgba(0, 240, 255, 0.08), inset 0 0 40px rgba(0, 240, 255, 0.03);
-    position: relative;
-    max-width: 480px;
+    gap: 20px;
+    padding: 48px 52px;
+    background: var(--surface, #12122a);
+    max-width: 440px;
     width: 90%;
+    position: relative;
 }
 
-/* corner brackets */
-.key-modal::before, .key-modal::after {
-    content: '';
-    position: absolute;
-    width: 12px;
-    height: 12px;
-    border-color: #00f0ff;
-    border-style: solid;
+/* pixel-border (landing page style) */
+.pixel-border {
+    border: 4px solid var(--border, #1a1a3a);
+    box-shadow:
+        inset -4px -4px 0 0 var(--border-hi, #2a2a5a),
+        inset 4px 4px 0 0 rgba(0,0,0,0.3);
 }
-.key-modal::before { top: -1px; left: -1px; border-width: 2px 0 0 2px; }
-.key-modal::after  { bottom: -1px; right: -1px; border-width: 0 2px 2px 0; }
+
+.key-sprite {
+    animation: float 3s ease-in-out infinite;
+    filter: drop-shadow(0 0 16px rgba(0,240,255,0.3));
+}
+
+@keyframes float {
+    0%,100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+}
+
+.key-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.key-tag {
+    font-family: var(--font-pixel, 'Press Start 2P', monospace);
+    font-size: 0.45rem;
+    color: var(--text-muted, #3a3a5a);
+    letter-spacing: 0.12em;
+}
 
 .key-title {
-    font-family: 'Press Start 2P', monospace;
-    font-size: 13px;
-    color: #00f0ff;
-    letter-spacing: .15em;
+    font-family: var(--font-pixel, 'Press Start 2P', monospace);
+    font-size: clamp(0.9rem, 3vw, 1.3rem);
+    line-height: 1.8;
+    color: #fff;
     text-align: center;
     margin: 0;
-    text-shadow: 0 0 20px rgba(0, 240, 255, 0.6);
+    text-shadow: 0 0 20px rgba(0,240,255,0.15);
 }
 
-.key-subtitle {
-    font-family: 'Silkscreen', monospace;
-    font-size: 9px;
-    color: rgba(255,255,255,0.45);
-    letter-spacing: .12em;
+.key-title .glow {
+    color: var(--cyan, #00f0ff);
+    text-shadow: 0 0 12px rgba(0,240,255,0.6), 0 0 24px rgba(0,240,255,0.2);
+}
+
+.key-desc {
+    font-family: var(--font-silk, 'Silkscreen', monospace);
+    font-size: 0.7rem;
+    color: var(--text-dim, #6a6a8a);
     text-align: center;
+    line-height: 2;
     margin: 0;
 }
 
-.key-input-wrap {
+.key-input-group {
     display: flex;
-    gap: 0;
+    flex-direction: column;
+    gap: 12px;
     width: 100%;
-    margin-top: 8px;
+    margin-top: 4px;
+}
+
+.key-input-box {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 14px;
+    background: var(--bg, #0a0a1a);
+}
+
+.key-input-prefix {
+    font-family: var(--font-pixel, 'Press Start 2P', monospace);
+    font-size: 0.55rem;
+    color: var(--cyan, #00f0ff);
+    flex-shrink: 0;
 }
 
 .key-input {
     flex: 1;
-    background: rgba(0, 240, 255, 0.04);
-    border: 1px solid rgba(0, 240, 255, 0.3);
-    border-right: none;
-    color: #00f0ff;
-    font-family: 'Press Start 2P', monospace;
-    font-size: 10px;
-    letter-spacing: .2em;
-    padding: 12px 16px;
-    outline: none;
-    caret-color: #00f0ff;
-    text-transform: uppercase;
-    transition: border-color .2s, box-shadow .2s;
-}
-.key-input:focus {
-    border-color: #00f0ff;
-    box-shadow: 0 0 16px rgba(0, 240, 255, 0.2);
-    background: rgba(0, 240, 255, 0.07);
-}
-.key-input::placeholder { color: rgba(0, 240, 255, 0.25); }
-
-.key-btn {
-    background: #00f0ff;
-    color: #000;
+    background: transparent;
     border: none;
-    font-family: 'Press Start 2P', monospace;
-    font-size: 8px;
-    letter-spacing: .12em;
-    padding: 12px 16px;
-    cursor: pointer;
-    white-space: nowrap;
-    transition: background .15s, box-shadow .15s;
+    color: #fff;
+    font-family: var(--font-pixel, 'Press Start 2P', monospace);
+    font-size: 0.6rem;
+    letter-spacing: 0.15em;
+    outline: none;
+    caret-color: var(--cyan, #00f0ff);
+    text-transform: uppercase;
+    width: 100%;
 }
-.key-btn:hover  { background: #40ffff; box-shadow: 0 0 20px rgba(0, 240, 255, 0.5); }
-.key-btn:active { background: #00c8d8; }
-.key-btn:disabled { opacity: .5; cursor: not-allowed; }
+.key-input::placeholder {
+    color: var(--text-muted, #3a3a5a);
+}
+
+/* btn-retro (landing page style) */
+.btn-retro {
+    font-family: var(--font-pixel, 'Press Start 2P', monospace);
+    font-size: 0.55rem;
+    padding: 12px 24px;
+    cursor: pointer;
+    border: none;
+    text-decoration: none;
+    text-align: center;
+    letter-spacing: 0.08em;
+    box-shadow:
+        4px 4px 0 0 rgba(0,0,0,0.5),
+        8px 8px 0 0 rgba(0,0,0,0.2);
+    transition: all 0.1s;
+}
+.btn-retro:hover {
+    transform: translate(4px, 4px);
+    box-shadow: 4px 4px 0 0 rgba(0,0,0,0.3);
+}
+.btn-retro.primary {
+    background: var(--cyan, #00f0ff);
+    color: var(--bg, #0a0a1a);
+}
+
+.key-btn { width: 100%; }
+.key-btn:disabled { opacity: 0.4; cursor: not-allowed; }
 
 .key-error {
-    font-family: 'Silkscreen', monospace;
-    font-size: 8px;
-    color: #ff4060;
-    letter-spacing: .1em;
-    min-height: 14px;
+    font-family: var(--font-pixel, 'Press Start 2P', monospace);
+    font-size: 0.4rem;
+    color: var(--red, #ff4060);
+    letter-spacing: 0.1em;
+    min-height: 16px;
     text-align: center;
 }
 
-.key-hint {
-    text-align: center;
+.key-footer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
     margin-top: 4px;
-    line-height: 1.9;
+    width: 100%;
 }
 
-/* ── loader 자동 페이드 (JS 에러 보험) ── */
-@keyframes loaderAutoHide {
-    to { opacity: 0; visibility: hidden; pointer-events: none; }
+.key-footer-line {
+    width: 100%;
+    height: 4px;
+    background: var(--border, #1a1a3a);
 }
-.loader {
-    animation: loaderAutoHide 0.5s 2s forwards;
+
+.key-footer-text {
+    font-family: var(--font-pixel, 'Press Start 2P', monospace);
+    font-size: 0.35rem;
+    color: var(--text-muted, #3a3a5a);
+    letter-spacing: 0.12em;
+    text-align: center;
 }
-.loader.hidden {
-    animation: none;
-    opacity: 0;
-    visibility: hidden;
-    pointer-events: none;
+
+.key-footer-link {
+    font-family: var(--font-pixel, 'Press Start 2P', monospace);
+    font-size: 0.4rem;
+    color: var(--cyan, #00f0ff);
+    text-decoration: none;
+    letter-spacing: 0.1em;
+    padding: 6px 16px;
+    border: 4px solid var(--border, #1a1a3a);
+    transition: border-color 0.2s, color 0.2s;
+}
+.key-footer-link:hover {
+    border-color: var(--cyan, #00f0ff);
+}
+
+/* ── Mobile ── */
+@media (max-width: 480px) {
+    .key-panel { padding: 32px 24px; }
+    .key-title { font-size: 0.85rem; }
 }
