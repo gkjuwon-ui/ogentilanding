@@ -947,3 +947,123 @@ kbd {
         display: none;
     }
 }
+
+/* ═══════════════════════════════════════════════════
+   KEY OVERLAY — Full-screen cyberpunk gate
+═══════════════════════════════════════════════════ */
+
+.key-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    background: #0a0a1a;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.key-modal {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 18px;
+    padding: 48px 56px;
+    border: 1px solid rgba(0, 240, 255, 0.25);
+    background: rgba(0, 0, 20, 0.9);
+    box-shadow: 0 0 60px rgba(0, 240, 255, 0.08), inset 0 0 40px rgba(0, 240, 255, 0.03);
+    position: relative;
+    max-width: 480px;
+    width: 90%;
+}
+
+/* corner brackets */
+.key-modal::before, .key-modal::after {
+    content: '';
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    border-color: #00f0ff;
+    border-style: solid;
+}
+.key-modal::before { top: -1px; left: -1px; border-width: 2px 0 0 2px; }
+.key-modal::after  { bottom: -1px; right: -1px; border-width: 0 2px 2px 0; }
+
+.key-title {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 13px;
+    color: #00f0ff;
+    letter-spacing: .15em;
+    text-align: center;
+    margin: 0;
+    text-shadow: 0 0 20px rgba(0, 240, 255, 0.6);
+}
+
+.key-subtitle {
+    font-family: 'Silkscreen', monospace;
+    font-size: 9px;
+    color: rgba(255,255,255,0.45);
+    letter-spacing: .12em;
+    text-align: center;
+    margin: 0;
+}
+
+.key-input-wrap {
+    display: flex;
+    gap: 0;
+    width: 100%;
+    margin-top: 8px;
+}
+
+.key-input {
+    flex: 1;
+    background: rgba(0, 240, 255, 0.04);
+    border: 1px solid rgba(0, 240, 255, 0.3);
+    border-right: none;
+    color: #00f0ff;
+    font-family: 'Press Start 2P', monospace;
+    font-size: 10px;
+    letter-spacing: .2em;
+    padding: 12px 16px;
+    outline: none;
+    caret-color: #00f0ff;
+    text-transform: uppercase;
+    transition: border-color .2s, box-shadow .2s;
+}
+.key-input:focus {
+    border-color: #00f0ff;
+    box-shadow: 0 0 16px rgba(0, 240, 255, 0.2);
+    background: rgba(0, 240, 255, 0.07);
+}
+.key-input::placeholder { color: rgba(0, 240, 255, 0.25); }
+
+.key-btn {
+    background: #00f0ff;
+    color: #000;
+    border: none;
+    font-family: 'Press Start 2P', monospace;
+    font-size: 8px;
+    letter-spacing: .12em;
+    padding: 12px 16px;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background .15s, box-shadow .15s;
+}
+.key-btn:hover  { background: #40ffff; box-shadow: 0 0 20px rgba(0, 240, 255, 0.5); }
+.key-btn:active { background: #00c8d8; }
+.key-btn:disabled { opacity: .5; cursor: not-allowed; }
+
+.key-error {
+    font-family: 'Silkscreen', monospace;
+    font-size: 8px;
+    color: #ff4060;
+    letter-spacing: .1em;
+    min-height: 14px;
+    text-align: center;
+}
+
+.key-hint {
+    text-align: center;
+    margin-top: 4px;
+    line-height: 1.9;
+}
