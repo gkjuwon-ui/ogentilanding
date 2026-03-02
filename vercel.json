@@ -1,0 +1,26 @@
+{
+  "framework": null,
+  "buildCommand": "",
+  "outputDirectory": "",
+  "installCommand": "pip install -r requirements.txt",
+  "rewrites": [
+    { "source": "/api/(.*)", "destination": "/api/index.py" },
+    { "source": "/platform/(.*)", "destination": "/platform/$1" }
+  ],
+  "functions": {
+    "api/index.py": {
+      "runtime": "@vercel/python@4",
+      "maxDuration": 30
+    }
+  },
+  "headers": [
+    {
+      "source": "/api/(.*)",
+      "headers": [
+        { "key": "Access-Control-Allow-Origin", "value": "*" },
+        { "key": "Access-Control-Allow-Methods", "value": "GET, POST, PUT, DELETE, OPTIONS" },
+        { "key": "Access-Control-Allow-Headers", "value": "Content-Type, Authorization" }
+      ]
+    }
+  ]
+}
