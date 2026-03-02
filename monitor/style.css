@@ -149,7 +149,6 @@ kbd {
 
 .loader-logo {
     animation: pixel-pulse 1.5s step-end infinite;
-    filter: drop-shadow(0 0 12px rgba(0,240,255,0.5));
 }
 
 .loader-text {
@@ -157,7 +156,7 @@ kbd {
     font-size: 0.9rem;
     letter-spacing: 0.3em;
     color: var(--accent);
-    text-shadow: 0 0 12px rgba(0,240,255,0.5);
+    text-shadow: 2px 2px 0 rgba(0,0,0,0.8);
 }
 
 .loader-sub {
@@ -194,7 +193,6 @@ kbd {
     width: var(--progress, 0%);
     background: var(--accent);
     transition: width 0.4s ease;
-    box-shadow: 0 0 8px rgba(0,240,255,0.5);
 }
 
 .nav-left, .nav-right {
@@ -208,7 +206,7 @@ kbd {
     font-size: 0.7rem;
     letter-spacing: 0.1em;
     color: var(--accent);
-    text-shadow: 0 0 8px rgba(0,240,255,0.4);
+    text-shadow: 2px 2px 0 rgba(0,0,0,0.8);
 }
 
 .nav-tag {
@@ -233,16 +231,14 @@ kbd {
 
 .connection-badge.live {
     color: var(--green);
-    border-color: rgba(0, 255, 136, 0.4);
-    background: rgba(0, 255, 136, 0.06);
-    text-shadow: 0 0 6px rgba(0,255,136,0.4);
+    border-color: var(--green);
+    background: var(--bg);
 }
 
 .connection-badge.demo {
     color: var(--amber);
-    border-color: rgba(255, 224, 64, 0.3);
-    background: rgba(255, 224, 64, 0.06);
-    text-shadow: 0 0 6px rgba(255,224,64,0.4);
+    border-color: var(--amber);
+    background: var(--bg);
 }
 
 .connection-badge.connecting {
@@ -261,18 +257,17 @@ kbd {
     align-items: center;
     gap: 8px;
     padding: 4px 10px;
-    border: var(--px) solid rgba(0, 255, 136, 0.2);
-    background: rgba(0, 255, 136, 0.04);
+    border: var(--px) solid var(--green);
+    background: var(--bg);
 }
 
 .status-indicator.paused {
-    border-color: rgba(255, 224, 64, 0.2);
-    background: rgba(255, 224, 64, 0.04);
+    border-color: var(--amber);
+    background: var(--bg);
 }
 
 .status-indicator.paused .status-dot {
     background: var(--amber);
-    box-shadow: 0 0 6px var(--amber);
     animation: none;
 }
 
@@ -284,7 +279,6 @@ kbd {
     width: 8px;
     height: 8px;
     background: var(--green);
-    box-shadow: 0 0 6px var(--green);
     animation: pixel-pulse 2s step-end infinite;
 }
 
@@ -380,7 +374,7 @@ kbd {
     font-size: 1.5rem;
     color: #fff;
     line-height: 1.2;
-    text-shadow: 0 0 12px rgba(0,240,255,0.3);
+    text-shadow: 2px 2px 0 rgba(0,0,0,0.8);
 }
 
 .metric-unit {
@@ -433,12 +427,12 @@ kbd {
     font-family: var(--font-pixel);
     font-size: 0.5rem;
     color: var(--accent);
-    text-shadow: 0 0 6px rgba(0,240,255,0.3);
+    text-shadow: 2px 2px 0 rgba(0,0,0,0.8);
 }
 
 .viz-label:last-child .agent-name {
     color: var(--green);
-    text-shadow: 0 0 6px rgba(0,255,136,0.3);
+    text-shadow: 2px 2px 0 rgba(0,0,0,0.8);
 }
 
 .agent-role {
@@ -458,7 +452,8 @@ kbd {
     font-size: 0.5rem;
     color: var(--accent);
     padding: 6px 14px;
-    background: rgba(0, 240, 255, 0.04);
+    background: var(--bg);
+    border: 2px solid var(--border);
     display: inline-block;
 }
 
@@ -493,7 +488,6 @@ kbd {
 
 .phase-item.active .phase-dot {
     background: var(--accent);
-    box-shadow: 0 0 10px rgba(0, 240, 255, 0.5);
 }
 
 .phase-item.current .phase-dot {
@@ -510,7 +504,6 @@ kbd {
 
 .phase-connector.active {
     background: var(--accent);
-    box-shadow: 0 0 6px rgba(0, 240, 255, 0.3);
 }
 
 .phase-info {
@@ -676,12 +669,10 @@ kbd {
 
 .feed-status.success {
     color: var(--green);
-    text-shadow: 0 0 6px rgba(0,255,136,0.3);
 }
 
 .feed-status.fail {
     color: var(--red);
-    text-shadow: 0 0 6px rgba(255,64,96,0.3);
 }
 
 /* --- Vocabulary --- */
@@ -706,7 +697,7 @@ kbd {
     align-items: center;
     gap: 8px;
     padding: 8px 10px;
-    background: rgba(18, 18, 42, 0.8);
+    background: var(--bg);
     border: 2px solid var(--border);
     animation: pixel-fade-in 0.4s ease;
 }
@@ -721,7 +712,7 @@ kbd {
     font-size: 0.45rem;
     color: var(--accent);
     min-width: 28px;
-    text-shadow: 0 0 6px rgba(0,240,255,0.3);
+    text-shadow: 2px 2px 0 rgba(0,0,0,0.8);
 }
 
 .vocab-info {
@@ -749,7 +740,6 @@ kbd {
 .vocab-bar {
     height: 100%;
     background: var(--accent);
-    box-shadow: 0 0 4px rgba(0,240,255,0.3);
     transition: width 0.3s ease;
 }
 
@@ -826,8 +816,8 @@ kbd {
 }
 
 @keyframes pulse-glow {
-    0%, 100% { opacity: 0.6; filter: drop-shadow(0 0 8px rgba(0, 240, 255, 0.3)); }
-    50% { opacity: 1; filter: drop-shadow(0 0 16px rgba(0, 240, 255, 0.6)); }
+    0%, 100% { opacity: 0.6; }
+    50% { opacity: 1; }
 }
 
 @keyframes slide-in {
@@ -1036,7 +1026,6 @@ kbd {
 /* ── Two-agent sprite row ── */
 .key-sprite-row {
     animation: float 3s ease-in-out infinite;
-    filter: drop-shadow(0 0 12px rgba(0,240,255,0.2)) drop-shadow(0 0 12px rgba(0,255,136,0.15));
     margin-top: 8px;
 }
 
@@ -1069,12 +1058,12 @@ kbd {
     color: #fff;
     text-align: center;
     margin: 0;
-    text-shadow: 0 0 20px rgba(0,240,255,0.15);
+    text-shadow: 2px 2px 0 rgba(0,0,0,0.8);
 }
 
 .key-title .glow {
     color: var(--accent, #00f0ff);
-    text-shadow: 0 0 12px rgba(0,240,255,0.6), 0 0 24px rgba(0,240,255,0.2);
+    text-shadow: 2px 2px 0 rgba(0,0,0,0.8);
 }
 
 /* ── Mini stats bar (landing page stats-bar style) ── */
@@ -1133,10 +1122,6 @@ kbd {
 }
 .key-input-box:focus-within {
     border-color: var(--accent, #00f0ff);
-    box-shadow:
-        inset -4px -4px 0 0 var(--border-hi, #2a2a5a),
-        inset 4px 4px 0 0 rgba(0,0,0,0.3),
-        0 0 16px rgba(0,240,255,0.15);
 }
 
 .key-input-prefix {
@@ -1188,7 +1173,7 @@ kbd {
     box-shadow: 4px 4px 0 0 rgba(0,0,0,0.3);
 }
 .btn-retro.primary {
-    background: linear-gradient(90deg, var(--accent, #00f0ff), var(--green, #00ff88));
+    background: var(--accent, #00f0ff);
     color: var(--bg, #0a0a1a);
 }
 
@@ -1247,7 +1232,6 @@ kbd {
 }
 .key-footer-link:hover {
     border-color: var(--purple, #b060ff);
-    box-shadow: 0 0 12px rgba(176,96,255,0.3);
 }
 
 /* ── Mobile ── */
