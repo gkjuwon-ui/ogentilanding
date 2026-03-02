@@ -10,13 +10,11 @@
     const CONFIG = {
         CHART_HISTORY: 200,
         FEED_MAX: 50,
+        POLL_INTERVAL: 3000,
 
         PHASES: ['Warmup', 'Simple', 'Complex', 'Generalize', 'Universalize'],
 
         API_BASE: 'https://ogenti-api-production.up.railway.app',
-            return 'http://localhost:8000';
-        },/ws`;
-        },
     };
 
     // ─── Connection State ─────────────────────────────────────
