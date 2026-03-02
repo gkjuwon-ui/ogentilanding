@@ -1067,3 +1067,17 @@ kbd {
     margin-top: 4px;
     line-height: 1.9;
 }
+
+/* ── loader 자동 페이드 (JS 에러 보험) ── */
+@keyframes loaderAutoHide {
+    to { opacity: 0; visibility: hidden; pointer-events: none; }
+}
+.loader {
+    animation: loaderAutoHide 0.5s 2s forwards;
+}
+.loader.hidden {
+    animation: none;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}

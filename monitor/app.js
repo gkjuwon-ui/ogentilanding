@@ -1058,10 +1058,15 @@
     // Init
     // ────────────────────────────────────────────────────────────
 
+    function hideLoader() {
+        const loader = $('#loader');
+        if (loader) loader.classList.add('hidden');
+    }
+
     function init() {
-        initCanvas();
-        initCharts();
-        setupInteractions();
+        try { initCanvas(); } catch(e) { console.warn('[OGENTI] canvas init error:', e); }
+        try { initCharts(); } catch(e) { console.warn('[OGENTI] chart init error:', e); }
+        try { setupInteractions(); } catch(e) { console.warn('[OGENTI] interaction init error:', e); }
 
         // Enable Enter key on key input
         const input = $('#keyInput');
@@ -1075,17 +1080,14 @@
         const urlKey = new URLSearchParams(window.location.search).get('key');
         if (urlKey) {
             if (input) input.value = urlKey.toUpperCase();
-            // Slight delay to let canvas init finish
             setTimeout(() => connectWithKey(urlKey), 300);
         } else {
             conn.mode = 'idle';
             updateConnectionUI();
         }
 
-        setTimeout(() => {
-            const loader = $('#loader');
-            if (loader) loader.classList.add('hidden');
-        }, 600);
+        // Always hide loader — even if something above threw
+        setTimeout(hideLoader, 600);
     }
 
     if (document.readyState === 'loading') {
