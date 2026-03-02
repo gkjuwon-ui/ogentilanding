@@ -65,10 +65,10 @@ body {
     top: 0;
     z-index: 100;
 }
-.nav-brand {
+
     font-family: var(--font-pixel);
     font-size: 14px;
-    color: var(--cyan);
+    color: #fff;
     text-decoration: none;
     display: flex;
     align-items: center;
@@ -95,7 +95,7 @@ body {
     border: 2px solid transparent;
 }
 .nav-link:hover, .nav-link.active {
-    color: var(--cyan);
+    color: var(--yellow);
     border-color: var(--border);
     background: var(--bg);
 }
@@ -124,11 +124,12 @@ body {
     max-width: 900px;
     margin: 0 auto;
     padding: 32px 20px;
+    background: #000;
 }
 .page-title {
     font-family: var(--font-pixel);
     font-size: 16px;
-    color: var(--cyan);
+    color: var(--yellow); text-shadow: 2px 2px 0 #000;
     margin-bottom: 8px;
 }
 .page-sub {
@@ -148,7 +149,7 @@ body {
 .card-title {
     font-family: var(--font-pixel);
     font-size: 11px;
-    color: var(--cyan);
+    color: var(--yellow); text-shadow: 2px 2px 0 #000;
     margin-bottom: 16px;
 }
 .card-row {
@@ -162,7 +163,7 @@ body {
 .card-row:last-child { border-bottom: none; }
 .card-label { color: var(--text-dim); }
 .card-value { color: var(--text); font-weight: bold; }
-.card-value.cyan { color: var(--cyan); }
+.card-value.cyan { color: var(--yellow); }
 .card-value.green { color: var(--green); }
 .card-value.pink { color: var(--purple); }
 .card-value.yellow { color: var(--yellow); }
@@ -174,10 +175,11 @@ body {
     align-items: center;
     justify-content: center;
     padding: 20px;
+    background: #000;
 }
 .auth-box {
     background: var(--bg2);
-    border: 4px solid var(--cyan);
+    border: 4px solid var(--border);
     padding: 40px;
     width: 100%;
     max-width: 420px;
@@ -187,7 +189,7 @@ body {
 .auth-logo {
     font-family: var(--font-pixel);
     font-size: 20px;
-    color: var(--cyan);
+    color: var(--yellow);
     margin-bottom: 4px;
 }
 .auth-subtitle {
@@ -199,7 +201,7 @@ body {
 .auth-title {
     font-family: var(--font-pixel);
     font-size: 12px;
-    color: var(--cyan);
+    color: var(--yellow);
     margin-bottom: 24px;
 }
 
@@ -233,7 +235,7 @@ body {
 }
 
 .form-input:focus {
-    border-color: var(--cyan);
+    border-color: var(--yellow);
 }
 .form-input::placeholder { color: var(--text-dim);  }
 
@@ -242,7 +244,7 @@ body {
     font-size: 24px;
     letter-spacing: 8px;
     font-family: var(--font-pixel);
-    color: var(--cyan);
+    color: var(--yellow);
 }
 
 /* ── Buttons ── */
@@ -331,7 +333,7 @@ body {
 .msg.show { display: block; }
 .msg-error { border-color: var(--red); color: var(--red); background: var(--bg); }
 .msg-success { border-color: var(--green); color: var(--green); background: var(--bg); }
-.msg-info { border-color: var(--cyan); color: var(--cyan); background: var(--bg); }
+.msg-info { border-color: var(--yellow); color: var(--yellow); background: var(--bg); }
 
 /* ── Auth link ── */
 .auth-link {
@@ -340,7 +342,7 @@ body {
     color: var(--text-dim);
 }
 .auth-link a {
-    color: var(--cyan);
+    color: var(--yellow);
     text-decoration: none;
 }
 .auth-link a:hover { text-decoration: underline; }
@@ -359,7 +361,7 @@ th {
     text-align: left;
     padding: 10px 12px;
     background: var(--bg3);
-    color: var(--cyan);
+    color: var(--yellow);
     font-family: var(--font-pixel);
     font-size: 8px;
     letter-spacing: 1px;
@@ -388,7 +390,7 @@ tr:hover td { background: var(--bg3); }
     box-shadow: 8px 8px 0 0 #333;
 }
 .pricing-card:hover, .pricing-card.selected {
-    border-color: var(--cyan);
+    border-color: var(--yellow);
     transform: translate(-2px, -2px);
     box-shadow: 8px 8px 0 0 #333;
 }
@@ -396,7 +398,7 @@ tr:hover td { background: var(--bg3); }
 .pricing-credits {
     font-family: var(--font-pixel);
     font-size: 14px;
-    color: var(--cyan);
+    color: var(--yellow);
     margin-bottom: 4px;
 }
 .pricing-price {
@@ -466,7 +468,7 @@ tr:hover td { background: var(--bg3); }
 .stat-number {
     font-family: var(--font-pixel);
     font-size: 18px;
-    color: var(--cyan);
+    color: var(--yellow);
 }
 .stat-label {
     font-size: 9px;
@@ -537,7 +539,7 @@ tr:hover td { background: var(--bg3); }
     letter-spacing: 1px;
 }
 .badge-green { border-color: var(--green); color: var(--green); background: var(--bg); }
-.badge-cyan { border-color: var(--cyan); color: var(--cyan); background: var(--bg); }
+.badge-cyan { border-color: var(--yellow); color: var(--yellow); background: var(--bg); }
 .badge-purple { border-color: var(--purple); color: var(--purple); background: var(--bg); }
 .badge-yellow { border-color: var(--yellow); color: var(--yellow); background: var(--bg); }
 .badge-red { border-color: var(--red); color: var(--red); background: var(--bg); }
@@ -560,7 +562,12 @@ tr:hover td { background: var(--bg3); }
     .nav-links { order: 3; width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; }
     .nav-link { font-size: 10px; padding: 5px 8px; white-space: nowrap; }
     .nav-user { gap: 8px; }
-    .page-wrap { padding: 20px 14px; }
+    .page-wrap {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 32px 20px;
+    background: #000;
+}
     .pricing-grid { grid-template-columns: 1fr 1fr; }
     .model-grid { grid-template-columns: 1fr 1fr; }
     .stat-number { font-size: 14px; }
@@ -572,7 +579,7 @@ tr:hover td { background: var(--bg3); }
         padding: 8px 10px;
         gap: 6px;
     }
-    .nav-brand { font-size: 11px; }
+     font-size: 11px; }
     .nav-tag { font-size: 7px; padding: 2px 4px; }
     .nav-links {
         order: 3;
@@ -588,7 +595,12 @@ tr:hover td { background: var(--bg3); }
     .nav-credits { font-size: 8px; padding: 3px 6px; }
     .nav-tier { font-size: 7px; padding: 2px 6px; }
 
-    .page-wrap { padding: 14px 10px; }
+    .page-wrap {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 32px 20px;
+    background: #000;
+}
     .page-title { font-size: 12px; }
     .page-sub { font-size: 10px; margin-bottom: 20px; }
 
@@ -634,7 +646,7 @@ tr:hover td { background: var(--bg3); }
 
 /* --- Very small phones (<360px) --- */
 @media (max-width: 360px) {
-    .nav-brand { font-size: 9px; }
+     font-size: 9px; }
     .nav-link { font-size: 8px; padding: 4px 6px; }
     .page-title { font-size: 10px; }
     .auth-logo { font-size: 14px; }
@@ -678,7 +690,7 @@ tr:hover td { background: var(--bg3); }
     width: 16px;
     height: 16px;
     border: 4px solid var(--border);
-    border-top-color: var(--cyan);
+    border-top-color: var(--yellow);
     animation: spin .6s linear infinite;
 }
 @keyframes spin { to { transform: rotate(360deg); } }
@@ -686,7 +698,7 @@ tr:hover td { background: var(--bg3); }
 /* ── Estimate Box ── */
 .estimate-box {
     background: var(--bg3);
-    border: 4px solid var(--cyan);
+    border: 4px solid var(--border);
     padding: 20px;
     margin: 20px 0;
     box-shadow: 8px 8px 0 0 #333;
@@ -745,12 +757,7 @@ tr:hover td { background: var(--bg3); }
 }
 
 /* Cards / Boxes / Panels */
-.card, .auth-box, .console-wrapper, .pricing-card, .model-card, .stat-item, .estimate-box {
-    border: 4px solid #fff !important;
-    background: #0000aa !important;
-    box-shadow: 8px 8px 0 0 #333;
-    
-}
+
 
 .auth-box {
     background: #000 !important;
@@ -788,4 +795,28 @@ tr:hover td { background: var(--bg3); }
     content: " ";
     position: fixed; inset: 0; pointer-events: none; z-index: 9998;
     background: radial-gradient(ellipse at center, transparent 40%, rgba(0,0,0,0.8) 100%);
+}
+
+.card, .stat-item, .pricing-card, .model-card, .estimate-box, .console-wrapper {
+    background: #000 !important;
+    border: 4px solid #fff !important;
+    box-shadow: 8px 8px 0 0 #333 !important;
+}
+
+.auth-box {
+    background: #0000aa !important;
+    border: 4px solid #fff !important;
+    box-shadow: 8px 8px 0 0 #333 !important;
+}
+
+.card, .stat-item, .pricing-card, .model-card, .estimate-box, .console-wrapper {
+    background: #000 !important;
+    border: 4px solid #fff !important;
+    box-shadow: 8px 8px 0 0 #333 !important;
+}
+
+.auth-box {
+    background: #0000aa !important;
+    border: 4px solid #fff !important;
+    box-shadow: 8px 8px 0 0 #333 !important;
 }
