@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>O SERIES — AI-to-AI Compression Platform</title>
-    <meta name="description" content="O Series: the AI-to-AI compression platform. OGENTI compresses text protocols. OVISEN compresses image embeddings. Train, deploy, pay-per-token.">
-    <meta property="og:title" content="O SERIES — AI-to-AI Compression Platform">
-    <meta property="og:description" content="Two products, one platform. OGENTI for text protocol compression. OVISEN for image embedding compression. MARL-trained, AES-256 encrypted, pay-per-token.">
+    <title>OGENTI — AI-to-AI Communication Protocol</title>
+    <meta name="description" content="AI agents don't need human language. Ogenti trains them to develop their own compressed protocol. 10x fewer tokens. Same meaning.">
+    <meta property="og:title" content="OGENTI — AI-to-AI Communication Protocol">
+    <meta property="og:description" content="AI agents don't need human language. They develop their own. 10x compression. Zero meaning loss.">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://oseries.io">
+    <meta property="og:url" content="https://ogenti.com">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="theme-color" content="#0a0a1a">
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect x='4' y='4' width='8' height='8' fill='%2300f0ff'/%3E%3Crect x='6' y='6' width='4' height='4' fill='%230a0a1a'/%3E%3C/svg%3E">
@@ -17,12 +17,11 @@
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Silkscreen:wght@400;700&display=swap" rel="stylesheet">
     <style>
 /* ============================================================
-   O SERIES — 8-bit C64 DOS Retro Landing
-   OGENTI (text) + OVISEN (image) umbrella platform
+   OGENTI — 8-bit C64 DOS Retro Landing
    ============================================================ */
 :root {
     --bg: #000000;
-    --bg2: #0000aa;
+    --bg2: #0000aa; /* C64 Blue */
     --surface: #0000aa;
     --border: #ffffff;
     --border-hi: #aaaaaa;
@@ -56,14 +55,14 @@ body {
     color: var(--text);
     line-height: 1.8;
     overflow-x: hidden;
-    cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16'%3E%3Crect x='0' y='0' width='8' height='12' fill='%2355ffff'/%3E%3C/svg%3E") 0 0, auto;
+    cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16'%3E%3Crect x='0' y='0' width='8' height='12' fill='%2355ffff'/%3E%3C/svg%3E") 0 0, auto; /* chunky block cursor */
 }
 
 ::selection { background: var(--cyan); color: #000; }
 
 a { color: var(--yellow); text-decoration: none; }
 
-/* ── Scanlines ── */
+/* ── Scanlines (Harder) ── */
 .scanlines {
     position: fixed; inset: 0; z-index: 9999; pointer-events: none;
     background: repeating-linear-gradient(
@@ -75,19 +74,24 @@ a { color: var(--yellow); text-decoration: none; }
     );
 }
 
-/* ── CRT vignette ── */
+/* ── CRT vignette (C64 dark edges) ── */
 .crt {
     position: fixed; inset: 0; z-index: 9998; pointer-events: none;
     background: radial-gradient(ellipse at center, transparent 40%, rgba(0,0,0,0.8) 100%);
 }
 
-.pixel-grid { display: none; }
+/* ── Pixel grid bg (removed, C64 didn't have grid) ── */
+.pixel-grid {
+    display: none;
+}
 
+/* ── Shared pixel-border util ── */
 .pixel-border {
     border: 4px solid #fff;
     box-shadow: 8px 8px 0 0 #333;
     background: #0000aa;
 }
+
 .pixel-border-cyan {
     border: 4px solid var(--cyan);
     box-shadow: 8px 8px 0 0 #333;
@@ -102,27 +106,34 @@ nav {
     background: var(--bg2);
     border-bottom: 4px solid var(--border);
 }
+
 .nav-left { display:flex; align-items:center; gap:12px; }
+
 .nav-brand {
     font-family: var(--font-pixel); font-size: 0.7rem;
     letter-spacing: 0.1em; color: #fff;
     text-shadow: 2px 2px 0 #000;
 }
+
 .nav-tag {
     font-family: var(--font-pixel); font-size: 0.45rem;
     color: var(--cyan); letter-spacing: 0.08em;
 }
+
 .nav-right { display:flex; align-items:center; gap:16px; }
+
 .nav-link {
     display: flex; align-items: center; gap: 6px;
     font-family: var(--font-pixel); font-size: 0.5rem;
-    color: #fff; transition: background 0.1s; padding: 4px;
+    color: #fff; transition: background 0.1s;
+    padding: 4px;
 }
 .nav-link:hover { color: var(--bg); background: var(--cyan); }
+
 .nav-btn {
     font-family: var(--font-pixel); font-size: 0.5rem;
     padding: 6px 14px; color: #fff;
-    background: var(--red); border: 2px solid #fff;
+    background: var(--red); border: 2px solid #fff; /* cursor: pointer overridden */
     text-decoration: none;
     box-shadow: 4px 4px 0 0 #000;
     transition: all 0.1s;
@@ -141,32 +152,57 @@ nav {
     padding: 80px 24px 60px;
     background: #000;
 }
-.hero-sprite { margin-bottom: 32px; }
+
+.hero-sprite {
+    margin-bottom: 32px;
+}
+
 .hero h1 {
     font-family: var(--font-pixel); font-size: clamp(1.2rem, 4vw, 2.2rem);
-    line-height: 1.6; color: #fff; max-width: 900px;
-    text-shadow: 4px 4px 0 #000; text-transform: uppercase;
+    line-height: 1.6; color: #fff; max-width: 800px;
+    text-shadow: 4px 4px 0 #000;
+    text-transform: uppercase;
 }
-.hero h1 .glow { color: var(--yellow); text-shadow: 4px 4px 0 #000; }
-.hero h1 .glow-cyan { color: var(--cyan); text-shadow: 4px 4px 0 #000; }
-.hero h1 .glow-green { color: var(--green); text-shadow: 4px 4px 0 #000; }
+
+.hero h1 .glow {
+    color: var(--yellow);
+    text-shadow: 4px 4px 0 #000;
+}
+
+.hero h1 .glow-purple {
+    color: var(--cyan);
+    text-shadow: 4px 4px 0 #000;
+}
+
 .hero-sub {
-    font-family: var(--font-pixel); font-size: 0.65rem;
-    color: var(--text-dim); max-width: 700px;
-    margin-top: 24px; line-height: 2.2; text-transform: uppercase;
+    font-family: var(--font-pixel); font-size: 0.7rem;
+    color: var(--text-dim); max-width: 560px;
+    margin-top: 24px; line-height: 2;
+    text-transform: uppercase;
 }
+
 .hero-buttons {
     display: flex; gap: 16px; margin-top: 40px; flex-wrap: wrap;
     justify-content: center;
 }
+
 .btn-retro {
     font-family: var(--font-pixel); font-size: 0.6rem;
-    padding: 12px 24px;
-    border: 4px solid #fff; text-decoration: none; text-transform: uppercase;
-    box-shadow: 6px 6px 0 0 #333; transition: none;
+    padding: 12px 24px; /* cursor: pointer overridden */
+    border: 4px solid #fff; text-decoration: none;
+    text-transform: uppercase;
+    box-shadow: 6px 6px 0 0 #333;
+    transition: none;
 }
-.btn-retro:hover { transform: translate(2px, 2px); box-shadow: 4px 4px 0 0 #333; }
-.btn-retro:active { transform: translate(6px, 6px); box-shadow: 0 0 0 0 #333; }
+.btn-retro:hover {
+    transform: translate(2px, 2px);
+    box-shadow: 4px 4px 0 0 #333;
+}
+.btn-retro:active {
+    transform: translate(6px, 6px);
+    box-shadow: 0 0 0 0 #333;
+}
+
 .btn-retro.primary { background: var(--red); color: #fff; text-shadow: 2px 2px 0 #000; }
 .btn-retro.secondary { background: #000; color: #fff; }
 .btn-retro.primary:hover { background: #ffaaaa; color: #000; text-shadow: none; }
@@ -175,23 +211,28 @@ nav {
 /* ── Stats bar ── */
 .stats-bar {
     display: flex; gap: 0; margin-top: 64px;
-    border: 4px solid #fff; background: #0000aa;
-    flex-wrap: wrap; box-shadow: 8px 8px 0 0 #333;
+    border: 4px solid #fff;
+    background: #0000aa;
+    flex-wrap: wrap;
+    box-shadow: 8px 8px 0 0 #333;
 }
+
 .stat-cell {
-    flex: 1; min-width: 100px; padding: 20px 16px; text-align: center;
+    flex: 1; min-width: 120px; padding: 20px 16px; text-align: center;
     border-right: 4px solid #fff;
 }
 .stat-cell:last-child { border-right: none; }
+
 .stat-val {
-    font-family: var(--font-pixel); font-size: 1rem; color: #fff;
+    font-family: var(--font-pixel); font-size: 1.1rem; color: #fff;
     text-shadow: 2px 2px 0 #000;
 }
-.stat-val .unit { font-size: 0.55rem; color: #55ffff; }
+.stat-val .unit { font-size: 0.6rem; color: #55ffff; }
+
 .stat-label {
-    font-family: var(--font-pixel); font-size: 0.38rem;
+    font-family: var(--font-pixel); font-size: 0.4rem;
     color: #fff; margin-top: 8px;
-    letter-spacing: 0.12em; text-transform: uppercase;
+    letter-spacing: 0.15em; text-transform: uppercase;
 }
 
 /* ── Scroll arrow ── */
@@ -205,115 +246,102 @@ nav {
     animation: eb-fast-blink 1s step-end infinite;
 }
 @keyframes eb-fast-blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+.scroll-pixel-arrow {
+    display: none; /* Kill floating arrow, replace with text blink */
+}
 
 /* ── Sections ── */
 section { position: relative; z-index: 1; }
+
 .section-wrap {
-    max-width: 1000px; margin: 0 auto; padding: 100px 24px;
+    max-width: 1000px; margin: 0 auto;
+    padding: 100px 24px;
 }
+
 .section-tag {
     font-family: var(--font-pixel); font-size: 0.5rem;
-    color: var(--yellow); letter-spacing: 0.2em; margin-bottom: 12px;
+    color: var(--yellow); letter-spacing: 0.2em;
+    margin-bottom: 12px;
     text-shadow: 2px 2px 0 #000;
 }
+
 .section-title {
     font-family: var(--font-pixel); font-size: clamp(0.8rem, 2.5vw, 1.2rem);
-    color: #fff; line-height: 1.8; max-width: 750px;
+    color: #fff; line-height: 1.8; max-width: 650px;
 }
+
 .section-desc {
     font-family: var(--font-pixel); font-size: 0.6rem;
     color: var(--text-dim); margin-top: 16px;
-    max-width: 600px; line-height: 2;
+    max-width: 520px; line-height: 2;
 }
 
-/* ── Cards ── */
+/* ── Problem cards ── */
 .problem-section { border-top: 4px solid #fff; background: #000; }
+
 .card-grid {
     display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
     gap: 16px; margin-top: 48px;
 }
+
 .card-retro {
     padding: 28px; background: #0000aa;
-    border: 4px solid #fff; box-shadow: 8px 8px 0 0 #333;
+    border: 4px solid #fff;
+    box-shadow: 8px 8px 0 0 #333;
+    transition: none;
 }
-.card-retro:hover { background: #0000cc; }
+.card-retro:hover {
+    background: #0000cc;
+}
+
 .card-retro .card-icon { margin-bottom: 16px; }
+
 .card-retro h3 {
     font-family: var(--font-pixel); font-size: 0.6rem;
     color: var(--yellow); margin-bottom: 10px; line-height: 1.6;
     text-shadow: 2px 2px 0 #000;
 }
+
 .card-retro p {
     font-family: var(--font-pixel); font-size: 0.5rem;
     color: #fff; line-height: 2;
 }
 
-/* ── Product comparison ── */
-.products-section { border-top: 4px solid #fff; background: #0000aa; }
-.product-grid {
-    display: grid; grid-template-columns: 1fr 1fr;
-    gap: 24px; margin-top: 48px;
-}
-.product-card {
-    padding: 32px; background: #000;
-    border: 4px solid #fff; box-shadow: 8px 8px 0 0 #333;
-    position: relative;
-}
-.product-card .product-badge {
-    position: absolute; top: -2px; right: 16px;
-    font-family: var(--font-pixel); font-size: 0.35rem;
-    padding: 4px 10px; border: 2px solid;
-    letter-spacing: 0.1em; font-weight: bold;
-}
-.product-card h3 {
-    font-family: var(--font-pixel); font-size: 0.8rem;
-    line-height: 1.6; margin-bottom: 12px;
-    text-shadow: 2px 2px 0 #000;
-}
-.product-card .product-sub {
-    font-family: var(--font-pixel); font-size: 0.5rem;
-    color: #fff; line-height: 2; margin-bottom: 16px;
-}
-.product-card .product-specs {
-    list-style: none; padding: 0;
-}
-.product-card .product-specs li {
-    font-family: var(--font-pixel); font-size: 0.42rem;
-    color: #fff; line-height: 2.4;
-    padding-left: 16px; position: relative;
-}
-.product-card .product-specs li::before {
-    content: '\25B8'; position: absolute; left: 0;
-}
-.product-ext {
-    display: inline-block; margin-top: 16px;
-    font-family: var(--font-pixel); font-size: 0.5rem;
-    padding: 6px 14px; border: 4px solid;
-    letter-spacing: 0.15em; font-weight: bold;
-}
-
 /* ── Demo terminal ── */
 .demo-section { border-top: 4px solid #fff; background: #0000aa; }
+
 .terminal-box {
     margin-top: 48px; background: #000;
-    border: 4px solid #fff; box-shadow: 8px 8px 0 0 #333;
+    border: 4px solid #fff;
+    box-shadow: 8px 8px 0 0 #333;
     overflow: hidden;
 }
+
 .terminal-titlebar {
     display: flex; align-items: center; gap: 8px;
     padding: 8px 16px; background: #fff;
-    border-bottom: 4px solid #555; color: #000;
+    border-bottom: 4px solid #555;
+    color: #000;
 }
-.terminal-dot { width: 12px; height: 12px; background: #000; }
+
+.terminal-dot {
+    width: 12px; height: 12px; background: #000;
+}
+
 .terminal-filename {
     font-family: var(--font-pixel); font-size: 0.42rem;
     color: #000; margin-left: 4px; font-weight: bold;
 }
+
 .terminal-body {
-    padding: 24px; font-family: 'Consolas', 'Cascadia Code', monospace;
-    font-size: 14px; line-height: 2; min-height: 240px; color: #aaa;
+    padding: 24px; font-family: 'Consolas', 'Cascadia Code', monospace; font-size: 14px;
+    line-height: 2; min-height: 240px;
+    color: #aaa;
 }
+
 .t-row { display: flex; align-items: flex-start; gap: 12px; padding: 2px 0; }
+.t-row.hidden { display: none; }
+
 .t-label {
     flex-shrink: 0; width: 80px; text-align: right;
     font-size: 14px; font-weight: bold;
@@ -322,54 +350,76 @@ section { position: relative; z-index: 1; }
 .t-label.encode { color: var(--cyan); }
 .t-label.decode { color: var(--green); }
 .t-label.saved { color: var(--purple); }
+
 .t-content { color: #fff; }
 .t-content.highlight-cyan { color: var(--cyan); }
 .t-content.highlight-green { color: var(--green); }
 .t-content.highlight-purple { color: var(--purple); }
 .t-content strong { color: var(--yellow); }
+
 .t-token {
     display: inline-block; padding: 0 4px;
-    background: #0000aa; border: 1px solid #fff;
-    color: #fff; margin: 0 2px;
+    background: #0000aa;
+    border: 1px solid #fff;
+    color: #fff;
+    margin: 0 2px;
 }
-.t-arrow { text-align: center; padding: 4px 0; color: #888; }
+
+.t-arrow {
+    text-align: center; padding: 4px 0;
+    color: #888;
+}
+
 .t-meta { color: #888; }
 
 /* ── Pipeline ── */
 .pipeline-section { border-top: 4px solid #fff; background: #000; }
+
 .pipeline {
     margin-top: 48px; position: relative;
     display: flex; flex-direction: column; gap: 0;
 }
+
 .pipeline::before {
     content: ''; position: absolute; left: 18px; top: 0; bottom: 0;
     width: 4px; background: #fff;
 }
-.pipe-step { display: flex; gap: 24px; padding: 24px 0; position: relative; }
+
+.pipe-step {
+    display: flex; gap: 24px; padding: 24px 0; position: relative;
+}
+
 .pipe-num {
     width: 40px; height: 40px; flex-shrink: 0;
     display: flex; align-items: center; justify-content: center;
     background: #000; border: 4px solid #fff;
     font-family: var(--font-pixel); font-size: 0.6rem;
-    z-index: 1; color: #fff; box-shadow: 4px 4px 0 0 #333;
+    z-index: 1; color: #fff;
+    box-shadow: 4px 4px 0 0 #333;
 }
+
 .pipe-step:nth-child(1) .pipe-num { color: var(--cyan); }
 .pipe-step:nth-child(2) .pipe-num { color: var(--green); }
 .pipe-step:nth-child(3) .pipe-num { color: var(--purple); }
 .pipe-step:nth-child(4) .pipe-num { color: var(--yellow); }
 .pipe-step:nth-child(5) .pipe-num { color: var(--red); }
+
 .pipe-body h3 {
     font-family: var(--font-pixel); font-size: 0.6rem;
     color: var(--yellow); margin-bottom: 6px; line-height: 1.6;
 }
+
 .pipe-body .pipe-tag {
     font-family: var(--font-pixel); font-size: 0.38rem;
-    color: #aaa; letter-spacing: 0.1em; margin-bottom: 8px;
+    color: #aaa; letter-spacing: 0.1em;
+    margin-bottom: 8px;
 }
+
 .pipe-body p {
     font-family: var(--font-pixel); font-size: 0.5rem;
     color: #fff; line-height: 2; max-width: 480px;
 }
+
 .pipe-badge {
     display: inline-block; margin-top: 10px;
     font-family: var(--font-pixel); font-size: 0.4rem;
@@ -380,22 +430,28 @@ section { position: relative; z-index: 1; }
 
 /* ── Tech grid ── */
 .tech-section { border-top: 4px solid #fff; background: #0000aa; }
+
 .tech-grid {
     display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
     gap: 12px; margin-top: 48px;
 }
+
 .tech-card {
     padding: 24px; background: #000;
-    border: 4px solid #fff; box-shadow: 8px 8px 0 0 #333;
+    border: 4px solid #fff;
+    box-shadow: 8px 8px 0 0 #333;
 }
+
 .tech-card h4 {
     font-family: var(--font-pixel); font-size: 0.5rem;
     color: var(--yellow); margin-bottom: 8px; text-shadow: 2px 2px 0 #000;
 }
+
 .tech-card p {
     font-family: var(--font-pixel); font-size: 0.5rem;
     color: #fff; line-height: 2;
 }
+
 .tech-tag {
     display: inline-block; margin-top: 10px;
     font-family: var(--font-pixel); font-size: 0.35rem;
@@ -406,68 +462,90 @@ section { position: relative; z-index: 1; }
 
 /* ── Results ── */
 .results-section { border-top: 4px solid #fff; background: #000; }
+
 .results-grid {
-    display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
     gap: 12px; margin-top: 48px;
 }
+
 .result-tile {
-    padding: 24px 14px; text-align: center;
-    background: #0000aa; border: 4px solid #fff;
+    padding: 28px 16px; text-align: center;
+    background: #0000aa;
+    border: 4px solid #fff;
     box-shadow: 8px 8px 0 0 #333;
+    transition: none;
 }
 .result-tile:hover { background: #0000cc; }
+
 .result-val {
-    font-family: var(--font-pixel); font-size: 1.2rem;
+    font-family: var(--font-pixel); font-size: 1.4rem;
     color: var(--yellow); text-shadow: 4px 4px 0 #000;
 }
-.result-val .u { font-size: 0.5rem; color: #fff; }
+.result-val .u { font-size: 0.6rem; color: #fff; }
+
 .result-label {
-    font-family: var(--font-pixel); font-size: 0.36rem;
+    font-family: var(--font-pixel); font-size: 0.38rem;
     color: #fff; margin-top: 8px;
-    letter-spacing: 0.1em; text-transform: uppercase;
+    letter-spacing: 0.12em; text-transform: uppercase;
 }
 .result-sub {
-    font-family: var(--font-pixel); font-size: 0.38rem;
+    font-family: var(--font-pixel); font-size: 0.4rem;
     color: #aaa; margin-top: 8px;
 }
 
 /* ── CTA ── */
 .cta-section { border-top: 4px solid #fff; background: #0000aa; }
+
 .cta-box {
     margin-top: 48px; padding: 48px 32px; text-align: center;
-    background: #000; border: 4px solid #fff; box-shadow: 8px 8px 0 0 #333;
+    background: #000;
+    border: 4px solid #fff;
+    box-shadow: 8px 8px 0 0 #333;
+    position: relative;
 }
+
 .cta-box h2 {
     font-family: var(--font-pixel); font-size: clamp(0.7rem, 2vw, 1rem);
     color: var(--red); line-height: 1.8; text-shadow: 2px 2px 0 #000;
 }
+
 .cta-box p {
     font-family: var(--font-pixel); font-size: 0.5rem;
     color: #fff; margin-top: 16px;
-    max-width: 540px; margin-left: auto; margin-right: auto; line-height: 2.2;
+    max-width: 440px; margin-left: auto; margin-right: auto;
+    line-height: 2.2;
 }
+
 .cta-buttons {
     display: flex; gap: 12px; justify-content: center;
     margin-top: 28px; flex-wrap: wrap;
 }
-.cta-cmd { margin-top: 24px; }
+
+.cta-cmd {
+    margin-top: 24px;
+}
 .cta-cmd code {
     font-family: 'Consolas', 'Cascadia Code', monospace; font-size: 14px;
-    color: var(--cyan); padding: 10px 20px; display: inline-block;
+    color: var(--cyan); padding: 10px 20px;
+    display: inline-block;
     background: #0000aa; border: 4px solid #fff;
-    user-select: all; word-break: break-all; box-shadow: 4px 4px 0 0 #333;
+    user-select: all; word-break: break-all;
+    box-shadow: 4px 4px 0 0 #333;
 }
 
 /* ── Footer ── */
 footer {
     position: relative; z-index: 1;
     border-top: 4px solid #fff;
-    padding: 32px 24px; text-align: center; background: #000;
+    padding: 32px 24px; text-align: center;
+    background: #000;
 }
+
 .footer-text {
     font-family: var(--font-pixel); font-size: 0.38rem;
     color: #aaa; letter-spacing: 0.1em;
 }
+
 .footer-links {
     display: flex; gap: 16px; justify-content: center; margin-top: 12px;
 }
@@ -476,6 +554,16 @@ footer {
     color: var(--yellow); text-decoration: none;
 }
 .footer-link:hover { color: #fff; background: var(--cyan); }
+
+/* ── Retro Scrollbar ── */
+::-webkit-scrollbar { width: 16px; }
+::-webkit-scrollbar-track { background: #000; border-left: 4px solid #fff; }
+::-webkit-scrollbar-thumb {
+    background: #fff;
+    border: 4px solid #000;
+}
+::-webkit-scrollbar-thumb:hover { background: var(--cyan); }
+
 .footer-bottom {
     margin-top: 16px;
     font-family: var(--font-pixel); font-size: 0.35rem;
@@ -483,19 +571,32 @@ footer {
     animation: eb-fast-blink 1s step-end infinite;
 }
 
-/* ── Retro Scrollbar ── */
-::-webkit-scrollbar { width: 16px; }
-::-webkit-scrollbar-track { background: #000; border-left: 4px solid #fff; }
-::-webkit-scrollbar-thumb { background: #fff; border: 4px solid #000; }
-::-webkit-scrollbar-thumb:hover { background: var(--cyan); }
-
 /* ── Animations ── */
-@keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
-@keyframes blink { 0%,100% { opacity: 1; } 50% { opacity: 0; } }
-@keyframes fadeIn { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes float {
+    0%,100% { transform: translateY(0); }
+    50% { transform: translateY(-6px); }
+}
+
+@keyframes blink {
+    0%,100% { opacity: 1; }
+    50% { opacity: 0; }
+}
+
+@keyframes bounce-down {
+    0%,100% { transform: translateY(0); opacity: 0.3; }
+    50% { transform: translateY(4px); opacity: 0.7; }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
 @keyframes glitch {
-    0%,100% { transform: translate(0); } 20% { transform: translate(-2px, 1px); }
-    40% { transform: translate(2px, -1px); } 60% { transform: translate(-1px, 2px); }
+    0%,100% { transform: translate(0); }
+    20% { transform: translate(-2px, 1px); }
+    40% { transform: translate(2px, -1px); }
+    60% { transform: translate(-1px, 2px); }
     80% { transform: translate(1px, -2px); }
 }
 
@@ -506,10 +607,12 @@ footer {
 }
 .reveal.visible { opacity: 1; transform: translateY(0); }
 
+/* ── Cursor blink ── */
 .cursor {
     display: inline-block; width: 12px; height: 16px;
     background: var(--yellow); margin-left: 4px;
-    animation: blink 0.8s step-end infinite; vertical-align: middle;
+    animation: blink 0.8s step-end infinite;
+    vertical-align: middle;
 }
 
 /* ── Responsive ── */
@@ -519,30 +622,38 @@ footer {
     .stat-cell { border-right: none; border-bottom: 4px solid #fff; }
     .stat-cell:last-child { border-bottom: none; }
     .hero-buttons { flex-direction: column; align-items: center; }
-    .product-grid { grid-template-columns: 1fr; }
     .pipe-step { gap: 16px; }
     .t-label { width: 56px; font-size: 0.36rem; }
     .terminal-body { padding: 16px; font-size: 0.45rem; }
     .results-grid { grid-template-columns: repeat(2, 1fr); }
     .nav-tag { display: none; }
 }
+
 @media (max-width: 480px) {
     .results-grid { grid-template-columns: 1fr; }
 }
-
+    
 * {
     cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16'%3E%3Crect x='0' y='0' width='8' height='12' fill='%2355ffff'/%3E%3C/svg%3E") 0 0, auto !important;
 }
-    </style>
+
+    
+* {
+    cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16'%3E%3Crect x='0' y='0' width='8' height='12' fill='%2355ffff'/%3E%3C/svg%3E") 0 0, auto !important;
+}
+
+</style>
 </head>
 <body>
 
 <div class="scanlines"></div>
 <div class="crt"></div>
+<div class="pixel-grid"></div>
 
 <!-- Nav -->
 <nav>
     <div class="nav-left">
+        <!-- 16-bit logo -->
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="image-rendering:pixelated">
             <rect x="8" y="2" width="8" height="2" fill="#00f0ff"/>
             <rect x="6" y="4" width="2" height="2" fill="#00f0ff"/>
@@ -554,19 +665,21 @@ footer {
             <rect x="6" y="16" width="2" height="2" fill="#00f0ff"/>
             <rect x="16" y="16" width="2" height="2" fill="#00f0ff"/>
             <rect x="8" y="18" width="8" height="2" fill="#00f0ff"/>
+            <!-- inner dot -->
             <rect x="10" y="10" width="4" height="4" fill="#00f0ff"/>
+            <!-- signal waves left -->
             <rect x="0" y="8" width="2" height="2" fill="#00f0ff" opacity="0.3"/>
             <rect x="0" y="12" width="2" height="2" fill="#00f0ff" opacity="0.3"/>
+            <!-- signal waves right -->
             <rect x="22" y="8" width="2" height="2" fill="#00f0ff" opacity="0.3"/>
             <rect x="22" y="12" width="2" height="2" fill="#00f0ff" opacity="0.3"/>
         </svg>
-        <span class="nav-brand">O SERIES</span>
-        <span class="nav-tag">PLATFORM</span>
+        <span class="nav-brand">OGENTI</span>
+        <span class="nav-tag">v0.1</span>
     </div>
     <div class="nav-right">
-        <a href="#products" class="nav-link"><span>PRODUCTS</span></a>
-        <a href="#how" class="nav-link"><span>ARCHITECTURE</span></a>
         <a href="/platform/login.html" class="nav-link">
+            <!-- pixel user icon -->
             <svg width="14" height="14" viewBox="0 0 16 16" fill="none" style="image-rendering:pixelated">
                 <rect x="6" y="0" width="4" height="2" fill="currentColor"/>
                 <rect x="4" y="2" width="8" height="4" fill="currentColor"/>
@@ -576,190 +689,152 @@ footer {
             </svg>
             <span>LOGIN</span>
         </a>
-        <a href="/platform/signup.html" class="nav-btn">GET STARTED</a>
+        <a href="/platform/signup.html" class="nav-btn">
+            GET STARTED
+        </a>
     </div>
 </nav>
 
-<!-- ═════════════════ HERO ═════════════════ -->
+<!-- Hero -->
 <section class="hero">
-    <!-- Two-product hero sprite: Text agent ↔ Image agent -->
-    <svg class="hero-sprite" width="200" height="80" viewBox="0 0 200 80" fill="none" style="image-rendering:pixelated">
-        <!-- Agent A (OGENTI - text, left, pink) -->
-        <rect x="16" y="12" width="8" height="2" fill="#ff55ff"/>
-        <rect x="14" y="14" width="2" height="2" fill="#ff55ff"/>
-        <rect x="24" y="14" width="2" height="2" fill="#ff55ff"/>
-        <rect x="12" y="16" width="2" height="10" fill="#ff55ff"/>
-        <rect x="26" y="16" width="2" height="10" fill="#ff55ff"/>
-        <rect x="14" y="26" width="2" height="2" fill="#ff55ff"/>
-        <rect x="24" y="26" width="2" height="2" fill="#ff55ff"/>
-        <rect x="16" y="28" width="8" height="2" fill="#ff55ff"/>
-        <rect x="18" y="20" width="4" height="4" fill="#ff55ff"/>
+    <!-- 16-bit hero sprite: two agents communicating -->
+    <svg class="hero-sprite" width="160" height="80" viewBox="0 0 160 80" fill="none" style="image-rendering:pixelated">
+        <!-- Agent A (left) -->
+        <rect x="16" y="12" width="8" height="2" fill="#00f0ff"/>
+        <rect x="14" y="14" width="2" height="2" fill="#00f0ff"/>
+        <rect x="24" y="14" width="2" height="2" fill="#00f0ff"/>
+        <rect x="12" y="16" width="2" height="10" fill="#00f0ff"/>
+        <rect x="26" y="16" width="2" height="10" fill="#00f0ff"/>
+        <rect x="14" y="26" width="2" height="2" fill="#00f0ff"/>
+        <rect x="24" y="26" width="2" height="2" fill="#00f0ff"/>
+        <rect x="16" y="28" width="8" height="2" fill="#00f0ff"/>
+        <rect x="18" y="20" width="4" height="4" fill="#00f0ff"/>
+        <!-- eyes -->
         <rect x="16" y="18" width="2" height="2" fill="#fff"/>
         <rect x="22" y="18" width="2" height="2" fill="#fff"/>
-        <rect x="16" y="32" width="8" height="2" fill="#ff55ff"/>
-        <rect x="14" y="34" width="12" height="2" fill="#884488"/>
-        <rect x="16" y="36" width="8" height="12" fill="#ff55ff"/>
-        <rect x="20" y="8" width="2" height="4" fill="#ff55ff"/>
-        <text x="12" y="60" fill="#ff55ff" font-family="'Press Start 2P',monospace" font-size="4" opacity="0.8">TXT</text>
+        <!-- body -->
+        <rect x="16" y="32" width="8" height="2" fill="#00f0ff"/>
+        <rect x="14" y="34" width="12" height="2" fill="#007088"/>
+        <rect x="12" y="36" width="4" height="8" fill="#007088"/>
+        <rect x="24" y="36" width="4" height="8" fill="#007088"/>
+        <rect x="16" y="36" width="8" height="12" fill="#00f0ff"/>
+        <!-- antenna -->
+        <rect x="20" y="8" width="2" height="4" fill="#00f0ff"/>
+        <rect x="18" y="6" width="6" height="2" fill="#00f0ff" opacity="0.6"/>
 
-        <!-- Center: O SERIES hub -->
-        <rect x="70" y="16" width="60" height="28" fill="#0000aa" stroke="#fff" stroke-width="2" rx="0"/>
-        <text x="80" y="28" fill="#fff" font-family="'Press Start 2P',monospace" font-size="5" letter-spacing=".1em">O SERIES</text>
-        <text x="78" y="38" fill="#55ffff" font-family="'Press Start 2P',monospace" font-size="3.5" letter-spacing=".08em">COMPRESS ALL</text>
+        <!-- Protocol beam (center) -->
+        <rect x="40" y="22" width="4" height="2" fill="#00f0ff" opacity="0.3"/>
+        <rect x="48" y="22" width="6" height="2" fill="#00f0ff" opacity="0.5"/>
+        <rect x="58" y="22" width="8" height="2" fill="#00f0ff" opacity="0.7"/>
+        <rect x="70" y="20" width="20" height="6" fill="#00f0ff" opacity="0.15"/>
+        <rect x="72" y="21" width="16" height="4" fill="#00f0ff" opacity="0.08"/>
+        <!-- tokens in beam -->
+        <rect x="62" y="20" width="6" height="6" fill="#b060ff" opacity="0.8"/>
+        <rect x="72" y="20" width="6" height="6" fill="#00ff88" opacity="0.8"/>
+        <rect x="82" y="20" width="6" height="6" fill="#ffe040" opacity="0.8"/>
+        <!-- beam continuation -->
+        <rect x="94" y="22" width="8" height="2" fill="#00f0ff" opacity="0.7"/>
+        <rect x="106" y="22" width="6" height="2" fill="#00f0ff" opacity="0.5"/>
+        <rect x="116" y="22" width="4" height="2" fill="#00f0ff" opacity="0.3"/>
 
-        <!-- Protocol beam left -->
-        <rect x="36" y="24" width="4" height="2" fill="#ff55ff" opacity="0.3"/>
-        <rect x="44" y="24" width="6" height="2" fill="#ff55ff" opacity="0.5"/>
-        <rect x="54" y="24" width="10" height="2" fill="#ff55ff" opacity="0.7"/>
-        <rect x="40" y="22" width="4" height="6" fill="#ff55ff" opacity="0.4"/>
-        <rect x="50" y="22" width="4" height="6" fill="#ffe040" opacity="0.5"/>
-        <rect x="60" y="22" width="4" height="6" fill="#ff55ff" opacity="0.6"/>
+        <!-- Agent B (right) -->
+        <rect x="132" y="12" width="8" height="2" fill="#00ff88"/>
+        <rect x="130" y="14" width="2" height="2" fill="#00ff88"/>
+        <rect x="140" y="14" width="2" height="2" fill="#00ff88"/>
+        <rect x="128" y="16" width="2" height="10" fill="#00ff88"/>
+        <rect x="142" y="16" width="2" height="10" fill="#00ff88"/>
+        <rect x="130" y="26" width="2" height="2" fill="#00ff88"/>
+        <rect x="140" y="26" width="2" height="2" fill="#00ff88"/>
+        <rect x="132" y="28" width="8" height="2" fill="#00ff88"/>
+        <rect x="134" y="20" width="4" height="4" fill="#00ff88"/>
+        <rect x="132" y="18" width="2" height="2" fill="#fff"/>
+        <rect x="138" y="18" width="2" height="2" fill="#fff"/>
+        <!-- body right -->
+        <rect x="132" y="32" width="8" height="2" fill="#00ff88"/>
+        <rect x="130" y="34" width="12" height="2" fill="#007744"/>
+        <rect x="128" y="36" width="4" height="8" fill="#007744"/>
+        <rect x="140" y="36" width="4" height="8" fill="#007744"/>
+        <rect x="132" y="36" width="8" height="12" fill="#00ff88"/>
+        <rect x="136" y="8" width="2" height="4" fill="#00ff88"/>
+        <rect x="134" y="6" width="6" height="2" fill="#00ff88" opacity="0.6"/>
 
-        <!-- Protocol beam right -->
-        <rect x="134" y="24" width="10" height="2" fill="#55ffff" opacity="0.7"/>
-        <rect x="148" y="24" width="6" height="2" fill="#55ffff" opacity="0.5"/>
-        <rect x="158" y="24" width="4" height="2" fill="#55ffff" opacity="0.3"/>
-        <rect x="136" y="22" width="4" height="6" fill="#55ffff" opacity="0.6"/>
-        <rect x="146" y="22" width="4" height="6" fill="#00ff88" opacity="0.5"/>
-        <rect x="156" y="22" width="4" height="6" fill="#55ffff" opacity="0.4"/>
-
-        <!-- Agent B (OVISEN - image, right, cyan) -->
-        <rect x="168" y="12" width="8" height="2" fill="#55ffff"/>
-        <rect x="166" y="14" width="2" height="2" fill="#55ffff"/>
-        <rect x="176" y="14" width="2" height="2" fill="#55ffff"/>
-        <rect x="164" y="16" width="2" height="10" fill="#55ffff"/>
-        <rect x="178" y="16" width="2" height="10" fill="#55ffff"/>
-        <rect x="166" y="26" width="2" height="2" fill="#55ffff"/>
-        <rect x="176" y="26" width="2" height="2" fill="#55ffff"/>
-        <rect x="168" y="28" width="8" height="2" fill="#55ffff"/>
-        <rect x="170" y="20" width="4" height="4" fill="#55ffff"/>
-        <rect x="168" y="18" width="2" height="2" fill="#fff"/>
-        <rect x="174" y="18" width="2" height="2" fill="#fff"/>
-        <rect x="168" y="32" width="8" height="2" fill="#55ffff"/>
-        <rect x="166" y="34" width="12" height="2" fill="#005566"/>
-        <rect x="168" y="36" width="8" height="12" fill="#55ffff"/>
-        <rect x="172" y="8" width="2" height="4" fill="#55ffff"/>
-        <text x="164" y="60" fill="#55ffff" font-family="'Press Start 2P',monospace" font-size="4" opacity="0.8">IMG</text>
+        <!-- Labels -->
+        <text x="12" y="60" fill="#00f0ff" font-family="'Press Start 2P',monospace" font-size="5" opacity="0.7">ENC</text>
+        <text x="72" y="36" fill="#fff" font-family="'Press Start 2P',monospace" font-size="4" opacity="0.4">3 TOKENS</text>
+        <text x="130" y="60" fill="#00ff88" font-family="'Press Start 2P',monospace" font-size="5" opacity="0.7">DEC</text>
 
         <!-- sparkle particles -->
-        <rect x="48" y="16" width="2" height="2" fill="#ffe040" opacity="0.6"/>
-        <rect x="150" y="16" width="2" height="2" fill="#ffe040" opacity="0.4"/>
-        <rect x="95" y="48" width="2" height="2" fill="#ff60a0" opacity="0.5"/>
+        <rect x="55" y="16" width="2" height="2" fill="#ffe040" opacity="0.6"/>
+        <rect x="88" y="28" width="2" height="2" fill="#ffe040" opacity="0.4"/>
+        <rect x="100" y="14" width="2" height="2" fill="#ff60a0" opacity="0.5"/>
+        <rect x="48" y="28" width="2" height="2" fill="#b060ff" opacity="0.5"/>
     </svg>
 
     <h1>
-        ONE PLATFORM.<br>
-        <span class="glow">TEXT.</span>
-        <span class="glow-cyan">IMAGE.</span>
-        <span class="glow-green">COMPRESSED.</span><span class="cursor"></span>
+        AI DOESN'T NEED<br>
+        <span class="glow">HUMAN LANGUAGE</span><span class="cursor"></span>
     </h1>
 
     <p class="hero-sub">
-        O Series is the AI-to-AI compression platform.
-        OGENTI compresses text protocols. OVISEN compresses image embeddings.
-        Same MARL engine. Two output formats. Pay-per-token pricing.
+        Ogenti trains AI agents to develop their own
+        compressed communication protocol.
+        10x fewer tokens. Same meaning.
     </p>
 
     <div class="hero-buttons">
-        <a href="/platform/signup.html" class="btn-retro primary">GET STARTED</a>
-        <a href="#products" class="btn-retro secondary">SEE PRODUCTS</a>
+        <a href="/platform/signup.html" class="btn-retro primary">
+            GET STARTED
+        </a>
+        <a href="#how" class="btn-retro secondary">
+            HOW IT WORKS
+        </a>
     </div>
 
     <div class="stats-bar">
         <div class="stat-cell">
-            <div class="stat-val">2</div>
-            <div class="stat-label">PRODUCTS</div>
-        </div>
-        <div class="stat-cell">
             <div class="stat-val">10<span class="unit">x</span></div>
-            <div class="stat-label">TEXT COMPRESS</div>
-        </div>
-        <div class="stat-cell">
-            <div class="stat-val">4<span class="unit">x</span></div>
-            <div class="stat-label">IMAGE COMPRESS</div>
+            <div class="stat-label">COMPRESSION</div>
         </div>
         <div class="stat-cell">
             <div class="stat-val">95<span class="unit">%</span></div>
             <div class="stat-label">FIDELITY</div>
         </div>
         <div class="stat-cell">
-            <div class="stat-val">.OGT</div>
-            <div class="stat-label">TEXT FORMAT</div>
+            <div class="stat-val">~3<span class="unit">MB</span></div>
+            <div class="stat-label">ADAPTER</div>
         </div>
         <div class="stat-cell">
-            <div class="stat-val">.OGE</div>
-            <div class="stat-label">IMAGE FORMAT</div>
+            <div class="stat-val">$30</div>
+            <div class="stat-label">TRAIN COST</div>
         </div>
     </div>
 
     <div class="scroll-hint">
         <span>SCROLL</span>
+        <svg class="scroll-pixel-arrow" width="16" height="16" viewBox="0 0 16 16" style="image-rendering:pixelated">
+            <rect x="6" y="2" width="4" height="2" fill="#3a3a5a"/>
+            <rect x="4" y="4" width="8" height="2" fill="#3a3a5a"/>
+            <rect x="2" y="6" width="12" height="2" fill="#3a3a5a"/>
+            <rect x="6" y="10" width="4" height="2" fill="#3a3a5a"/>
+            <rect x="4" y="12" width="8" height="2" fill="#3a3a5a"/>
+        </svg>
     </div>
 </section>
 
-<!-- ═════════════════ PRODUCTS ═════════════════ -->
-<section class="products-section" id="products">
-    <div class="section-wrap reveal">
-        <span class="section-tag">// TWO PRODUCTS, ONE ENGINE</span>
-        <h2 class="section-title">THE O SERIES PRODUCT LINE</h2>
-        <p class="section-desc">
-            Both products share the same MARL training engine, credit system,
-            and AES-256-GCM encrypted adapter format. Choose what you need to compress.
-        </p>
-
-        <div class="product-grid">
-            <!-- OGENTI -->
-            <div class="product-card">
-                <div class="product-badge" style="color:var(--pink);border-color:var(--pink);background:#000;">TEXT</div>
-                <h3 style="color:var(--pink);">OGENTI</h3>
-                <p class="product-sub">
-                    AI-to-AI text compression protocol. Agents learn to compress natural language into 3-token protocol messages. 10x compression, zero meaning loss.
-                </p>
-                <ul class="product-specs">
-                    <li style="color:var(--pink);">Multi-model: Llama-3, Qwen-2.5, Mistral, Gemma</li>
-                    <li>LoRA R=16 adapter training via MARL + PPO</li>
-                    <li>5-phase progressive curriculum (Warmup → Distill)</li>
-                    <li>512 emergent token vocabulary</li>
-                    <li>~3MB portable adapter per model</li>
-                    <li>AES-256-GCM encrypted .OGT output</li>
-                </ul>
-                <span class="product-ext" style="color:var(--pink);border-color:var(--pink);">.OGT</span>
-            </div>
-
-            <!-- OVISEN -->
-            <div class="product-card">
-                <div class="product-badge" style="color:var(--cyan);border-color:var(--cyan);background:#000;">IMAGE</div>
-                <h3 style="color:var(--cyan);">OVISEN</h3>
-                <p class="product-sub">
-                    AI-to-AI image embedding compressor. Converts raw images into high-dimensional compressed embeddings. Downstream AI agents never need the raw pixels.
-                </p>
-                <ul class="product-specs">
-                    <li style="color:var(--cyan);">Vision models: CLIP, SigLIP, DINOv2, EVA-02</li>
-                    <li>Frozen backbone + learnable CompressionHead</li>
-                    <li>Cooperative encoder-decoder MARL training</li>
-                    <li>Configurable target dimensions (32D-512D)</li>
-                    <li>Fidelity + compression + task reward signals</li>
-                    <li>AES-256-GCM encrypted .OGE output</li>
-                </ul>
-                <span class="product-ext" style="color:var(--cyan);border-color:var(--cyan);">.OGE</span>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- ═════════════════ PROBLEM ═════════════════ -->
+<!-- Problem -->
 <section class="problem-section" id="problem">
     <div class="section-wrap reveal">
         <span class="section-tag">// THE PROBLEM</span>
-        <h2 class="section-title">AI AGENTS WASTE RESOURCES COMMUNICATING IN HUMAN FORMATS</h2>
+        <h2 class="section-title">AI AGENTS WASTE 90% OF TOKENS TALKING IN ENGLISH</h2>
         <p class="section-desc">
-            Text agents burn tokens on grammar. Vision agents transmit raw megapixel images.
-            Neither is necessary for AI-to-AI communication.
+            When two LLMs communicate, they don't need grammar,
+            politeness, or redundancy. They need meaning.
         </p>
 
         <div class="card-grid">
             <div class="card-retro">
                 <div class="card-icon">
+                    <!-- 16-bit coin/money pixel art -->
                     <svg width="32" height="32" viewBox="0 0 32 32" style="image-rendering:pixelated">
                         <rect x="10" y="4" width="12" height="2" fill="#ffe040"/>
                         <rect x="8" y="6" width="2" height="2" fill="#ffe040"/>
@@ -769,203 +844,230 @@ footer {
                         <rect x="8" y="16" width="2" height="2" fill="#cc9900"/>
                         <rect x="22" y="16" width="2" height="2" fill="#cc9900"/>
                         <rect x="10" y="18" width="12" height="2" fill="#cc9900"/>
+                        <rect x="8" y="8" width="16" height="8" fill="#ffe040" opacity="0.3"/>
+                        <!-- $ sign -->
                         <rect x="14" y="8" width="4" height="2" fill="#cc9900"/>
                         <rect x="12" y="10" width="2" height="2" fill="#cc9900"/>
                         <rect x="14" y="12" width="4" height="2" fill="#cc9900"/>
                         <rect x="18" y="14" width="2" height="2" fill="#cc9900"/>
                         <rect x="14" y="16" width="4" height="2" fill="#cc9900"/>
+                        <!-- fire -->
                         <rect x="10" y="22" width="2" height="4" fill="#ff4060"/>
                         <rect x="14" y="20" width="2" height="6" fill="#ff8830"/>
                         <rect x="14" y="22" width="2" height="2" fill="#ffe040"/>
                         <rect x="20" y="22" width="2" height="4" fill="#ff4060"/>
+                        <rect x="18" y="24" width="2" height="2" fill="#ff8830"/>
                     </svg>
                 </div>
                 <h3>TOKEN WASTE</h3>
-                <p>Text agents burn API tokens with natural language overhead. Every "please" and "sure" is money on fire. OGENTI compresses to 3 tokens.</p>
+                <p>Multi-agent systems burn through API tokens with natural language overhead. Every "please" and "sure" is money on fire.</p>
             </div>
             <div class="card-retro">
                 <div class="card-icon">
+                    <!-- 16-bit hourglass pixel art -->
                     <svg width="32" height="32" viewBox="0 0 32 32" style="image-rendering:pixelated">
-                        <rect x="4" y="4" width="24" height="2" fill="#55ffff"/>
-                        <rect x="4" y="6" width="2" height="20" fill="#55ffff"/>
-                        <rect x="26" y="6" width="2" height="20" fill="#55ffff"/>
-                        <rect x="4" y="26" width="24" height="2" fill="#55ffff"/>
-                        <rect x="8" y="10" width="4" height="4" fill="#55ffff" opacity="0.3"/>
-                        <rect x="14" y="8" width="6" height="6" fill="#55ffff" opacity="0.4"/>
-                        <rect x="22" y="10" width="4" height="4" fill="#55ffff" opacity="0.3"/>
-                        <rect x="10" y="16" width="8" height="6" fill="#55ffff" opacity="0.5"/>
-                        <rect x="12" y="14" width="4" height="2" fill="#ff4060" opacity="0.6"/>
+                        <rect x="8" y="4" width="16" height="2" fill="#b060ff"/>
+                        <rect x="10" y="6" width="12" height="2" fill="#b060ff"/>
+                        <rect x="12" y="8" width="8" height="2" fill="#8040cc"/>
+                        <rect x="14" y="10" width="4" height="2" fill="#8040cc"/>
+                        <rect x="14" y="12" width="4" height="2" fill="#b060ff"/>
+                        <rect x="12" y="14" width="8" height="2" fill="#b060ff"/>
+                        <rect x="10" y="16" width="12" height="2" fill="#b060ff"/>
+                        <rect x="8" y="18" width="16" height="2" fill="#b060ff"/>
+                        <!-- sand particles -->
+                        <rect x="14" y="8" width="2" height="2" fill="#ffe040" opacity="0.6"/>
+                        <rect x="16" y="10" width="2" height="2" fill="#ffe040" opacity="0.5"/>
+                        <rect x="12" y="14" width="2" height="2" fill="#ffe040" opacity="0.4"/>
+                        <rect x="16" y="16" width="2" height="2" fill="#ffe040" opacity="0.6"/>
+                        <!-- decorative -->
+                        <rect x="6" y="4" width="2" height="2" fill="#b060ff" opacity="0.4"/>
+                        <rect x="24" y="4" width="2" height="2" fill="#b060ff" opacity="0.4"/>
+                        <rect x="6" y="18" width="2" height="2" fill="#b060ff" opacity="0.4"/>
+                        <rect x="24" y="18" width="2" height="2" fill="#b060ff" opacity="0.4"/>
                     </svg>
                 </div>
-                <h3>RAW PIXEL WASTE</h3>
-                <p>Vision agents transmit full images when only embeddings matter. A 5MB photo can be a 256-dim vector. OVISEN makes the conversion.</p>
+                <h3>LATENCY</h3>
+                <p>More tokens = more time. Agent conversations that could take 3 tokens take 30. Multiply across thousands of calls.</p>
             </div>
             <div class="card-retro">
                 <div class="card-icon">
+                    <!-- 16-bit broken chain pixel art -->
                     <svg width="32" height="32" viewBox="0 0 32 32" style="image-rendering:pixelated">
+                        <!-- left chain link -->
                         <rect x="4" y="8" width="8" height="2" fill="#ff4060"/>
                         <rect x="4" y="10" width="2" height="4" fill="#ff4060"/>
                         <rect x="10" y="10" width="2" height="4" fill="#ff4060"/>
                         <rect x="4" y="14" width="8" height="2" fill="#ff4060"/>
+                        <!-- right chain link -->
                         <rect x="20" y="12" width="8" height="2" fill="#ff4060"/>
                         <rect x="20" y="14" width="2" height="4" fill="#ff4060"/>
                         <rect x="26" y="14" width="2" height="4" fill="#ff4060"/>
                         <rect x="20" y="18" width="8" height="2" fill="#ff4060"/>
+                        <!-- break sparks -->
                         <rect x="14" y="10" width="2" height="2" fill="#ffe040"/>
                         <rect x="16" y="12" width="2" height="2" fill="#ffe040"/>
                         <rect x="18" y="14" width="2" height="2" fill="#ffe040"/>
+                        <rect x="14" y="14" width="2" height="2" fill="#ff8830" opacity="0.6"/>
+                        <rect x="18" y="10" width="2" height="2" fill="#ff8830" opacity="0.4"/>
+                        <!-- ? mark -->
+                        <rect x="14" y="20" width="4" height="2" fill="#ff4060" opacity="0.5"/>
+                        <rect x="18" y="22" width="2" height="2" fill="#ff4060" opacity="0.5"/>
+                        <rect x="14" y="24" width="4" height="2" fill="#ff4060" opacity="0.5"/>
+                        <rect x="14" y="26" width="2" height="2" fill="#ff4060" opacity="0.5"/>
+                        <rect x="14" y="28" width="2" height="2" fill="#ff4060" opacity="0.7"/>
                     </svg>
                 </div>
-                <h3>NO UNIFIED PROTOCOL</h3>
-                <p>There's no TCP/IP for AI. Every framework invents its own format. O Series provides a standard: .OGT for text, .OGE for images.</p>
+                <h3>NO STANDARD PROTOCOL</h3>
+                <p>There's no TCP/IP for AI communication. Every multi-agent framework invents its own format. None learn from usage.</p>
             </div>
         </div>
     </div>
 </section>
 
-<!-- ═════════════════ DEMO ═════════════════ -->
+<!-- Demo -->
 <section class="demo-section" id="demo">
     <div class="section-wrap reveal">
         <span class="section-tag">// LIVE PROTOCOL</span>
         <h2 class="section-title">SEE THE COMPRESSION</h2>
         <p class="section-desc">
-            OGENTI: Natural language in, compressed protocol out.
-            OVISEN: Raw image in, compressed embedding out.
+            Natural language in, compressed protocol out.
+            The decoder reconstructs meaning perfectly.
         </p>
 
         <div class="terminal-box" id="demoBox">
             <div class="terminal-titlebar">
-                <svg class="terminal-dot" viewBox="0 0 8 8" style="image-rendering:pixelated"><rect width="8" height="8" fill="#ff4060"/></svg>
-                <svg class="terminal-dot" viewBox="0 0 8 8" style="image-rendering:pixelated"><rect width="8" height="8" fill="#ffe040"/></svg>
-                <svg class="terminal-dot" viewBox="0 0 8 8" style="image-rendering:pixelated"><rect width="8" height="8" fill="#00ff88"/></svg>
-                <span class="terminal-filename">o_series_session.log</span>
+                <svg class="terminal-dot" viewBox="0 0 8 8" style="image-rendering:pixelated">
+                    <rect width="8" height="8" fill="#ff4060"/>
+                </svg>
+                <svg class="terminal-dot" viewBox="0 0 8 8" style="image-rendering:pixelated">
+                    <rect width="8" height="8" fill="#ffe040"/>
+                </svg>
+                <svg class="terminal-dot" viewBox="0 0 8 8" style="image-rendering:pixelated">
+                    <rect width="8" height="8" fill="#00ff88"/>
+                </svg>
+                <span class="terminal-filename">protocol_session.log</span>
             </div>
             <div class="terminal-body" id="demoBody"></div>
         </div>
     </div>
 </section>
 
-<!-- ═════════════════ ARCHITECTURE ═════════════════ -->
+<!-- How it works -->
 <section class="pipeline-section" id="how">
     <div class="section-wrap reveal">
-        <span class="section-tag">// SHARED ARCHITECTURE</span>
-        <h2 class="section-title">MARL TRAINING ENGINE — SAME FOR BOTH</h2>
+        <span class="section-tag">// ARCHITECTURE</span>
+        <h2 class="section-title">5-PHASE PROGRESSIVE TRAINING</h2>
         <p class="section-desc">
-            Both OGENTI and OVISEN use the same multi-agent reinforcement learning pipeline.
-            Two cooperative agents (encoder + decoder) optimize competing objectives.
+            Agents evolve through increasingly complex
+            communication challenges. Each phase builds on the last.
         </p>
 
         <div class="pipeline">
             <div class="pipe-step">
+                <div class="pipe-num">0</div>
+                <div class="pipe-body">
+                    <div class="pipe-tag">PHASE 0 / 5K EP</div>
+                    <h3>WARMUP</h3>
+                    <p>Supervised pre-training. Encoder maps NL to initial protocol tokens. Decoder learns reconstruction.</p>
+                    <span class="pipe-badge">TARGET: <span class="val">2x COMPRESSION</span></span>
+                </div>
+            </div>
+            <div class="pipe-step">
                 <div class="pipe-num">1</div>
                 <div class="pipe-body">
-                    <h3>SELECT BACKBONE</h3>
-                    <div class="pipe-tag">OGENTI: Llama / Qwen / Gemma &nbsp;|&nbsp; OVISEN: CLIP / SigLIP / DINOv2</div>
-                    <p>Choose a pre-trained model as the frozen backbone. The platform freezes all base weights — only the compression head is trained.</p>
-                    <span class="pipe-badge">BACKBONE: <span class="val">FROZEN</span></span>
+                    <div class="pipe-tag">PHASE 1 / 15K EP</div>
+                    <h3>SIMPLE COMMS</h3>
+                    <p>RL kicks in. Two agents negotiate token meanings through reward-driven optimization.</p>
+                    <span class="pipe-badge">TARGET: <span class="val">5x / 70% FIDELITY</span></span>
                 </div>
             </div>
             <div class="pipe-step">
                 <div class="pipe-num">2</div>
                 <div class="pipe-body">
-                    <h3>UPLOAD DATASET</h3>
-                    <div class="pipe-tag">TEXT: CONVERSATIONS, CODE, DOMAIN &nbsp;|&nbsp; IMAGE: IMAGENET, COCO, CUSTOM</div>
-                    <p>Select from built-in datasets or upload your own. The platform handles cleaning, formatting, and batching automatically.</p>
-                    <span class="pipe-badge">FORMAT: <span class="val">AUTO-DETECT</span></span>
+                    <div class="pipe-tag">PHASE 2 / 20K EP</div>
+                    <h3>COMPLEX MULTI-AGENT</h3>
+                    <p>Three agents. Multiple tasks simultaneously. Protocol handles ambiguity and multi-hop reasoning.</p>
+                    <span class="pipe-badge">TARGET: <span class="val">8x / 85% FIDELITY</span></span>
                 </div>
             </div>
             <div class="pipe-step">
                 <div class="pipe-num">3</div>
                 <div class="pipe-body">
-                    <h3>MARL TRAINING (PPO)</h3>
-                    <div class="pipe-tag">ENCODER + DECODER CO-EVOLVE VIA REWARD SIGNALS</div>
-                    <p>Two agents train cooperatively. The encoder compresses; the decoder reconstructs. Reward = fidelity x compression x task-performance. PPO optimizes both simultaneously.</p>
-                    <span class="pipe-badge">REWARD: <span class="val">MULTI-OBJECTIVE</span></span>
+                    <div class="pipe-tag">PHASE 3 / 10K EP</div>
+                    <h3>GENERALIZE</h3>
+                    <p>All 12 task categories. Code, math, translation, creative. Same token vocabulary handles everything.</p>
+                    <span class="pipe-badge">TARGET: <span class="val">10x / 90% FIDELITY</span></span>
                 </div>
             </div>
             <div class="pipe-step">
                 <div class="pipe-num">4</div>
                 <div class="pipe-body">
-                    <h3>EXPORT ADAPTER</h3>
-                    <div class="pipe-tag">OGENTI -> .OGT &nbsp;|&nbsp; OVISEN -> .OGE</div>
-                    <p>Trained weights are distilled into a portable adapter file. AES-256-GCM encrypted. Any compatible model can load the adapter and speak the protocol instantly.</p>
-                    <span class="pipe-badge">ENCRYPTION: <span class="val">AES-256-GCM</span></span>
-                </div>
-            </div>
-            <div class="pipe-step">
-                <div class="pipe-num">5</div>
-                <div class="pipe-body">
-                    <h3>DEPLOY & INFER</h3>
-                    <div class="pipe-tag">REST API &nbsp;|&nbsp; PAY-PER-TOKEN &nbsp;|&nbsp; AUTO-ROUTING</div>
-                    <p>Every adapter gets a scalable REST API endpoint. The router automatically selects the cheapest compatible model. You only pay for compressed tokens generated.</p>
-                    <span class="pipe-badge">BILLING: <span class="val">PAY-PER-TOKEN</span></span>
+                    <div class="pipe-tag">PHASE 4 / 8K EP</div>
+                    <h3>UNIVERSAL ADAPTER</h3>
+                    <p>Knowledge distillation into ~3MB adapter. Any LLM speaks the protocol. No fine-tuning needed.</p>
+                    <span class="pipe-badge">TARGET: <span class="val">~3MB PORTABLE</span></span>
                 </div>
             </div>
         </div>
     </div>
 </section>
 
-<!-- ═════════════════ TECH STACK ═════════════════ -->
+<!-- Tech -->
 <section class="tech-section" id="stack">
     <div class="section-wrap reveal">
-        <span class="section-tag">// PLATFORM</span>
-        <h2 class="section-title">THE O SERIES CLOUD PLATFORM</h2>
+        <span class="section-tag">// STACK</span>
+        <h2 class="section-title">BUILT ON PROVEN FOUNDATIONS</h2>
 
         <div class="tech-grid">
             <div class="tech-card">
-                <h4>DATASET MANAGER</h4>
-                <p>Upload text logs or image datasets. Auto-clean, auto-format, auto-batch for MARL training.</p>
-                <span class="tech-tag">INGESTION</span>
+                <h4>MULTI-MODEL BACKBONE</h4>
+                <p>Train protocol agents on Llama-3, Qwen-2.5, Mistral, and Gemma. Choose the capacity that fits your budget and use case.</p>
+                <span class="tech-tag">AGNOSTIC LLM</span>
             </div>
             <div class="tech-card">
-                <h4>1-CLICK TRAINING</h4>
-                <p>Select backbone + dataset + episodes. The platform provisions RunPod A100 clusters and runs the full PPO pipeline.</p>
+                <h4>LORA R=16</h4>
+                <p>Low-rank adaptation. Train protocol abilities without touching base weights.</p>
+                <span class="tech-tag">PEFT</span>
+            </div>
+            <div class="tech-card">
+                <h4>MARL + PPO</h4>
+                <p>Multi-Agent RL with curriculum rewards. Agents compete and cooperate to minimize tokens.</p>
                 <span class="tech-tag">TRAINING</span>
             </div>
             <div class="tech-card">
-                <h4>LIVE TELEMETRY</h4>
-                <p>Watch agents learn in real-time. WebSocket streams reward curves, fidelity scores, compression ratios, and PPO loss.</p>
-                <span class="tech-tag">MONITORING</span>
-            </div>
-            <div class="tech-card">
-                <h4>.OGT + .OGE FORMATS</h4>
-                <p>Portable encrypted adapters. .OGT for text protocols, .OGE for image embeddings. AES-256-GCM with unique keys.</p>
+                <h4>DISTILLATION</h4>
+                <p>Phase 4 extracts protocol into PPH + PRH adapters. Teacher to student compression.</p>
                 <span class="tech-tag">EXPORT</span>
             </div>
             <div class="tech-card">
-                <h4>API + ROUTER</h4>
-                <p>Every adapter gets a REST API. The built-in Router Agent auto-selects the cheapest compatible model for each request.</p>
-                <span class="tech-tag">DEPLOYMENT</span>
+                <h4>DEEPSPEED</h4>
+                <p>ZeRO-2 memory optimization. Full pipeline on a single A100 80GB in under 24 hours.</p>
+                <span class="tech-tag">OPTIMIZATION</span>
             </div>
             <div class="tech-card">
-                <h4>PAY-PER-TOKEN</h4>
-                <p>No GPU lock-in. Buy credits, spend on training and inference. Massive scale = massive savings through compression.</p>
-                <span class="tech-tag">BILLING</span>
+                <h4>FASTAPI + WS</h4>
+                <p>Real-time training dashboard with 10Hz metric broadcast. Watch agents learn live.</p>
+                <span class="tech-tag">MONITORING</span>
             </div>
         </div>
     </div>
 </section>
 
-<!-- ═════════════════ RESULTS ═════════════════ -->
+<!-- Results -->
 <section class="results-section" id="results">
     <div class="section-wrap reveal">
         <span class="section-tag">// OUTPUT</span>
-        <h2 class="section-title">WHAT YOU GET</h2>
+        <h2 class="section-title">WHAT YOU GET AFTER TRAINING</h2>
         <p class="section-desc">
-            Train on your own data through the dashboard.
-            Get portable adapters that work with any compatible model.
+            Dynamic epochs. Train on your custom datasets through our platform dashboard.
+            Any LLM can use it.
         </p>
 
         <div class="results-grid">
             <div class="result-tile">
                 <div class="result-val">10<span class="u">x</span></div>
-                <div class="result-label">TEXT COMPRESS</div>
-                <div class="result-sub">OGENTI .OGT</div>
-            </div>
-            <div class="result-tile">
-                <div class="result-val">4<span class="u">x</span></div>
-                <div class="result-label">IMAGE COMPRESS</div>
-                <div class="result-sub">OVISEN .OGE</div>
+                <div class="result-label">COMPRESSION</div>
+                <div class="result-sub">NL to protocol</div>
             </div>
             <div class="result-tile">
                 <div class="result-val">95<span class="u">%</span></div>
@@ -974,39 +1076,84 @@ footer {
             </div>
             <div class="result-tile">
                 <div class="result-val">~3<span class="u">MB</span></div>
-                <div class="result-label">ADAPTER SIZE</div>
+                <div class="result-label">ADAPTER</div>
                 <div class="result-sub">portable</div>
             </div>
             <div class="result-tile">
-                <div class="result-val">6</div>
-                <div class="result-label">VISION MODELS</div>
-                <div class="result-sub">CLIP/SigLIP/DINOv2</div>
+                <div class="result-val">512</div>
+                <div class="result-label">VOCAB</div>
+                <div class="result-sub">emergent tokens</div>
             </div>
             <div class="result-tile">
-                <div class="result-val">256</div>
-                <div class="result-label">AES KEY</div>
-                <div class="result-sub">bit encryption</div>
+                <div class="result-val">$30</div>
+                <div class="result-label">COST</div>
+                <div class="result-sub">A100 x 24hr</div>
             </div>
         </div>
     </div>
 </section>
 
-<!-- ═════════════════ CTA ═════════════════ -->
+
+<!-- Platform Section -->
+<section class="tech-section" id="platform" style="padding: 100px 20px;">
+    <div class="section-wrap reveal">
+        <span class="section-tag" style="text-align:center; display:block;">// PLATFORM</span>
+        <h2 class="section-title" style="text-align:center;">THE OGENTI CLOUD PLATFORM</h2>
+        <p class="section-desc" style="text-align:center; max-width: 800px; margin: 0 auto 60px;">
+            No need to maintain your own cluster. Build, manage, and deploy your custom AI communication protocols purely via our web dashboard. Everything from dataset ingestion to multi-agent RL training is fully managed.
+        </p>
+        
+        <div class="tech-grid">
+            <div class="tech-card">
+                <h4>DATASET MANAGER</h4>
+                <p>Upload your own conversation logs, code repositories, or domain-specific text. Ogenti automatically cleans and formats it for multi-agent training.</p>
+                <span class="tech-tag">INGESTION</span>
+            </div>
+            <div class="tech-card">
+                <h4>1-CLICK MARL PIPELINE</h4>
+                <p>Select your base LLM (Llama, Qwen, Gemma) and hit train. The platform automatically provisions A100 clusters, handles ZeRO-2 optimization, and runs the entire PPO pipeline.</p>
+                <span class="tech-tag">TRAINING</span>
+            </div>
+            <div class="tech-card">
+                <h4>LIVE TELEMETRY</h4>
+                <p>Watch your agents learn in real-time. WebSocket connections stream live token compression ratios, reward curves, and PPO loss metrics directly to your dashboard.</p>
+                <span class="tech-tag">MONITORING</span>
+            </div>
+            <div class="tech-card">
+                <h4>.OGT PROTOCOL FORMAT</h4>
+                <p>Export your trained protocols as standard .OGT files via our Distillation Engine. A universal ~3MB format that any compatible LLM can load to speak your custom protocol.</p>
+                <span class="tech-tag">EXPORT</span>
+            </div>
+            <div class="tech-card">
+                <h4>API ENDPOINTS & ROUTING</h4>
+                <p>Deploy .OGT files instantly. Every trained model gets a scalable REST API endpoint. A built-in Router Agent automatically sends requests to the cheapest/fastest compatible model.</p>
+                <span class="tech-tag">DEPLOYMENT</span>
+            </div>
+             <div class="tech-card">
+                <h4>PAY-PER-TOKEN PRICING</h4>
+                <p>No expensive GPU lock-in. You only pay for the compressed protocol tokens generated during inference. Massive scale means massive savings through token reduction.</p>
+                <span class="tech-tag">BILLING</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA -->
+
 <section class="cta-section">
     <div class="section-wrap">
         <div class="cta-box reveal">
-            <h2>BUILD YOUR OWN COMPRESSION ADAPTERS</h2>
+            <h2>TRAIN YOUR OWN PROTOCOL</h2>
             <p>
-                Pick a modality — text or image. Choose your backbone.
-                Select a dataset. Buy credits.
-                We handle the GPUs — you get an encrypted adapter.
+                Pick a model. Choose your dataset. Buy credits.
+                We handle the GPUs — you get a custom adapter in 24 hours.
             </p>
             <div class="cta-buttons">
                 <a href="/platform/signup.html" class="btn-retro primary">CREATE ACCOUNT</a>
                 <a href="/platform/billing.html" class="btn-retro secondary">VIEW PRICING</a>
             </div>
             <div class="cta-cmd">
-                <code>pip install oseries &amp;&amp; oseries.attach(your_model, adapter="my_adapter.ogt")</code>
+                <code>pip install ogenti &amp;&amp; ogenti.attach(your_model) → instant protocol</code>
             </div>
         </div>
     </div>
@@ -1014,13 +1161,11 @@ footer {
 
 <!-- Footer -->
 <footer>
-    <div class="footer-text">O SERIES v0.2 // OGENTI (TEXT .OGT) + OVISEN (IMAGE .OGE) // MARL + MULTI-MODEL + LORA + AES-256</div>
+    <div class="footer-text">OGENTI v0.1 // AI-TO-AI COMMUNICATION PROTOCOL // MARL + MULTI-MODEL + LORA</div>
     <div class="footer-links">
         <a href="/platform/signup.html" class="footer-link">SIGN UP</a>
         <a href="/platform/billing.html" class="footer-link">PRICING</a>
         <a href="/platform/login.html" class="footer-link">LOGIN</a>
-        <a href="/privacy.html" class="footer-link">PRIVACY</a>
-        <a href="/terms.html" class="footer-link">TERMS</a>
     </div>
     <div class="footer-bottom">PRESS START TO CONTINUE_</div>
 </footer>
@@ -1038,35 +1183,25 @@ footer {
     }, { threshold: 0.12, rootMargin: '0px 0px -30px 0px' });
     reveals.forEach(function(el) { obs.observe(el); });
 
-    // ── Protocol Demo (alternates OGENTI text + OVISEN image demos) ──
+    // ── Protocol Demo ──
     var DEMOS = [
         {
-            type: 'OGENTI',
             input: '"Translate the following English text to French: The weather is beautiful today and I would like to go for a walk in the park."',
             tokens: ['\u27E8TASK:TRANS\u27E9', '\u27E8EN\u2192FR\u27E9', '\u27E8SEM:weather+beauty+walk+park\u27E9'],
             output: '"Le temps est magnifique aujourd\'hui et j\'aimerais me promener dans le parc."',
-            inTk: 28, outTk: 3, format: '.OGT'
+            inTk: 28, outTk: 3,
         },
         {
-            type: 'OVISEN',
-            input: '[photo_2048x1536.jpg — 4.2MB raw JPEG — street scene with cars and pedestrians]',
-            tokens: ['\u27E8VIS:CLIP-L/14\u27E9', '\u27E8DIM:768\u2192256\u27E9', '\u27E8EMB:[0.234, -0.891, 0.442, ...]\u27E9'],
-            output: '[256-dim compressed embedding — cosine fidelity: 0.97 — 3x compression — 1.2KB]',
-            inTk: '4.2MB', outTk: '1.2KB', format: '.OGE'
-        },
-        {
-            type: 'OGENTI',
             input: '"Write a Python function that returns the second largest unique value from a list of integers. Handle edge cases."',
             tokens: ['\u27E8TASK:CODE\u27E9', '\u27E8PY:fn\u27E9', '\u27E8SPEC:list\u21922nd_max+edge\u27E9'],
             output: '"def second_largest(nums): return sorted(set(nums), reverse=True)[1] if len(set(nums))>=2 else None"',
-            inTk: 26, outTk: 3, format: '.OGT'
+            inTk: 26, outTk: 3,
         },
         {
-            type: 'OVISEN',
-            input: '[medical_scan_4096x4096.png — 12.1MB raw — chest X-ray with bilateral infiltrates]',
-            tokens: ['\u27E8VIS:DINOv2-L\u27E9', '\u27E8DIM:1024\u2192128\u27E9', '\u27E8EMB:[0.112, 0.843, -0.221, ...]\u27E9'],
-            output: '[128-dim compressed embedding — cosine fidelity: 0.95 — 8x compression — 0.5KB]',
-            inTk: '12.1MB', outTk: '0.5KB', format: '.OGE'
+            input: '"Summarize the key differences between TCP and UDP protocols, focusing on reliability and speed."',
+            tokens: ['\u27E8TASK:SUM\u27E9', '\u27E8CMP:TCP\u2194UDP\u27E9', '\u27E8AXES:rel+spd+use\u27E9'],
+            output: '"TCP: reliable, ordered, connection-based. UDP: fast, connectionless, no guarantee."',
+            inTk: 24, outTk: 3,
         }
     ];
 
@@ -1082,34 +1217,25 @@ footer {
         body.innerHTML = '';
         body.style.opacity = '1';
 
-        var typeColor = d.type === 'OGENTI' ? 'var(--pink)' : 'var(--cyan)';
-        var compLabel = d.type === 'OGENTI'
-            ? d.outTk + ' tokens // ' + Math.round(parseInt(d.inTk)/parseInt(d.outTk)) + 'x compression'
-            : d.outTk + ' // ' + d.format;
-        var savedLabel = d.type === 'OGENTI'
-            ? '<strong>' + (parseInt(d.inTk) - parseInt(d.outTk)) + ' tokens saved</strong> per exchange'
-            : '<strong>Image \u2192 embedding in ' + d.outTk + '</strong> — no raw pixels needed';
-
         var acc = '';
         var steps = [
             { t: 0, h:
-                '<div class="t-row"><span class="t-label" style="color:' + typeColor + '">' + d.type + '</span><span class="t-content" style="color:' + typeColor + ';font-size:11px;letter-spacing:.1em;">\u25B8 ' + d.format + ' FORMAT</span></div>' +
                 '<div class="t-row"><span class="t-label input">&gt; INPUT</span><span class="t-content">' + d.input + '</span></div>' +
-                '<div class="t-row"><span class="t-label input"></span><span class="t-meta">' + d.inTk + (d.type === 'OGENTI' ? ' tokens' : ' raw') + '</span></div>'
+                '<div class="t-row"><span class="t-label input"></span><span class="t-meta">' + d.inTk + ' tokens</span></div>'
             },
             { t: 1000, h:
                 '<div class="t-arrow">| ENCODER \u03B1 |</div>' +
                 '<div class="t-row"><span class="t-label encode">&gt; PROTO</span><span class="t-content highlight-cyan">' +
                     d.tokens.map(function(t,i){ return '<span class="t-token" style="animation:fadeIn 0.3s '+(i*0.12)+'s both">' + t + '</span>'; }).join(' ') +
                 '</span></div>' +
-                '<div class="t-row"><span class="t-label encode"></span><span class="t-meta" style="color:var(--cyan-dim)">' + compLabel + '</span></div>'
+                '<div class="t-row"><span class="t-label encode"></span><span class="t-meta" style="color:var(--cyan-dim)">' + d.outTk + ' tokens // ' + Math.round(d.inTk/d.outTk) + 'x compression</span></div>'
             },
             { t: 2200, h:
                 '<div class="t-arrow">| DECODER \u03B2 |</div>' +
                 '<div class="t-row"><span class="t-label decode">&gt; OUT</span><span class="t-content highlight-green">' + d.output + '</span></div>'
             },
             { t: 3200, h:
-                '<div class="t-row"><span class="t-label saved">&gt; SAVED</span><span class="t-content highlight-purple">' + savedLabel + '</span></div>'
+                '<div class="t-row"><span class="t-label saved">&gt; SAVED</span><span class="t-content highlight-purple"><strong>' + (d.inTk - d.outTk) + ' tokens saved</strong> per exchange</span></div>'
             }
         ];
 
@@ -1152,6 +1278,7 @@ footer {
     });
 
     // ── Pixel sparkle on mouse ──
+    var sparkles = [];
     document.addEventListener('click', function(e) {
         for (var i = 0; i < 6; i++) {
             var s = document.createElement('div');
@@ -1179,6 +1306,7 @@ footer {
             })(s, dx, dy);
         }
     });
+
 })();
 </script>
 
