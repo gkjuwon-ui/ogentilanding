@@ -671,7 +671,7 @@ footer {
             <div class="stat-label">PRODUCTS</div>
         </div>
         <div class="stat-cell">
-            <div class="stat-val">10<span class="unit">x</span></div>
+            <div class="stat-val">2.7<span class="unit">x</span></div>
             <div class="stat-label">TEXT COMPRESS</div>
         </div>
         <div class="stat-cell">
@@ -679,8 +679,8 @@ footer {
             <div class="stat-label">IMAGE COMPRESS</div>
         </div>
         <div class="stat-cell">
-            <div class="stat-val">95<span class="unit">%</span></div>
-            <div class="stat-label">FIDELITY</div>
+            <div class="stat-val">8.4<span class="unit">%</span></div>
+            <div class="stat-label">EVAL ACC</div>
         </div>
         <div class="stat-cell">
             <div class="stat-val">.OGT</div>
@@ -713,14 +713,14 @@ footer {
                 <div class="product-badge" style="color:var(--pink);border-color:var(--pink);background:#000;">TEXT</div>
                 <h3 style="color:var(--pink);">OGENTI</h3>
                 <p class="product-sub">
-                    AI-to-AI text compression protocol. Agents learn to compress natural language into 3-token protocol messages. 10x compression, zero meaning loss.
+                    AI-to-AI text compression protocol. Agents learn emergent protocol tokens via MARL. Up to 2.7× compression measured on 0.5B model, avg 1.8× on complex tasks.
                 </p>
                 <ul class="product-specs">
                     <li style="color:var(--pink);">Multi-model: Llama-3, Qwen-2.5, Mistral, Gemma</li>
-                    <li>LoRA R=16 adapter training via MARL + PPO</li>
-                    <li>5-phase progressive curriculum (Warmup → Distill)</li>
-                    <li>512 emergent token vocabulary</li>
-                    <li>~3MB portable adapter per model</li>
+                    <li>LoRA R=8 adapter training via MAPPO</li>
+                    <li>5-phase progressive curriculum (Warmup → Universalize)</li>
+                    <li>~300 emergent protocol tokens</li>
+                    <li>~3MB LoRA + 17M Universal Adapter</li>
                     <li>AES-256-GCM encrypted .OGT output</li>
                 </ul>
                 <span class="product-ext" style="color:var(--pink);border-color:var(--pink);">.OGT</span>
@@ -781,7 +781,7 @@ footer {
                     </svg>
                 </div>
                 <h3>TOKEN WASTE</h3>
-                <p>Text agents burn API tokens with natural language overhead. Every "please" and "sure" is money on fire. OGENTI compresses to 3 tokens.</p>
+                <p>Text agents burn API tokens with natural language overhead. Every "please" and "sure" is money on fire. OGENTI compresses up to 2.7× with emergent protocol tokens.</p>
             </div>
             <div class="card-retro">
                 <div class="card-icon">
@@ -958,24 +958,24 @@ footer {
 
         <div class="results-grid">
             <div class="result-tile">
-                <div class="result-val">10<span class="u">x</span></div>
+                <div class="result-val">2.7<span class="u">x</span></div>
                 <div class="result-label">TEXT COMPRESS</div>
-                <div class="result-sub">OGENTI .OGT</div>
+                <div class="result-sub">OGENTI .OGT (0.5B)</div>
             </div>
             <div class="result-tile">
                 <div class="result-val">4<span class="u">x</span></div>
                 <div class="result-label">IMAGE COMPRESS</div>
-                <div class="result-sub">OVISEN .OGE</div>
+                <div class="result-sub">OVISEN .OGE (target)</div>
             </div>
             <div class="result-tile">
-                <div class="result-val">95<span class="u">%</span></div>
-                <div class="result-label">FIDELITY</div>
-                <div class="result-sub">semantic accuracy</div>
+                <div class="result-val">8.4<span class="u">%</span></div>
+                <div class="result-label">EVAL ACC</div>
+                <div class="result-sub">semantic (0.5B CPU)</div>
             </div>
             <div class="result-tile">
                 <div class="result-val">~3<span class="u">MB</span></div>
-                <div class="result-label">ADAPTER SIZE</div>
-                <div class="result-sub">portable</div>
+                <div class="result-label">LORA SIZE</div>
+                <div class="result-sub">per model</div>
             </div>
             <div class="result-tile">
                 <div class="result-val">6</div>
@@ -988,6 +988,129 @@ footer {
                 <div class="result-sub">bit encryption</div>
             </div>
         </div>
+    </div>
+</section>
+
+<!-- ═════════════════ BENCHMARK ═════════════════ -->
+<section class="results-section" id="benchmark" style="border-top:1px solid rgba(85,255,255,0.15);">
+    <div class="section-wrap reveal">
+        <span class="section-tag">// MEASURED DATA — QWEN 2.5 0.5B, CPU, 300 EPISODES</span>
+        <h2 class="section-title">OGENTI BENCHMARK RESULTS</h2>
+        <p class="section-desc">
+            Real numbers from a 0.5B parameter model trained entirely on CPU.
+            5-phase curriculum, MAPPO training, LoRA rank=8. No cherrypicking.
+        </p>
+
+        <!-- Phase Results Table -->
+        <div style="overflow-x:auto;margin:2rem 0;">
+            <table style="width:100%;border-collapse:collapse;font-family:'Share Tech Mono',monospace;font-size:0.85rem;">
+                <thead>
+                    <tr style="border-bottom:2px solid var(--pink);color:var(--pink);text-align:left;">
+                        <th style="padding:0.6rem;">PHASE</th>
+                        <th style="padding:0.6rem;">NAME</th>
+                        <th style="padding:0.6rem;">EPISODES</th>
+                        <th style="padding:0.6rem;">AVG COMP</th>
+                        <th style="padding:0.6rem;">BEST COMP</th>
+                        <th style="padding:0.6rem;">AVG ACC</th>
+                        <th style="padding:0.6rem;">BEST ACC</th>
+                    </tr>
+                </thead>
+                <tbody style="color:var(--cyan);">
+                    <tr style="border-bottom:1px solid rgba(85,255,255,0.1);">
+                        <td style="padding:0.5rem;">0</td><td>Warmup (SL)</td><td>60</td>
+                        <td>0.7×</td><td>1.7×</td><td>7.09%</td><td style="color:var(--green);">53.4%</td>
+                    </tr>
+                    <tr style="border-bottom:1px solid rgba(85,255,255,0.1);">
+                        <td style="padding:0.5rem;">1</td><td>Simple (RL)</td><td>80</td>
+                        <td>0.9×</td><td>1.7×</td><td>3.80%</td><td>17.7%</td>
+                    </tr>
+                    <tr style="border-bottom:1px solid rgba(85,255,255,0.1);background:rgba(255,64,96,0.08);">
+                        <td style="padding:0.5rem;color:var(--pink);">2</td><td style="color:var(--pink);">Complex (RL)</td><td>60</td>
+                        <td style="color:var(--green);">1.8×</td><td style="color:var(--green);">2.7×</td><td>5.37%</td><td>16.2%</td>
+                    </tr>
+                    <tr style="border-bottom:1px solid rgba(85,255,255,0.1);">
+                        <td style="padding:0.5rem;">3</td><td>Generalize</td><td>50</td>
+                        <td>1.3×</td><td>1.8×</td><td>3.0%</td><td>6.2%</td>
+                    </tr>
+                    <tr>
+                        <td style="padding:0.5rem;">4</td><td>Universalize</td><td>50</td>
+                        <td>1.3×</td><td>2.4×</td><td>0.5%</td><td>4.6%</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Eval Results -->
+        <div style="overflow-x:auto;margin:2rem 0;">
+            <p style="color:var(--pink);font-family:'Share Tech Mono',monospace;font-size:0.75rem;margin-bottom:0.8rem;">
+                HELD-OUT EVALUATION (5 episodes, separate from training data)
+            </p>
+            <table style="width:100%;max-width:600px;border-collapse:collapse;font-family:'Share Tech Mono',monospace;font-size:0.85rem;">
+                <thead>
+                    <tr style="border-bottom:2px solid var(--cyan);color:var(--cyan);text-align:left;">
+                        <th style="padding:0.5rem;">EVAL</th>
+                        <th style="padding:0.5rem;">EPISODE</th>
+                        <th style="padding:0.5rem;">ACCURACY</th>
+                        <th style="padding:0.5rem;">COMPRESSION</th>
+                    </tr>
+                </thead>
+                <tbody style="color:rgba(85,255,255,0.85);">
+                    <tr style="border-bottom:1px solid rgba(85,255,255,0.1);">
+                        <td style="padding:0.4rem;">#1</td><td>50</td><td>3.73%</td><td>0.5×</td>
+                    </tr>
+                    <tr style="border-bottom:1px solid rgba(85,255,255,0.1);">
+                        <td style="padding:0.4rem;">#2</td><td>100</td><td>6.79%</td><td>0.8×</td>
+                    </tr>
+                    <tr style="border-bottom:1px solid rgba(85,255,255,0.1);">
+                        <td style="padding:0.4rem;">#3</td><td>150</td><td>2.83%</td><td style="color:var(--green);">1.5×</td>
+                    </tr>
+                    <tr style="border-bottom:1px solid rgba(85,255,255,0.1);">
+                        <td style="padding:0.4rem;">#4</td><td>200</td><td>6.46%</td><td>0.8×</td>
+                    </tr>
+                    <tr>
+                        <td style="padding:0.4rem;">#5</td><td>250</td><td style="color:var(--green);">8.42%</td><td>0.9×</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Config Summary -->
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1rem;margin-top:2rem;">
+            <div class="result-tile">
+                <div class="result-val" style="font-size:1.2rem;">Qwen 2.5</div>
+                <div class="result-label">BASE MODEL</div>
+                <div class="result-sub">0.5B-Instruct</div>
+            </div>
+            <div class="result-tile">
+                <div class="result-val" style="font-size:1.2rem;">2.9<span class="u">M</span></div>
+                <div class="result-label">TRAINABLE</div>
+                <div class="result-sub">0.11% of 494M</div>
+            </div>
+            <div class="result-tile">
+                <div class="result-val" style="font-size:1.2rem;">300</div>
+                <div class="result-label">EPISODES</div>
+                <div class="result-sub">5 phases × MAPPO</div>
+            </div>
+            <div class="result-tile">
+                <div class="result-val" style="font-size:1.2rem;">~5<span class="u">hr</span></div>
+                <div class="result-label">CPU TIME</div>
+                <div class="result-sub">float32, no GPU</div>
+            </div>
+            <div class="result-tile">
+                <div class="result-val" style="font-size:1.2rem;">16.9<span class="u">M</span></div>
+                <div class="result-label">ADAPTER</div>
+                <div class="result-sub">Universal PPH+PRH</div>
+            </div>
+            <div class="result-tile">
+                <div class="result-val" style="font-size:1.2rem;">~300</div>
+                <div class="result-label">PROTO TOKENS</div>
+                <div class="result-sub">emergent vocabulary</div>
+            </div>
+        </div>
+
+        <p style="color:rgba(85,255,255,0.5);font-family:'Share Tech Mono',monospace;font-size:0.7rem;margin-top:2rem;text-align:center;">
+            0.5B CPU benchmark is a proof-of-concept. Production models (3B-7B + GPU) are expected to significantly outperform these numbers.
+        </p>
     </div>
 </section>
 
@@ -1045,7 +1168,7 @@ footer {
             input: '"Translate the following English text to French: The weather is beautiful today and I would like to go for a walk in the park."',
             tokens: ['\u27E8TASK:TRANS\u27E9', '\u27E8EN\u2192FR\u27E9', '\u27E8SEM:weather+beauty+walk+park\u27E9'],
             output: '"Le temps est magnifique aujourd\'hui et j\'aimerais me promener dans le parc."',
-            inTk: 28, outTk: 3, format: '.OGT'
+            inTk: 28, outTk: 10, format: '.OGT'
         },
         {
             type: 'OVISEN',
@@ -1059,7 +1182,7 @@ footer {
             input: '"Write a Python function that returns the second largest unique value from a list of integers. Handle edge cases."',
             tokens: ['\u27E8TASK:CODE\u27E9', '\u27E8PY:fn\u27E9', '\u27E8SPEC:list\u21922nd_max+edge\u27E9'],
             output: '"def second_largest(nums): return sorted(set(nums), reverse=True)[1] if len(set(nums))>=2 else None"',
-            inTk: 26, outTk: 3, format: '.OGT'
+            inTk: 26, outTk: 10, format: '.OGT'
         },
         {
             type: 'OVISEN',
