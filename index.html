@@ -243,8 +243,8 @@ section { position: relative; z-index: 1; }
 /* ── Product comparison ── */
 .products-section { border-top: 4px solid #fff; background: #0000aa; }
 .product-grid {
-    display: grid; grid-template-columns: repeat(3, 1fr);
-    gap: 20px; margin-top: 48px;
+    display: grid; grid-template-columns: repeat(2, 1fr);
+    gap: 24px; margin-top: 48px;
 }
 .product-card {
     padding: 28px; background: #000;
@@ -698,66 +698,72 @@ footer {
 <!-- ═════════════════ PRODUCTS ═════════════════ -->
 <section class="products-section" id="products">
     <div class="section-wrap reveal">
-        <span class="section-tag">// THREE PRODUCTS, ONE ENGINE</span>
+        <span class="section-tag">// TWO SERIES, ONE ENGINE</span>
         <h2 class="section-title">THE SERIES PRODUCT LINE</h2>
         <p class="section-desc">
-            All products share the same MARL training engine, credit system,
-            and AES-256-GCM encrypted adapter format. Choose what you need.
+            Two series, one MARL training engine. Same credit system,
+            same AES-256-GCM encryption. Different missions.
         </p>
 
         <div class="product-grid">
-            <!-- OGENTI -->
+            <!-- O-SERIES -->
             <div class="product-card">
-                <div class="product-badge" style="color:var(--pink);border-color:var(--pink);background:#000;">O-SERIES</div>
-                <h3 style="color:var(--pink);">OGENTI</h3>
+                <div class="product-badge" style="color:var(--cyan);border-color:var(--cyan);background:#000;">COMPRESSION</div>
+                <h3 style="color:var(--cyan);">O-SERIES</h3>
                 <p class="product-sub">
-                    AI-to-AI text compression protocol. Agents learn emergent tokens via MARL. Up to 2.7x compression on 0.5B model.
+                    AI-to-AI compression protocol. Two products that eliminate communication waste between AI agents.
                 </p>
-                <ul class="product-specs">
-                    <li style="color:var(--pink);">Llama-3, Qwen-2.5, Mistral, Gemma</li>
-                    <li>LoRA R=8 adapter training via MAPPO</li>
-                    <li>5-phase progressive curriculum</li>
-                    <li>~300 emergent protocol tokens</li>
-                    <li>~3MB LoRA + 17M Universal Adapter</li>
-                    <li>AES-256-GCM encrypted .OGT output</li>
-                </ul>
-                <span class="product-ext" style="color:var(--pink);border-color:var(--pink);">.OGT</span>
+
+                <div style="border-top:2px solid rgba(255,85,255,0.3);padding-top:12px;margin-top:12px;margin-bottom:16px;">
+                    <h4 style="font-family:var(--font-pixel);font-size:0.5rem;color:var(--pink);margin-bottom:8px;">OGENTI — TEXT COMPRESSION</h4>
+                    <ul class="product-specs">
+                        <li style="color:var(--pink);">Llama-3, Qwen-2.5, Mistral, Gemma</li>
+                        <li>LoRA R=8 adapter training via MAPPO</li>
+                        <li>5-phase progressive curriculum</li>
+                        <li>~300 emergent protocol tokens</li>
+                        <li>Up to 2.7x compression ratio</li>
+                    </ul>
+                    <span class="product-ext" style="color:var(--pink);border-color:var(--pink);font-size:0.4rem;padding:4px 10px;border-width:2px;">.OGT</span>
+                </div>
+
+                <div style="border-top:2px solid rgba(85,255,255,0.3);padding-top:12px;margin-bottom:8px;">
+                    <h4 style="font-family:var(--font-pixel);font-size:0.5rem;color:var(--cyan);margin-bottom:8px;">OVISEN — IMAGE COMPRESSION</h4>
+                    <ul class="product-specs">
+                        <li style="color:var(--cyan);">CLIP, SigLIP, DINOv2, EVA-02</li>
+                        <li>Frozen backbone + CompressionHead</li>
+                        <li>Cooperative encoder-decoder MARL</li>
+                        <li>Configurable target dims (32D-512D)</li>
+                        <li>Up to 4x embedding compression</li>
+                    </ul>
+                    <span class="product-ext" style="color:var(--cyan);border-color:var(--cyan);font-size:0.4rem;padding:4px 10px;border-width:2px;">.OGE</span>
+                </div>
             </div>
 
-            <!-- OVISEN -->
+            <!-- P-SERIES -->
             <div class="product-card">
-                <div class="product-badge" style="color:var(--cyan);border-color:var(--cyan);background:#000;">O-SERIES</div>
-                <h3 style="color:var(--cyan);">OVISEN</h3>
+                <div class="product-badge" style="color:var(--phiren);border-color:var(--phiren);background:#000;">FACTUALITY</div>
+                <h3 style="color:var(--phiren);">P-SERIES</h3>
                 <p class="product-sub">
-                    AI-to-AI image embedding compressor. Converts raw images into compressed embeddings. No raw pixels needed.
+                    Hallucination detection &amp; factuality verification. Making AI outputs trustworthy at the claim level.
                 </p>
-                <ul class="product-specs">
-                    <li style="color:var(--cyan);">CLIP, SigLIP, DINOv2, EVA-02</li>
-                    <li>Frozen backbone + CompressionHead</li>
-                    <li>Cooperative encoder-decoder MARL</li>
-                    <li>Configurable target dims (32D-512D)</li>
-                    <li>Fidelity + compression rewards</li>
-                    <li>AES-256-GCM encrypted .OGE output</li>
-                </ul>
-                <span class="product-ext" style="color:var(--cyan);border-color:var(--cyan);">.OGE</span>
-            </div>
 
-            <!-- PHIREN -->
-            <div class="product-card">
-                <div class="product-badge" style="color:var(--phiren);border-color:var(--phiren);background:#000;">P-SERIES</div>
-                <h3 style="color:var(--phiren);">PHIREN</h3>
-                <p class="product-sub">
-                    Hallucination detection &amp; factuality guard. Claim-level verification with calibrated confidence scores.
+                <div style="border-top:2px solid rgba(85,255,85,0.3);padding-top:12px;margin-top:12px;margin-bottom:16px;">
+                    <h4 style="font-family:var(--font-pixel);font-size:0.5rem;color:var(--phiren);margin-bottom:8px;">PHIREN — HALLUCINATION GUARD</h4>
+                    <ul class="product-specs">
+                        <li style="color:var(--phiren);">Llama, Qwen, Mistral backbones</li>
+                        <li>ClaimExtractor + FactualityScorer</li>
+                        <li>Calibrated confidence estimation</li>
+                        <li>TruthfulQA, FEVER, HaluEval datasets</li>
+                        <li>Factuality + calibration rewards</li>
+                        <li>Claim-level verdict output</li>
+                        <li>SUPPORTED / CONTRADICTED / UNVERIFIABLE</li>
+                    </ul>
+                    <span class="product-ext" style="color:var(--phiren);border-color:var(--phiren);font-size:0.4rem;padding:4px 10px;border-width:2px;">.PHR</span>
+                </div>
+
+                <p style="font-family:var(--font-pixel);font-size:0.38rem;color:var(--text-dim);line-height:2.2;margin-top:8px;">
+                    Every claim extracted. Every fact verified. Every confidence calibrated. AES-256-GCM encrypted .PHR adapters.
                 </p>
-                <ul class="product-specs">
-                    <li style="color:var(--phiren);">Llama, Qwen, Mistral backbones</li>
-                    <li>ClaimExtractor + FactualityScorer</li>
-                    <li>Calibrated confidence estimation</li>
-                    <li>TruthfulQA, FEVER, HaluEval data</li>
-                    <li>Factuality + calibration rewards</li>
-                    <li>AES-256-GCM encrypted .PHR output</li>
-                </ul>
-                <span class="product-ext" style="color:var(--phiren);border-color:var(--phiren);">.PHR</span>
             </div>
         </div>
     </div>
