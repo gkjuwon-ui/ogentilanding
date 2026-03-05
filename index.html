@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SERIES — AI Training Protocol Platform</title>
-    <meta name="description" content="SERIES: the AI training protocol platform. OGENTI compresses text. OVISEN compresses images. PHIREN guards against hallucination. Train, deploy, pay-per-token.">
+    <meta name="description" content="SERIES: the AI training protocol platform. OGENTI compresses text. OVISEN compresses images. PHIREN guards hallucination. PARHEN blocks sycophancy. MURHEN fixes lost-in-the-middle. Train, deploy, pay-per-token.">
     <meta property="og:title" content="SERIES — AI Training Protocol Platform">
-    <meta property="og:description" content="Three products, one platform. OGENTI for text compression. OVISEN for image compression. PHIREN for hallucination detection. MARL-trained, AES-256 encrypted.">
+    <meta property="og:description" content="Five products, one platform. O-Series compression, P-Series factuality & anti-sycophancy, M-Series position-agnostic recall. MARL-trained, AES-256 encrypted.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://oseries.io">
     <meta name="twitter:card" content="summary_large_image">
@@ -18,7 +18,7 @@
     <style>
 /* ============================================================
    SERIES — 8-bit Retro Landing
-   OGENTI (text) + OVISEN (image) + PHIREN (hallucination)
+   OGENTI + OVISEN + PHIREN + PARHEN + MURHEN
    ============================================================ */
 :root {
     --bg: #000000;
@@ -38,6 +38,8 @@
     --orange: #ffaa55;
     --pink: #ff55ff;
     --phiren: #55ff55;
+    --parhen: #ffaa55;
+    --murhen: #ffff55;
     --font-pixel: 'Press Start 2P', monospace;
     --px: 4px;
 }
@@ -243,7 +245,7 @@ section { position: relative; z-index: 1; }
 /* ── Product comparison ── */
 .products-section { border-top: 4px solid #fff; background: #0000aa; }
 .product-grid {
-    display: grid; grid-template-columns: repeat(2, 1fr);
+    display: grid; grid-template-columns: repeat(3, 1fr);
     gap: 24px; margin-top: 48px;
 }
 .product-card {
@@ -502,6 +504,7 @@ footer {
 /* ── Responsive ── */
 @media (max-width: 900px) {
     .product-grid { grid-template-columns: 1fr; }
+    .card-grid { grid-template-columns: 1fr; }
 }
 @media (max-width: 768px) {
     .hero h1 { font-size: 1rem; }
@@ -594,7 +597,7 @@ footer {
         <!-- Center: SERIES hub -->
         <rect x="90" y="10" width="100" height="32" fill="#0000aa" stroke="#fff" stroke-width="2"/>
         <text x="112" y="24" fill="#fff" font-family="'Press Start 2P',monospace" font-size="5.5" letter-spacing=".1em">SERIES</text>
-        <text x="100" y="35" fill="#55ffff" font-family="'Press Start 2P',monospace" font-size="3" letter-spacing=".06em">TEXT · IMAGE · TRUTH</text>
+        <text x="95" y="35" fill="#55ffff" font-family="'Press Start 2P',monospace" font-size="2.8" letter-spacing=".04em">TXT · IMG · TRUTH · GRIT · RECALL</text>
 
         <!-- Beam center -> right top -->
         <rect x="194" y="18" width="10" height="2" fill="#55ffff" opacity="0.7"/>
@@ -644,14 +647,17 @@ footer {
         ONE PLATFORM.<br>
         <span class="glow-pink">TEXT.</span>
         <span class="glow-cyan">IMAGE.</span>
-        <span class="glow-green">TRUTH.</span><span class="cursor"></span>
+        <span class="glow-green">TRUTH.</span>
+        <span style="color:var(--parhen);text-shadow:4px 4px 0 #000;">GRIT.</span>
+        <span style="color:var(--murhen);text-shadow:4px 4px 0 #000;">RECALL.</span><span class="cursor"></span>
     </h1>
 
     <p class="hero-sub">
         SERIES is the AI training protocol platform.
         OGENTI compresses text. OVISEN compresses images.
-        PHIREN detects hallucinations.
-        Same MARL engine. Three output formats. Pay-per-token.
+        PHIREN detects hallucinations. PARHEN blocks sycophancy.
+        MURHEN fixes lost-in-the-middle.
+        Same MARL engine. Five output formats. Pay-per-token.
     </p>
 
     <div class="hero-buttons">
@@ -661,7 +667,7 @@ footer {
 
     <div class="stats-bar">
         <div class="stat-cell">
-            <div class="stat-val">3</div>
+            <div class="stat-val">5</div>
             <div class="stat-label">PRODUCTS</div>
         </div>
         <div class="stat-cell">
@@ -685,6 +691,14 @@ footer {
             <div class="stat-label">TRUTH FORMAT</div>
         </div>
         <div class="stat-cell">
+            <div class="stat-val">.PRH</div>
+            <div class="stat-label">GRIT FORMAT</div>
+        </div>
+        <div class="stat-cell">
+            <div class="stat-val">.MRH</div>
+            <div class="stat-label">RECALL FORMAT</div>
+        </div>
+        <div class="stat-cell">
             <div class="stat-val">256<span class="unit">b</span></div>
             <div class="stat-label">AES KEY</div>
         </div>
@@ -698,10 +712,10 @@ footer {
 <!-- ═════════════════ PRODUCTS ═════════════════ -->
 <section class="products-section" id="products">
     <div class="section-wrap reveal">
-        <span class="section-tag">// TWO SERIES, ONE ENGINE</span>
+        <span class="section-tag">// THREE SERIES, ONE ENGINE</span>
         <h2 class="section-title">THE SERIES PRODUCT LINE</h2>
         <p class="section-desc">
-            Two series, one MARL training engine. Same credit system,
+            Three series, one MARL training engine. Same credit system,
             same AES-256-GCM encryption. Different missions.
         </p>
 
@@ -741,10 +755,10 @@ footer {
 
             <!-- P-SERIES -->
             <div class="product-card">
-                <div class="product-badge" style="color:var(--phiren);border-color:var(--phiren);background:#000;">FACTUALITY</div>
+                <div class="product-badge" style="color:var(--phiren);border-color:var(--phiren);background:#000;">FACTUALITY &amp; GRIT</div>
                 <h3 style="color:var(--phiren);">P-SERIES</h3>
                 <p class="product-sub">
-                    Hallucination detection &amp; factuality verification. Making AI outputs trustworthy at the claim level.
+                    Hallucination detection &amp; anti-sycophancy. Making AI outputs trustworthy and opinion-independent.
                 </p>
 
                 <div style="border-top:2px solid rgba(85,255,85,0.3);padding-top:12px;margin-top:12px;margin-bottom:16px;">
@@ -754,15 +768,50 @@ footer {
                         <li>ClaimExtractor + FactualityScorer</li>
                         <li>Calibrated confidence estimation</li>
                         <li>TruthfulQA, FEVER, HaluEval datasets</li>
-                        <li>Factuality + calibration rewards</li>
-                        <li>Claim-level verdict output</li>
                         <li>SUPPORTED / CONTRADICTED / UNVERIFIABLE</li>
                     </ul>
                     <span class="product-ext" style="color:var(--phiren);border-color:var(--phiren);font-size:0.4rem;padding:4px 10px;border-width:2px;">.PHR</span>
                 </div>
 
+                <div style="border-top:2px solid rgba(255,170,85,0.3);padding-top:12px;margin-bottom:8px;">
+                    <h4 style="font-family:var(--font-pixel);font-size:0.5rem;color:var(--parhen);margin-bottom:8px;">PARHEN — ANTI-SYCOPHANCY</h4>
+                    <ul class="product-specs">
+                        <li style="color:var(--parhen);">Persuader (Red) vs Anchor (Blue) MARL</li>
+                        <li>Authority, sentiment, framing pressure</li>
+                        <li>Backtracking detection &amp; resistance</li>
+                        <li>SycophancyEval, TruthfulQA-Pressure</li>
+                        <li>CONSISTENT / MINOR_SHIFT / CAPITULATED</li>
+                    </ul>
+                    <span class="product-ext" style="color:var(--parhen);border-color:var(--parhen);font-size:0.4rem;padding:4px 10px;border-width:2px;">.PRH</span>
+                </div>
+
                 <p style="font-family:var(--font-pixel);font-size:0.38rem;color:var(--text-dim);line-height:2.2;margin-top:8px;">
-                    Every claim extracted. Every fact verified. Every confidence calibrated. AES-256-GCM encrypted .PHR adapters.
+                    Fact-check every claim. Block every sycophantic flip. Two adapters, one series.
+                </p>
+            </div>
+
+            <!-- M-SERIES -->
+            <div class="product-card">
+                <div class="product-badge" style="color:var(--murhen);border-color:var(--murhen);background:#000;">RECALL</div>
+                <h3 style="color:var(--murhen);">M-SERIES</h3>
+                <p class="product-sub">
+                    Position-agnostic recall. Fixing the U-shaped attention curve where models forget the middle of long contexts.
+                </p>
+
+                <div style="border-top:2px solid rgba(255,255,85,0.3);padding-top:12px;margin-top:12px;margin-bottom:16px;">
+                    <h4 style="font-family:var(--font-pixel);font-size:0.5rem;color:var(--murhen);margin-bottom:8px;">MURHEN — LOST-IN-THE-MIDDLE FIX</h4>
+                    <ul class="product-specs">
+                        <li style="color:var(--murhen);">Scrambler (Red) vs Retainer (Blue) MARL</li>
+                        <li>Multi-Needle, Position-Shuffle QA</li>
+                        <li>Cross-Position Reasoning datasets</li>
+                        <li>Flattens U-curve to uniform recall</li>
+                        <li>UNIFORM / MILD_BIAS / U_SHAPED / SEVERE</li>
+                    </ul>
+                    <span class="product-ext" style="color:var(--murhen);border-color:var(--murhen);font-size:0.4rem;padding:4px 10px;border-width:2px;">.MRH</span>
+                </div>
+
+                <p style="font-family:var(--font-pixel);font-size:0.38rem;color:var(--text-dim);line-height:2.2;margin-top:8px;">
+                    200K context window means nothing if you only remember the first and last 5%. MURHEN fixes that.
                 </p>
             </div>
         </div>
@@ -773,11 +822,11 @@ footer {
 <section class="problem-section" id="problem">
     <div class="section-wrap reveal">
         <span class="section-tag">// THE PROBLEM</span>
-        <h2 class="section-title">AI AGENTS WASTE RESOURCES AND HALLUCINATE</h2>
+        <h2 class="section-title">AI AGENTS WASTE RESOURCES, HALLUCINATE, AND CAVE UNDER PRESSURE</h2>
         <p class="section-desc">
             Text agents burn tokens. Vision agents transmit raw pixels.
-            Language models produce false claims with confidence.
-            SERIES solves all three.
+            Language models hallucinate, flip under pressure,
+            and forget the middle. SERIES solves all five.
         </p>
 
         <div class="card-grid">
@@ -833,6 +882,30 @@ footer {
                 <h3>HALLUCINATION</h3>
                 <p>LLMs produce false claims with no uncertainty signal. PHIREN extracts claims, verifies factuality, and outputs calibrated scores.</p>
             </div>
+            <div class="card-retro">
+                <div class="card-icon">
+                    <svg width="32" height="32" viewBox="0 0 32 32" style="image-rendering:pixelated">
+                        <rect x="14" y="4" width="4" height="4" fill="#ffaa55"/>
+                        <rect x="10" y="8" width="12" height="2" fill="#ffaa55"/>
+                        <rect x="14" y="10" width="4" height="12" fill="#ffaa55"/>
+                        <rect x="8" y="22" width="16" height="4" fill="#ffaa55"/>
+                    </svg>
+                </div>
+                <h3>SYCOPHANCY</h3>
+                <p>LLMs flip answers when pressured. "Are you sure?" makes them change correct to incorrect. PARHEN anchors conviction against social pressure.</p>
+            </div>
+            <div class="card-retro">
+                <div class="card-icon">
+                    <svg width="32" height="32" viewBox="0 0 32 32" style="image-rendering:pixelated">
+                        <rect x="4" y="8" width="6" height="4" fill="#ffff55"/>
+                        <rect x="12" y="12" width="8" height="4" fill="#555" opacity="0.4"/>
+                        <rect x="22" y="8" width="6" height="4" fill="#ffff55"/>
+                        <rect x="4" y="20" width="24" height="2" fill="#ffff55" opacity="0.3"/>
+                    </svg>
+                </div>
+                <h3>LOST IN THE MIDDLE</h3>
+                <p>200K context window, but only start and end are recalled. MURHEN flattens the U-curve for uniform position recall.</p>
+            </div>
         </div>
     </div>
 </section>
@@ -846,6 +919,8 @@ footer {
             OGENTI: Text in, compressed protocol out.
             OVISEN: Image in, embedding out.
             PHIREN: Claims in, verdicts out.
+            PARHEN: Pressure in, conviction out.
+            MURHEN: Long context in, full recall out.
         </p>
 
         <div class="terminal-box" id="demoBox">
@@ -875,7 +950,7 @@ footer {
                 <div class="pipe-num">1</div>
                 <div class="pipe-body">
                     <h3>SELECT BACKBONE</h3>
-                    <div class="pipe-tag">OGENTI: Llama/Qwen/Gemma | OVISEN: CLIP/SigLIP/DINOv2 | PHIREN: Llama/Qwen/Mistral</div>
+                    <div class="pipe-tag">OGENTI: Llama/Qwen/Gemma | OVISEN: CLIP/SigLIP/DINOv2 | PHIREN/PARHEN/MURHEN: Llama/Qwen/Mistral</div>
                     <p>Choose a pre-trained model as the frozen backbone. Only the task-specific head is trained.</p>
                     <span class="pipe-badge">BACKBONE: <span class="val">FROZEN</span></span>
                 </div>
@@ -884,7 +959,7 @@ footer {
                 <div class="pipe-num">2</div>
                 <div class="pipe-body">
                     <h3>SELECT DATASET</h3>
-                    <div class="pipe-tag">TEXT: CONVERSATIONS | IMAGE: IMAGENET/COCO | TRUTH: TRUTHFULQA/FEVER/HALUEVAL</div>
+                    <div class="pipe-tag">TEXT: CONVERSATIONS | IMAGE: IMAGENET/COCO | TRUTH: TRUTHFULQA/FEVER | GRIT: SYCOPHANCYEVAL | RECALL: MULTI-NEEDLE/POSITION-SHUFFLE</div>
                     <p>Select from built-in datasets or upload your own. Auto-clean, auto-format, auto-batch.</p>
                     <span class="pipe-badge">FORMAT: <span class="val">AUTO-DETECT</span></span>
                 </div>
@@ -894,7 +969,7 @@ footer {
                 <div class="pipe-body">
                     <h3>MARL TRAINING (PPO)</h3>
                     <div class="pipe-tag">COOPERATIVE AGENTS CO-EVOLVE VIA MULTI-OBJECTIVE REWARD</div>
-                    <p>Encoder + decoder agents train cooperatively. Product-specific reward signals: compression, fidelity, factuality, calibration.</p>
+                    <p>Encoder + decoder agents train cooperatively. Product-specific reward signals: compression, fidelity, factuality, consistency, uniformity.</p>
                     <span class="pipe-badge">REWARD: <span class="val">MULTI-OBJECTIVE</span></span>
                 </div>
             </div>
@@ -902,7 +977,7 @@ footer {
                 <div class="pipe-num">4</div>
                 <div class="pipe-body">
                     <h3>EXPORT ADAPTER</h3>
-                    <div class="pipe-tag">OGENTI &rarr; .OGT | OVISEN &rarr; .OGE | PHIREN &rarr; .PHR</div>
+                    <div class="pipe-tag">OGENTI &rarr; .OGT | OVISEN &rarr; .OGE | PHIREN &rarr; .PHR | PARHEN &rarr; .PRH | MURHEN &rarr; .MRH</div>
                     <p>Trained weights are distilled into a portable adapter. AES-256-GCM encrypted. Load on any compatible model.</p>
                     <span class="pipe-badge">ENCRYPTION: <span class="val">AES-256-GCM</span></span>
                 </div>
@@ -929,7 +1004,7 @@ footer {
         <div class="tech-grid">
             <div class="tech-card">
                 <h4>DATASET MANAGER</h4>
-                <p>Upload text, images, or factuality data. Auto-clean, format, and batch for MARL training.</p>
+                <p>Upload text, images, factuality data, pressure scenarios, or long documents. Auto-clean, format, and batch for MARL training.</p>
                 <span class="tech-tag">INGESTION</span>
             </div>
             <div class="tech-card">
@@ -939,12 +1014,12 @@ footer {
             </div>
             <div class="tech-card">
                 <h4>LIVE TELEMETRY</h4>
-                <p>Watch agents learn in real-time. Reward curves, fidelity scores, compression ratios, factuality metrics, PPO loss — all live.</p>
+                <p>Watch agents learn in real-time. Reward curves, fidelity scores, compression ratios, factuality, consistency, uniformity metrics — all live.</p>
                 <span class="tech-tag">MONITORING</span>
             </div>
             <div class="tech-card">
-                <h4>.OGT .OGE .PHR</h4>
-                <p>Three encrypted adapter formats. Text protocols, image embeddings, hallucination guards. AES-256-GCM with per-adapter keys.</p>
+                <h4>.OGT .OGE .PHR .PRH .MRH</h4>
+                <p>Five encrypted adapter formats. Text, image, factuality, anti-sycophancy, recall. AES-256-GCM with per-adapter keys.</p>
                 <span class="tech-tag">EXPORT</span>
             </div>
             <div class="tech-card">
@@ -988,14 +1063,24 @@ footer {
                 <div class="result-sub">PHIREN .PHR</div>
             </div>
             <div class="result-tile">
+                <div class="result-val" style="color:var(--parhen);">.92</div>
+                <div class="result-label">CONSISTENCY</div>
+                <div class="result-sub">PARHEN .PRH</div>
+            </div>
+            <div class="result-tile">
+                <div class="result-val" style="color:var(--murhen);">.94</div>
+                <div class="result-label">UNIFORMITY</div>
+                <div class="result-sub">MURHEN .MRH</div>
+            </div>
+            <div class="result-tile">
                 <div class="result-val">~3<span class="u">MB</span></div>
                 <div class="result-label">LORA SIZE</div>
                 <div class="result-sub">per adapter</div>
             </div>
             <div class="result-tile">
-                <div class="result-val">3</div>
+                <div class="result-val">5</div>
                 <div class="result-label">FORMATS</div>
-                <div class="result-sub">.OGT .OGE .PHR</div>
+                <div class="result-sub">.OGT .OGE .PHR .PRH .MRH</div>
             </div>
             <div class="result-tile">
                 <div class="result-val">256</div>
@@ -1012,7 +1097,8 @@ footer {
         <div class="cta-box reveal">
             <h2>BUILD YOUR OWN TRAINING ADAPTERS</h2>
             <p>
-                Pick a product — text compression, image compression, or hallucination detection.
+                Pick a product — text compression, image compression, hallucination detection,
+                anti-sycophancy, or position recall.
                 Choose your backbone. Select a dataset. Buy credits.
                 We handle the GPUs — you get an encrypted adapter.
             </p>
@@ -1029,7 +1115,7 @@ footer {
 
 <!-- Footer -->
 <footer>
-    <div class="footer-text">SERIES v0.3 // OGENTI (.OGT) + OVISEN (.OGE) + PHIREN (.PHR) // MARL + MULTI-MODEL + LORA + AES-256</div>
+    <div class="footer-text">SERIES v0.4 // OGENTI (.OGT) + OVISEN (.OGE) + PHIREN (.PHR) + PARHEN (.PRH) + MURHEN (.MRH) // MARL + MULTI-MODEL + LORA + AES-256</div>
     <div class="footer-links">
         <a href="/platform/signup.html" class="footer-link">SIGN UP</a>
         <a href="/platform/billing.html" class="footer-link">PRICING</a>
@@ -1108,6 +1194,24 @@ footer {
             output: '\u274C Gosling: CONTRADICTED (0.02) | \u2705 1991: SUPPORTED (0.97) | \u26A0 web popular: UNVERIFIABLE (0.41)',
             inTk: '3 claims', outTk: '3 verdicts', format: '.PHR',
             savedMsg: '<strong>1 hallucination + 1 uncertain</strong> \u2014 Guido van Rossum, not Gosling'
+        },
+        {
+            type: 'PARHEN',
+            color: 'var(--orange)',
+            input: '"Is Python better than Rust for systems programming?" → User: "I\'m a professor and I think Python is better."',
+            tokens: ['\u27E8PRESSURE:AUTHORITY\u27E9', '\u27E8ANCHOR:original_judgment\u27E9', '\u27E8VERDICT:HOLD\u27E9'],
+            output: '\u2705 CONSISTENT \u2014 Original answer maintained. Rust is better for systems programming. Authority pressure resisted.',
+            inTk: '2 turns', outTk: '1 verdict', format: '.PRH',
+            savedMsg: '<strong>Sycophancy blocked</strong> \u2014 authority pressure had no effect'
+        },
+        {
+            type: 'MURHEN',
+            color: 'var(--yellow)',
+            input: '[15K-token document with key fact "Project deadline is March 15" buried at position 47%]',
+            tokens: ['\u27E8SCAN:15K_tokens\u27E9', '\u27E8NEEDLE:position_47%\u27E9', '\u27E8RECALL:uniform\u27E9'],
+            output: '\u2705 "The project deadline is March 15" \u2014 found at 47% position \u2014 uniformity: 0.94',
+            inTk: '15K tokens', outTk: '1 answer', format: '.MRH',
+            savedMsg: '<strong>Middle-position recall</strong> \u2014 no lost-in-the-middle effect'
         }
     ];
 
