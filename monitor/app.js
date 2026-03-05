@@ -1,26 +1,118 @@
-﻿/* ============================================================
-   OGENTI Protocol Monitor — Dashboard Engine v2
-   Real backend integration via WebSocket + REST fallback
+/* ============================================================
+   SERIES Training Monitor — Dashboard Engine v3
+   Multi-product: OGENTI / OVISEN / PHIREN
+   REST polling + WebSocket fallback
    ============================================================ */
 
 (() => {
     'use strict';
 
+    // ─── Product Detection ────────────────────────────────────
+    const PRODUCT = (() => {
+        const params = new URLSearchParams(window.location.search);
+        return (params.get('product') || 'ogenti').toLowerCase();
+    })();
+
+    const PRODUCT_CONFIG = {
+        ogenti: {
+            label: 'OGENTI',
+            color: '#00f0ff',
+            metric2: { label: 'COMPRESSION', unit: 'x', sub: 'NL / protocol tokens', key: 'compression' },
+            metric3: { label: 'FIDELITY', unit: '%', sub: 'semantic accuracy', key: 'fidelity' },
+            apiPath: '/api/training/dashboard/',
+            chartLabels: ['Compression', 'Fidelity'],
+            chartColors: ['#00f0ff', '#00ff88'],
+            phases: ['Warmup', 'Simple', 'Complex', 'Generalize', 'Universalize'],
+            vizLabels: { a: 'Encoder α', aRole: 'NL → Protocol', b: 'Decoder β', bRole: 'Protocol → Action' },
+        },
+        ovisen: {
+            label: 'OVISEN',
+            color: '#55ffff',
+            metric2: { label: 'FIDELITY', unit: '%', sub: 'embedding accuracy', key: 'fidelity' },
+            metric3: { label: 'COMPRESSION', unit: 'x', sub: 'dimension reduction', key: 'compression' },
+            apiPath: '/api/ovisen/training/dashboard/',
+            chartLabels: ['Fidelity', 'Compression'],
+            chartColors: ['#55ffff', '#ff60b0'],
+            phases: ['Warmup', 'Feature Extraction', 'Compression Training', 'Fidelity Tuning', 'Distillation'],
+            vizLabels: { a: 'Vision α', aRole: 'Image → Embed', b: 'Decoder β', bRole: 'Embed → Action' },
+        },
+        phiren: {
+            label: 'PHIREN',
+            color: '#00ff64',
+            metric2: { label: 'FACTUALITY', unit: '%', sub: 'claim verification accuracy', key: 'factuality' },
+            metric3: { label: 'CALIBRATION', unit: '%', sub: 'confidence calibration', key: 'calibration' },
+            apiPath: '/api/phiren/training/dashboard/',
+            chartLabels: ['Factuality', 'Calibration'],
+            chartColors: ['#00ff64', '#ffd700'],
+            phases: ['Warmup', 'Fact Collection', 'Verification Training', 'Calibration Tuning', 'Distillation'],
+            vizLabels: { a: 'Verifier α', aRole: 'Claim → Check', b: 'Calibrator β', bRole: 'Score → Guard' },
+        },
+    };
+
+    const PC = PRODUCT_CONFIG[PRODUCT] || PRODUCT_CONFIG.ogenti;
+
+    // Apply product branding to DOM
+    function applyProductBranding() {
+        const m2l = document.getElementById('metric2Label'); if (m2l) m2l.textContent = PC.metric2.label;
+        const m2u = document.getElementById('metric2Unit'); if (m2u) m2u.textContent = PC.metric2.unit;
+        const m2s = document.getElementById('metric2Sub'); if (m2s) m2s.textContent = PC.metric2.sub;
+        const m3l = document.getElementById('metric3Label'); if (m3l) m3l.textContent = PC.metric3.label;
+        const m3s = document.getElementById('metric3Sub'); if (m3s) m3s.textContent = PC.metric3.sub;
+        // Update viz labels
+        const vizLabels = document.querySelectorAll('.viz-label');
+        if (vizLabels.length >= 2) {
+            const nameA = vizLabels[0].querySelector('.agent-name');
+            const roleA = vizLabels[0].querySelector('.agent-role');
+            if (nameA) nameA.textContent = PC.vizLabels.a;
+            if (roleA) roleA.textContent = PC.vizLabels.aRole;
+            const nameB = vizLabels[vizLabels.length - 1].querySelector('.agent-name');
+            const roleB = vizLabels[vizLabels.length - 1].querySelector('.agent-role');
+            if (nameB) nameB.textContent = PC.vizLabels.b;
+            if (roleB) roleB.textContent = PC.vizLabels.bRole;
+        }
+        // Update phase names
+        document.querySelectorAll('.phase-item').forEach((el, i) => {
+            const desc = el.querySelector('.phase-desc');
+            if (desc && PC.phases[i]) desc.textContent = PC.phases[i];
+        });
+        // Update chart legend
+        const l1d = document.getElementById('legend1Dot'); if (l1d) l1d.style.background = PC.chartColors[0];
+        const l1t = document.getElementById('legend1Text'); if (l1t) l1t.textContent = PC.chartLabels[0];
+        const l2d = document.getElementById('legend2Dot'); if (l2d) l2d.style.background = PC.chartColors[1];
+        const l2t = document.getElementById('legend2Text'); if (l2t) l2t.textContent = PC.chartLabels[1];
+    }
+
     // ─── Configuration ────────────────────────────────────────
     const CONFIG = {
+        WS_RECONNECT_INTERVAL: 3000,
+        WS_MAX_RETRIES: Infinity,
         CHART_HISTORY: 200,
         FEED_MAX: 50,
-        POLL_INTERVAL: 3000,
 
-        PHASES: ['Warmup', 'Simple', 'Complex', 'Generalize', 'Universalize'],
+        PHASES: PC.phases,
 
-        API_BASE: 'https://ogenti-api-production.up.railway.app',
+        // API base — auto-detect from current host
+        get API_BASE() {
+            const loc = window.location;
+            if (loc.port === '8000' || (loc.hostname !== 'localhost' && loc.hostname !== '127.0.0.1')) {
+                return loc.origin;
+            }
+            return 'http://localhost:8000';
+        },
+
+        get WS_URL() {
+            const base = this.API_BASE.replace(/^http/, 'ws');
+            return `${base}/ws`;
+        },
     };
 
     // ─── Connection State ─────────────────────────────────────
     const conn = {
+        ws: null,
         connected: false,
-        mode: 'idle',   // 'idle', 'connecting', 'live', 'demo', 'error'
+        mode: 'connecting',  // 'live', 'demo', 'connecting', 'reconnecting'
+        retries: 0,
+        reconnectTimer: null,
     };
 
     // ─── Dashboard State ──────────────────────────────────────
@@ -85,7 +177,7 @@
     }
 
     async function pollDashboard(key) {
-        const resp = await fetch(`${CONFIG.API_BASE}/api/training/dashboard/${key}`, { cache: 'no-store' });
+        const resp = await fetch(`${CONFIG.API_BASE}${PC.apiPath}${key}`, { cache: 'no-store' });
         if (resp.status === 404) throw new Error('INVALID KEY — CHECK YOUR DASHBOARD KEY');
         if (!resp.ok) throw new Error(`SERVER ERROR ${resp.status}`);
         const data = await resp.json();
@@ -94,6 +186,10 @@
     }
 
     function handleApiData(data) {
+        // Map product-specific metrics
+        const metric2Val = data[PC.metric2.key] ?? data.compression ?? 1.0;
+        const metric3Val = data[PC.metric3.key] ?? data.fidelity ?? 0.0;
+
         // Synthetic vocab generation based on real phase
         const targetVocabSize = Math.floor(data.phase * 8 + (data.progress_pct / 100) * 12);
         while (state.vocab.length < targetVocabSize && state.vocab.length < DEMO.VOCAB.length) {
@@ -110,7 +206,7 @@
                 tokenIds: Array.from({ length: 5 }, () => Math.floor(Math.random() * 256)),
                 tokenCount: data.avg_tokens,
                 success: Math.random() > 0.05,
-                fidelity: data.fidelity * 100,
+                fidelity: metric3Val * 100,
                 task,
             });
         }
@@ -121,14 +217,14 @@
             episode: data.current_episode,
             phase: data.phase,
             phase_name: data.phase_name,
-            compression: data.compression,
-            fidelity: data.fidelity,
+            compression: metric2Val,
+            fidelity: metric3Val,
             avg_tokens: data.avg_tokens,
             budget: data.budget,
             total_reward: 0,
             ep_rate: 0,
         });
-        pushHistory({ episode: data.current_episode, compression: data.compression, fidelity: data.fidelity * 100, budget: data.budget });
+        pushHistory({ episode: data.current_episode, compression: metric2Val, fidelity: (typeof metric3Val === 'number' && metric3Val <= 1.01) ? metric3Val * 100 : metric3Val, budget: data.budget });
 
         // Update job info bar
         const setEl = (id, val, style) => { const el = $(id); if (el) { el.textContent = val; if (style) Object.assign(el.style, style); } };
@@ -153,7 +249,7 @@
         conn.pollTimer = setInterval(async () => {
             if (document.hidden) return;
             try { await pollDashboard(key); }
-            catch (e) { console.warn('[OGENTI] Poll error:', e.message); }
+            catch (e) { console.warn('[SERIES] Poll error:', e.message); }
         }, CONFIG.POLL_INTERVAL);
     }
 
@@ -178,6 +274,86 @@
 
     // No-op in REST mode
     function sendCommand(cmd) {}
+
+    // ────────────────────────────────────────────────────────────
+    // REST Polling Fallback (for Colab iframe where WS may not relay data)
+    // ────────────────────────────────────────────────────────────
+
+    let restPollTimer = null;
+
+    function startRestPolling() {
+        if (restPollTimer) return;
+        restPollTimer = setInterval(async () => {
+            if (document.hidden) return;
+            try {
+                const resp = await fetch(`${CONFIG.API_BASE}/api/snapshot`, { cache: 'no-store' });
+                if (!resp.ok) return;
+                const data = await resp.json();
+                handleFullState(data);
+            } catch (e) {
+                console.warn('[SERIES] REST poll error:', e.message);
+            }
+        }, 2000);  // Poll every 2 seconds
+    }
+
+    // ────────────────────────────────────────────────────────────
+    // Local WebSocket Mode (direct connection for local training)
+    // ────────────────────────────────────────────────────────────
+
+    function connectWebSocketLocal() {
+        const wsUrl = CONFIG.WS_URL;
+        conn.mode = 'connecting';
+        updateConnectionUI();
+
+        try {
+            conn.ws = new WebSocket(wsUrl);
+        } catch (e) {
+            console.warn('[SERIES] WS connect failed:', e);
+            setTimeout(() => connectWebSocketLocal(), CONFIG.WS_RECONNECT_INTERVAL);
+            return;
+        }
+
+        conn.ws.onopen = () => {
+            conn.connected = true;
+            conn.mode = 'live';
+            conn.retries = 0;
+            updateConnectionUI();
+            // Also start REST polling as fallback (Colab proxy may not relay WS data)
+            startRestPolling();
+            // Show bar with local info
+            const bar = $('#jobInfoBar');
+            if (bar) bar.style.display = 'flex';
+            const setEl = (id, val) => { const el = $(id); if (el) el.textContent = val; };
+            setEl('#jobModel', 'LOCAL');
+            setEl('#jobDataset', 'CPU');
+            setEl('#jobStatus', 'LIVE');
+        };
+
+        conn.ws.onmessage = (evt) => {
+            try {
+                const msg = JSON.parse(evt.data);
+                handleServerEvent(msg);
+            } catch (e) {
+                console.warn('[SERIES] WS parse error:', e);
+            }
+        };
+
+        conn.ws.onclose = () => {
+            conn.connected = false;
+            conn.mode = 'reconnecting';
+            conn.retries++;
+            updateConnectionUI();
+            // Keep REST polling going as fallback
+            startRestPolling();
+            if (conn.retries <= CONFIG.WS_MAX_RETRIES) {
+                setTimeout(() => connectWebSocketLocal(), CONFIG.WS_RECONNECT_INTERVAL);
+            }
+        };
+
+        conn.ws.onerror = (err) => {
+            console.warn('[SERIES] WS error:', err);
+        };
+    }
 
     // Global submitKey called from HTML onclick
     window.submitKey = function () {
@@ -241,6 +417,7 @@
         }
 
         state.paused = data.status === 'paused';
+        handleStatus({ status: data.status || 'idle' });
         updateAllUI();
     }
 
@@ -302,7 +479,7 @@
     }
 
     function handleEval(data) {
-        console.log('[OGENTI] Eval:', data);
+        console.log('[SERIES] Eval:', data);
     }
 
     function handleStatus(data) {
@@ -569,13 +746,13 @@
                 labels: [],
                 datasets: [
                     {
-                        label: 'Compression', data: [],
-                        borderColor: '#00f0ff', backgroundColor: 'rgba(0, 240, 255, 0.06)',
+                        label: PC.chartLabels[0], data: [],
+                        borderColor: PC.chartColors[0], backgroundColor: PC.chartColors[0] + '10',
                         fill: true, tension: 0.1, pointRadius: 0, borderWidth: 2, stepped: false,
                     },
                     {
-                        label: 'Fidelity', data: [],
-                        borderColor: '#00ff88', backgroundColor: 'rgba(0, 255, 136, 0.06)',
+                        label: PC.chartLabels[1], data: [],
+                        borderColor: PC.chartColors[1], backgroundColor: PC.chartColors[1] + '10',
                         fill: true, tension: 0.1, pointRadius: 0, borderWidth: 2, stepped: false,
                         yAxisID: 'yFidelity',
                     },
@@ -592,8 +769,8 @@
                         titleFont: fontMono, bodyFont: fontMono, padding: 10, cornerRadius: 0,
                         callbacks: {
                             label: (c) => c.datasetIndex === 0
-                                ? `Compression: ${c.parsed.y.toFixed(1)}x`
-                                : `Fidelity: ${c.parsed.y.toFixed(1)}%`,
+                                ? `${PC.chartLabels[0]}: ${c.parsed.y.toFixed(1)}${PC.metric2.unit}`
+                                : `${PC.chartLabels[1]}: ${c.parsed.y.toFixed(1)}%`,
                         },
                     },
                 },
@@ -604,12 +781,12 @@
                         ticks: { color: tickColor, font: fontMono },
                         min: 0,
                         suggestedMax: 4,
-                        title: { display: true, text: 'Compression (x)', color: '#444', font: { size: 10 } },
+                        title: { display: true, text: PC.chartLabels[0] + ' (' + PC.metric2.unit + ')', color: '#444', font: { size: 10 } },
                     },
                     yFidelity: {
                         display: true, position: 'right', grid: { display: false },
                         ticks: { color: tickColor, font: fontMono }, min: 0, max: 100,
-                        title: { display: true, text: 'Fidelity (%)', color: '#444', font: { size: 10 } },
+                        title: { display: true, text: PC.chartLabels[1] + ' (%)', color: '#444', font: { size: 10 } },
                     },
                 },
             },
@@ -718,7 +895,7 @@
     // ────────────────────────────────────────────────────────────
 
     function handleAdapterExported(data) {
-        console.log('[OGENTI] Universal Adapter Exported:', data);
+        console.log('[SERIES] Universal Adapter Exported:', data);
 
         // Show export banner
         let banner = document.getElementById('adapterBanner');
@@ -853,7 +1030,7 @@
         const progress = Math.min((state.episode / totalEp) * 100, 100);
         $('#nav').style.setProperty('--progress', `${progress}%`);
 
-        document.title = `OGENTI · Ep ${state.episode.toLocaleString()}`;
+        document.title = `${PC.label} · Ep ${state.episode.toLocaleString()}`;
     }
 
     function updatePhaseTimeline() {
@@ -1056,15 +1233,11 @@
     // Init
     // ────────────────────────────────────────────────────────────
 
-    function hideLoader() {
-        const loader = $('#loader');
-        if (loader) loader.classList.add('hidden');
-    }
-
     function init() {
-        try { initCanvas(); } catch(e) { console.warn('[OGENTI] canvas init error:', e); }
-        try { initCharts(); } catch(e) { console.warn('[OGENTI] chart init error:', e); }
-        try { setupInteractions(); } catch(e) { console.warn('[OGENTI] interaction init error:', e); }
+        applyProductBranding();
+        initCanvas();
+        initCharts();
+        setupInteractions();
 
         // Enable Enter key on key input
         const input = $('#keyInput');
@@ -1074,18 +1247,26 @@
             input.addEventListener('input', () => { input.value = input.value.toUpperCase(); });
         }
 
-        // Check URL for ?key= param
-        const urlKey = new URLSearchParams(window.location.search).get('key');
+        // Check URL for ?local (WebSocket mode) or ?key= (SaaS polling mode)
+        const params = new URLSearchParams(window.location.search);
+        const isLocal = params.has('local') || window.location.port === '8000';
+        const urlKey = params.get('key');
+
         if (urlKey) {
             if (input) input.value = urlKey.toUpperCase();
+            // Slight delay to let canvas init finish
             setTimeout(() => connectWithKey(urlKey), 300);
         } else {
-            conn.mode = 'idle';
-            updateConnectionUI();
+            // Auto-connect via WebSocket (works for local, Colab iframe, any same-origin)
+            const overlay = $('#keyOverlay');
+            if (overlay) overlay.style.display = 'none';
+            setTimeout(() => connectWebSocketLocal(), 300);
         }
 
-        // Always hide loader — even if something above threw
-        setTimeout(hideLoader, 600);
+        setTimeout(() => {
+            const loader = $('#loader');
+            if (loader) loader.classList.add('hidden');
+        }, 600);
     }
 
     if (document.readyState === 'loading') {
@@ -1095,4 +1276,3 @@
     }
 
 })();
-

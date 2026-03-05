@@ -1,4 +1,4 @@
-﻿/* ============================================================
+/* ============================================================
    OGENTI Protocol Monitor — 16-bit Retro Dashboard
    Matching the landing page pixel aesthetic
    ============================================================ */
@@ -149,6 +149,7 @@ kbd {
 
 .loader-logo {
     animation: pixel-pulse 1.5s step-end infinite;
+    filter: drop-shadow(0 0 12px rgba(0,240,255,0.5));
 }
 
 .loader-text {
@@ -156,7 +157,7 @@ kbd {
     font-size: 0.9rem;
     letter-spacing: 0.3em;
     color: var(--accent);
-    text-shadow: 2px 2px 0 rgba(0,0,0,0.8);
+    text-shadow: 0 0 12px rgba(0,240,255,0.5);
 }
 
 .loader-sub {
@@ -193,6 +194,7 @@ kbd {
     width: var(--progress, 0%);
     background: var(--accent);
     transition: width 0.4s ease;
+    box-shadow: 0 0 8px rgba(0,240,255,0.5);
 }
 
 .nav-left, .nav-right {
@@ -206,7 +208,7 @@ kbd {
     font-size: 0.7rem;
     letter-spacing: 0.1em;
     color: var(--accent);
-    text-shadow: 2px 2px 0 rgba(0,0,0,0.8);
+    text-shadow: 0 0 8px rgba(0,240,255,0.4);
 }
 
 .nav-tag {
@@ -231,14 +233,16 @@ kbd {
 
 .connection-badge.live {
     color: var(--green);
-    border-color: var(--green);
-    background: var(--bg);
+    border-color: rgba(0, 255, 136, 0.4);
+    background: rgba(0, 255, 136, 0.06);
+    text-shadow: 0 0 6px rgba(0,255,136,0.4);
 }
 
 .connection-badge.demo {
     color: var(--amber);
-    border-color: var(--amber);
-    background: var(--bg);
+    border-color: rgba(255, 224, 64, 0.3);
+    background: rgba(255, 224, 64, 0.06);
+    text-shadow: 0 0 6px rgba(255,224,64,0.4);
 }
 
 .connection-badge.connecting {
@@ -257,17 +261,18 @@ kbd {
     align-items: center;
     gap: 8px;
     padding: 4px 10px;
-    border: var(--px) solid var(--green);
-    background: var(--bg);
+    border: var(--px) solid rgba(0, 255, 136, 0.2);
+    background: rgba(0, 255, 136, 0.04);
 }
 
 .status-indicator.paused {
-    border-color: var(--amber);
-    background: var(--bg);
+    border-color: rgba(255, 224, 64, 0.2);
+    background: rgba(255, 224, 64, 0.04);
 }
 
 .status-indicator.paused .status-dot {
     background: var(--amber);
+    box-shadow: 0 0 6px var(--amber);
     animation: none;
 }
 
@@ -279,6 +284,7 @@ kbd {
     width: 8px;
     height: 8px;
     background: var(--green);
+    box-shadow: 0 0 6px var(--green);
     animation: pixel-pulse 2s step-end infinite;
 }
 
@@ -374,7 +380,7 @@ kbd {
     font-size: 1.5rem;
     color: #fff;
     line-height: 1.2;
-    text-shadow: 2px 2px 0 rgba(0,0,0,0.8);
+    text-shadow: 0 0 12px rgba(0,240,255,0.3);
 }
 
 .metric-unit {
@@ -427,12 +433,12 @@ kbd {
     font-family: var(--font-pixel);
     font-size: 0.5rem;
     color: var(--accent);
-    text-shadow: 2px 2px 0 rgba(0,0,0,0.8);
+    text-shadow: 0 0 6px rgba(0,240,255,0.3);
 }
 
 .viz-label:last-child .agent-name {
     color: var(--green);
-    text-shadow: 2px 2px 0 rgba(0,0,0,0.8);
+    text-shadow: 0 0 6px rgba(0,255,136,0.3);
 }
 
 .agent-role {
@@ -452,8 +458,7 @@ kbd {
     font-size: 0.5rem;
     color: var(--accent);
     padding: 6px 14px;
-    background: var(--bg);
-    border: 2px solid var(--border);
+    background: rgba(0, 240, 255, 0.04);
     display: inline-block;
 }
 
@@ -488,6 +493,7 @@ kbd {
 
 .phase-item.active .phase-dot {
     background: var(--accent);
+    box-shadow: 0 0 10px rgba(0, 240, 255, 0.5);
 }
 
 .phase-item.current .phase-dot {
@@ -504,6 +510,7 @@ kbd {
 
 .phase-connector.active {
     background: var(--accent);
+    box-shadow: 0 0 6px rgba(0, 240, 255, 0.3);
 }
 
 .phase-info {
@@ -669,10 +676,12 @@ kbd {
 
 .feed-status.success {
     color: var(--green);
+    text-shadow: 0 0 6px rgba(0,255,136,0.3);
 }
 
 .feed-status.fail {
     color: var(--red);
+    text-shadow: 0 0 6px rgba(255,64,96,0.3);
 }
 
 /* --- Vocabulary --- */
@@ -697,7 +706,7 @@ kbd {
     align-items: center;
     gap: 8px;
     padding: 8px 10px;
-    background: var(--bg);
+    background: rgba(18, 18, 42, 0.8);
     border: 2px solid var(--border);
     animation: pixel-fade-in 0.4s ease;
 }
@@ -712,7 +721,7 @@ kbd {
     font-size: 0.45rem;
     color: var(--accent);
     min-width: 28px;
-    text-shadow: 2px 2px 0 rgba(0,0,0,0.8);
+    text-shadow: 0 0 6px rgba(0,240,255,0.3);
 }
 
 .vocab-info {
@@ -740,6 +749,7 @@ kbd {
 .vocab-bar {
     height: 100%;
     background: var(--accent);
+    box-shadow: 0 0 4px rgba(0,240,255,0.3);
     transition: width 0.3s ease;
 }
 
@@ -816,8 +826,8 @@ kbd {
 }
 
 @keyframes pulse-glow {
-    0%, 100% { opacity: 0.6; }
-    50% { opacity: 1; }
+    0%, 100% { opacity: 0.6; filter: drop-shadow(0 0 8px rgba(0, 240, 255, 0.3)); }
+    50% { opacity: 1; filter: drop-shadow(0 0 16px rgba(0, 240, 255, 0.6)); }
 }
 
 @keyframes slide-in {
@@ -936,159 +946,4 @@ kbd {
     .footer-dot {
         display: none;
     }
-}
-
-/* ── loader auto-hide safety ── */
-@keyframes loaderAutoHide { to { opacity:0; visibility:hidden; pointer-events:none; } }
-.loader { animation: loaderAutoHide 0.5s 2s forwards; }
-.loader.hidden { animation:none; opacity:0; visibility:hidden; pointer-events:none; }
-
-/* ═══════════════════════════════════════════════════
-   KEY OVERLAY — 8-BIT RETRO TERMINAL
-═══════════════════════════════════════════════════ */
-
-.key-overlay {
-    position: fixed;
-    inset: 0;
-    z-index: 9990;
-    background: #000;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-/* ── 8-Bit Box ── */
-.eb-box {
-    width: 500px;
-    max-width: 90vw;
-    background: #0000aa; /* Classic C64/DOS Blue */
-    border: 4px solid #fff;
-    box-shadow: 
-        inset -4px -4px 0 0 rgba(0,0,0,0.5),
-        8px 8px 0 0 #333; /* Hard pixel shadow */
-    padding: 4px; /* Space for inner layout */
-}
-
-.eb-header {
-    background: #fff;
-    color: #0000aa;
-    text-align: center;
-    padding: 6px;
-    font-family: var(--font-pixel, 'Press Start 2P', monospace);
-    font-size: 14px;
-}
-
-.eb-blink-fast {
-    animation: eb-fast-blink 0.5s step-end infinite;
-}
-@keyframes eb-fast-blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
-
-.eb-body {
-    padding: 24px;
-    font-family: var(--font-pixel, 'Press Start 2P', monospace);
-    font-size: 12px;
-    line-height: 2;
-    color: #aaaaff;
-}
-
-.eb-line {
-    color: #fff;
-    text-shadow: 2px 2px 0 #000;
-    white-space: pre;
-}
-.eb-cyan { color: #55ffff; }
-.eb-dim { color: #aaaaaa; }
-
-/* ── Input Row ── */
-.eb-input-row {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    margin-top: 8px;
-}
-
-.eb-prompt {
-    color: #55ffff;
-    font-size: 14px;
-    text-shadow: 2px 2px 0 #000;
-}
-
-.eb-input {
-    background: transparent;
-    border: none;
-    color: #fff;
-    font-family: var(--font-pixel, 'Press Start 2P', monospace);
-    font-size: 14px;
-    outline: none;
-    text-transform: uppercase;
-    width: 200px; /* enough for 12 chars */
-    text-shadow: 2px 2px 0 #000;
-}
-
-.eb-cursor {
-    display: inline-block;
-    width: 12px;
-    height: 14px;
-    background: #55ffff;
-    animation: eb-blink 0.8s step-end infinite;
-}
-@keyframes eb-blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
-
-/* ── Submit Button ── */
-.eb-submit {
-    display: block;
-    width: 100%;
-    margin-top: 16px;
-    padding: 14px;
-    background: #ff5555;
-    border: 4px solid #fff;
-    color: #fff;
-    font-family: var(--font-pixel, 'Press Start 2P', monospace);
-    font-size: 12px;
-    text-align: center;
-    cursor: pointer;
-    box-shadow: inset -4px -4px 0 0 rgba(0,0,0,0.3);
-    text-shadow: 2px 2px 0 #000;
-}
-.eb-submit:hover {
-    background: #ffaaaa;
-    color: #000;
-    text-shadow: none;
-}
-.eb-submit:active {
-    box-shadow: inset 4px 4px 0 0 rgba(0,0,0,0.5);
-}
-.eb-submit:disabled {
-    background: #555;
-    color: #aaa;
-    cursor: not-allowed;
-    border-color: #aaa;
-}
-
-/* ── Error ── */
-.eb-error {
-    color: #ff5555;
-    font-family: var(--font-pixel, 'Press Start 2P', monospace);
-    font-size: 10px;
-    min-height: 14px;
-    margin-top: 8px;
-    text-shadow: 1px 1px 0 #000;
-}
-
-/* ── Link ── */
-.eb-link {
-    color: #ffff55;
-    text-decoration: none;
-}
-.eb-link:hover {
-    color: #fff;
-    background: #5555ff;
-}
-
-/* ── Mobile ── */
-@media (max-width: 480px) {
-    .eb-box { border-width: 2px; }
-    .eb-submit { border-width: 2px; box-shadow: inset -2px -2px 0 0 rgba(0,0,0,0.3); }
-    .eb-body { padding: 16px; font-size: 10px; }
-    .eb-input { font-size: 12px; width: 150px; }
 }

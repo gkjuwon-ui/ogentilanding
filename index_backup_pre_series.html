@@ -1,0 +1,1309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>O SERIES — AI-to-AI Compression Platform</title>
+    <meta name="description" content="O Series: the AI-to-AI compression platform. OGENTI compresses text protocols. OVISEN compresses image embeddings. Train, deploy, pay-per-token.">
+    <meta property="og:title" content="O SERIES — AI-to-AI Compression Platform">
+    <meta property="og:description" content="Two products, one platform. OGENTI for text protocol compression. OVISEN for image embedding compression. MARL-trained, AES-256 encrypted, pay-per-token.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://oseries.io">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="theme-color" content="#0a0a1a">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect x='4' y='4' width='8' height='8' fill='%2300f0ff'/%3E%3Crect x='6' y='6' width='4' height='4' fill='%230a0a1a'/%3E%3C/svg%3E">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Silkscreen:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+/* ============================================================
+   O SERIES — 8-bit C64 DOS Retro Landing
+   OGENTI (text) + OVISEN (image) umbrella platform
+   ============================================================ */
+:root {
+    --bg: #000000;
+    --bg2: #0000aa;
+    --surface: #0000aa;
+    --border: #ffffff;
+    --border-hi: #aaaaaa;
+    --text: #aaaaff;
+    --text-dim: #aaaaaa;
+    --text-muted: #555555;
+    --cyan: #55ffff;
+    --cyan-dim: #00aaaa;
+    --purple: #ff55ff;
+    --green: #55ff55;
+    --yellow: #ffff55;
+    --red: #ff5555;
+    --orange: #ffaa55;
+    --pink: #ff55ff;
+    --font-pixel: 'Press Start 2P', monospace;
+    --font-silk: 'Press Start 2P', monospace;
+    --px: 4px;
+}
+
+*,*::before,*::after { margin:0; padding:0; box-sizing:border-box; }
+
+html {
+    font-size: 16px;
+    image-rendering: pixelated;
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: var(--font-pixel);
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.8;
+    overflow-x: hidden;
+    cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16'%3E%3Crect x='0' y='0' width='8' height='12' fill='%2355ffff'/%3E%3C/svg%3E") 0 0, auto;
+}
+
+::selection { background: var(--cyan); color: #000; }
+
+a { color: var(--yellow); text-decoration: none; }
+
+/* ── Scanlines ── */
+.scanlines {
+    position: fixed; inset: 0; z-index: 9999; pointer-events: none;
+    background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 2px,
+        rgba(0,0,0,0.2) 2px,
+        rgba(0,0,0,0.2) 4px
+    );
+}
+
+/* ── CRT vignette ── */
+.crt {
+    position: fixed; inset: 0; z-index: 9998; pointer-events: none;
+    background: radial-gradient(ellipse at center, transparent 40%, rgba(0,0,0,0.8) 100%);
+}
+
+.pixel-grid { display: none; }
+
+.pixel-border {
+    border: 4px solid #fff;
+    box-shadow: 8px 8px 0 0 #333;
+    background: #0000aa;
+}
+.pixel-border-cyan {
+    border: 4px solid var(--cyan);
+    box-shadow: 8px 8px 0 0 #333;
+    background: #000;
+}
+
+/* ── Nav ── */
+nav {
+    position: fixed; top: 0; left: 0; right: 0; height: 52px; z-index: 1000;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 24px;
+    background: var(--bg2);
+    border-bottom: 4px solid var(--border);
+}
+.nav-left { display:flex; align-items:center; gap:12px; }
+.nav-brand {
+    font-family: var(--font-pixel); font-size: 0.7rem;
+    letter-spacing: 0.1em; color: #fff;
+    text-shadow: 2px 2px 0 #000;
+}
+.nav-tag {
+    font-family: var(--font-pixel); font-size: 0.45rem;
+    color: var(--cyan); letter-spacing: 0.08em;
+}
+.nav-right { display:flex; align-items:center; gap:16px; }
+.nav-link {
+    display: flex; align-items: center; gap: 6px;
+    font-family: var(--font-pixel); font-size: 0.5rem;
+    color: #fff; transition: background 0.1s; padding: 4px;
+}
+.nav-link:hover { color: var(--bg); background: var(--cyan); }
+.nav-btn {
+    font-family: var(--font-pixel); font-size: 0.5rem;
+    padding: 6px 14px; color: #fff;
+    background: var(--red); border: 2px solid #fff;
+    text-decoration: none;
+    box-shadow: 4px 4px 0 0 #000;
+    transition: all 0.1s;
+}
+.nav-btn:hover {
+    background: var(--text); color: #000;
+    box-shadow: inset 2px 2px 0 0 rgba(0,0,0,0.5);
+    transform: translate(2px, 2px);
+}
+
+/* ── Hero ── */
+.hero {
+    position: relative; z-index: 1;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    min-height: 100vh; text-align: center;
+    padding: 80px 24px 60px;
+    background: #000;
+}
+.hero-sprite { margin-bottom: 32px; }
+.hero h1 {
+    font-family: var(--font-pixel); font-size: clamp(1.2rem, 4vw, 2.2rem);
+    line-height: 1.6; color: #fff; max-width: 900px;
+    text-shadow: 4px 4px 0 #000; text-transform: uppercase;
+}
+.hero h1 .glow { color: var(--yellow); text-shadow: 4px 4px 0 #000; }
+.hero h1 .glow-cyan { color: var(--cyan); text-shadow: 4px 4px 0 #000; }
+.hero h1 .glow-green { color: var(--green); text-shadow: 4px 4px 0 #000; }
+.hero-sub {
+    font-family: var(--font-pixel); font-size: 0.65rem;
+    color: var(--text-dim); max-width: 700px;
+    margin-top: 24px; line-height: 2.2; text-transform: uppercase;
+}
+.hero-buttons {
+    display: flex; gap: 16px; margin-top: 40px; flex-wrap: wrap;
+    justify-content: center;
+}
+.btn-retro {
+    font-family: var(--font-pixel); font-size: 0.6rem;
+    padding: 12px 24px;
+    border: 4px solid #fff; text-decoration: none; text-transform: uppercase;
+    box-shadow: 6px 6px 0 0 #333; transition: none;
+}
+.btn-retro:hover { transform: translate(2px, 2px); box-shadow: 4px 4px 0 0 #333; }
+.btn-retro:active { transform: translate(6px, 6px); box-shadow: 0 0 0 0 #333; }
+.btn-retro.primary { background: var(--red); color: #fff; text-shadow: 2px 2px 0 #000; }
+.btn-retro.secondary { background: #000; color: #fff; }
+.btn-retro.primary:hover { background: #ffaaaa; color: #000; text-shadow: none; }
+.btn-retro.secondary:hover { background: var(--cyan); color: #000; }
+
+/* ── Stats bar ── */
+.stats-bar {
+    display: flex; gap: 0; margin-top: 64px;
+    border: 4px solid #fff; background: #0000aa;
+    flex-wrap: wrap; box-shadow: 8px 8px 0 0 #333;
+}
+.stat-cell {
+    flex: 1; min-width: 100px; padding: 20px 16px; text-align: center;
+    border-right: 4px solid #fff;
+}
+.stat-cell:last-child { border-right: none; }
+.stat-val {
+    font-family: var(--font-pixel); font-size: 1rem; color: #fff;
+    text-shadow: 2px 2px 0 #000;
+}
+.stat-val .unit { font-size: 0.55rem; color: #55ffff; }
+.stat-label {
+    font-family: var(--font-pixel); font-size: 0.38rem;
+    color: #fff; margin-top: 8px;
+    letter-spacing: 0.12em; text-transform: uppercase;
+}
+
+/* ── Scroll arrow ── */
+.scroll-hint {
+    position: absolute; bottom: 24px; left: 50%; transform: translateX(-50%);
+    display: flex; flex-direction: column; align-items: center; gap: 8px;
+}
+.scroll-hint span {
+    font-family: var(--font-pixel); font-size: 0.4rem;
+    color: #aaa; letter-spacing: 0.15em;
+    animation: eb-fast-blink 1s step-end infinite;
+}
+@keyframes eb-fast-blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+
+/* ── Sections ── */
+section { position: relative; z-index: 1; }
+.section-wrap {
+    max-width: 1000px; margin: 0 auto; padding: 100px 24px;
+}
+.section-tag {
+    font-family: var(--font-pixel); font-size: 0.5rem;
+    color: var(--yellow); letter-spacing: 0.2em; margin-bottom: 12px;
+    text-shadow: 2px 2px 0 #000;
+}
+.section-title {
+    font-family: var(--font-pixel); font-size: clamp(0.8rem, 2.5vw, 1.2rem);
+    color: #fff; line-height: 1.8; max-width: 750px;
+}
+.section-desc {
+    font-family: var(--font-pixel); font-size: 0.6rem;
+    color: var(--text-dim); margin-top: 16px;
+    max-width: 600px; line-height: 2;
+}
+
+/* ── Cards ── */
+.problem-section { border-top: 4px solid #fff; background: #000; }
+.card-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 16px; margin-top: 48px;
+}
+.card-retro {
+    padding: 28px; background: #0000aa;
+    border: 4px solid #fff; box-shadow: 8px 8px 0 0 #333;
+}
+.card-retro:hover { background: #0000cc; }
+.card-retro .card-icon { margin-bottom: 16px; }
+.card-retro h3 {
+    font-family: var(--font-pixel); font-size: 0.6rem;
+    color: var(--yellow); margin-bottom: 10px; line-height: 1.6;
+    text-shadow: 2px 2px 0 #000;
+}
+.card-retro p {
+    font-family: var(--font-pixel); font-size: 0.5rem;
+    color: #fff; line-height: 2;
+}
+
+/* ── Product comparison ── */
+.products-section { border-top: 4px solid #fff; background: #0000aa; }
+.product-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 24px; margin-top: 48px;
+}
+.product-card {
+    padding: 32px; background: #000;
+    border: 4px solid #fff; box-shadow: 8px 8px 0 0 #333;
+    position: relative;
+}
+.product-card .product-badge {
+    position: absolute; top: -2px; right: 16px;
+    font-family: var(--font-pixel); font-size: 0.35rem;
+    padding: 4px 10px; border: 2px solid;
+    letter-spacing: 0.1em; font-weight: bold;
+}
+.product-card h3 {
+    font-family: var(--font-pixel); font-size: 0.8rem;
+    line-height: 1.6; margin-bottom: 12px;
+    text-shadow: 2px 2px 0 #000;
+}
+.product-card .product-sub {
+    font-family: var(--font-pixel); font-size: 0.5rem;
+    color: #fff; line-height: 2; margin-bottom: 16px;
+}
+.product-card .product-specs {
+    list-style: none; padding: 0;
+}
+.product-card .product-specs li {
+    font-family: var(--font-pixel); font-size: 0.42rem;
+    color: #fff; line-height: 2.4;
+    padding-left: 16px; position: relative;
+}
+.product-card .product-specs li::before {
+    content: '\25B8'; position: absolute; left: 0;
+}
+.product-ext {
+    display: inline-block; margin-top: 16px;
+    font-family: var(--font-pixel); font-size: 0.5rem;
+    padding: 6px 14px; border: 4px solid;
+    letter-spacing: 0.15em; font-weight: bold;
+}
+
+/* ── Demo terminal ── */
+.demo-section { border-top: 4px solid #fff; background: #0000aa; }
+.terminal-box {
+    margin-top: 48px; background: #000;
+    border: 4px solid #fff; box-shadow: 8px 8px 0 0 #333;
+    overflow: hidden;
+}
+.terminal-titlebar {
+    display: flex; align-items: center; gap: 8px;
+    padding: 8px 16px; background: #fff;
+    border-bottom: 4px solid #555; color: #000;
+}
+.terminal-dot { width: 12px; height: 12px; background: #000; }
+.terminal-filename {
+    font-family: var(--font-pixel); font-size: 0.42rem;
+    color: #000; margin-left: 4px; font-weight: bold;
+}
+.terminal-body {
+    padding: 24px; font-family: 'Consolas', 'Cascadia Code', monospace;
+    font-size: 14px; line-height: 2; min-height: 240px; color: #aaa;
+}
+.t-row { display: flex; align-items: flex-start; gap: 12px; padding: 2px 0; }
+.t-label {
+    flex-shrink: 0; width: 80px; text-align: right;
+    font-size: 14px; font-weight: bold;
+}
+.t-label.input { color: #888; }
+.t-label.encode { color: var(--cyan); }
+.t-label.decode { color: var(--green); }
+.t-label.saved { color: var(--purple); }
+.t-content { color: #fff; }
+.t-content.highlight-cyan { color: var(--cyan); }
+.t-content.highlight-green { color: var(--green); }
+.t-content.highlight-purple { color: var(--purple); }
+.t-content strong { color: var(--yellow); }
+.t-token {
+    display: inline-block; padding: 0 4px;
+    background: #0000aa; border: 1px solid #fff;
+    color: #fff; margin: 0 2px;
+}
+.t-arrow { text-align: center; padding: 4px 0; color: #888; }
+.t-meta { color: #888; }
+
+/* ── Pipeline ── */
+.pipeline-section { border-top: 4px solid #fff; background: #000; }
+.pipeline {
+    margin-top: 48px; position: relative;
+    display: flex; flex-direction: column; gap: 0;
+}
+.pipeline::before {
+    content: ''; position: absolute; left: 18px; top: 0; bottom: 0;
+    width: 4px; background: #fff;
+}
+.pipe-step { display: flex; gap: 24px; padding: 24px 0; position: relative; }
+.pipe-num {
+    width: 40px; height: 40px; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    background: #000; border: 4px solid #fff;
+    font-family: var(--font-pixel); font-size: 0.6rem;
+    z-index: 1; color: #fff; box-shadow: 4px 4px 0 0 #333;
+}
+.pipe-step:nth-child(1) .pipe-num { color: var(--cyan); }
+.pipe-step:nth-child(2) .pipe-num { color: var(--green); }
+.pipe-step:nth-child(3) .pipe-num { color: var(--purple); }
+.pipe-step:nth-child(4) .pipe-num { color: var(--yellow); }
+.pipe-step:nth-child(5) .pipe-num { color: var(--red); }
+.pipe-body h3 {
+    font-family: var(--font-pixel); font-size: 0.6rem;
+    color: var(--yellow); margin-bottom: 6px; line-height: 1.6;
+}
+.pipe-body .pipe-tag {
+    font-family: var(--font-pixel); font-size: 0.38rem;
+    color: #aaa; letter-spacing: 0.1em; margin-bottom: 8px;
+}
+.pipe-body p {
+    font-family: var(--font-pixel); font-size: 0.5rem;
+    color: #fff; line-height: 2; max-width: 480px;
+}
+.pipe-badge {
+    display: inline-block; margin-top: 10px;
+    font-family: var(--font-pixel); font-size: 0.4rem;
+    color: #000; padding: 4px 10px;
+    border: 2px solid #fff; background: var(--cyan);
+}
+.pipe-badge .val { color: #000; font-weight: bold; }
+
+/* ── Tech grid ── */
+.tech-section { border-top: 4px solid #fff; background: #0000aa; }
+.tech-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 12px; margin-top: 48px;
+}
+.tech-card {
+    padding: 24px; background: #000;
+    border: 4px solid #fff; box-shadow: 8px 8px 0 0 #333;
+}
+.tech-card h4 {
+    font-family: var(--font-pixel); font-size: 0.5rem;
+    color: var(--yellow); margin-bottom: 8px; text-shadow: 2px 2px 0 #000;
+}
+.tech-card p {
+    font-family: var(--font-pixel); font-size: 0.5rem;
+    color: #fff; line-height: 2;
+}
+.tech-tag {
+    display: inline-block; margin-top: 10px;
+    font-family: var(--font-pixel); font-size: 0.35rem;
+    color: #000; padding: 3px 8px;
+    border: 2px solid #fff; background: #fff;
+    letter-spacing: 0.08em; font-weight: bold;
+}
+
+/* ── Results ── */
+.results-section { border-top: 4px solid #fff; background: #000; }
+.results-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 12px; margin-top: 48px;
+}
+.result-tile {
+    padding: 24px 14px; text-align: center;
+    background: #0000aa; border: 4px solid #fff;
+    box-shadow: 8px 8px 0 0 #333;
+}
+.result-tile:hover { background: #0000cc; }
+.result-val {
+    font-family: var(--font-pixel); font-size: 1.2rem;
+    color: var(--yellow); text-shadow: 4px 4px 0 #000;
+}
+.result-val .u { font-size: 0.5rem; color: #fff; }
+.result-label {
+    font-family: var(--font-pixel); font-size: 0.36rem;
+    color: #fff; margin-top: 8px;
+    letter-spacing: 0.1em; text-transform: uppercase;
+}
+.result-sub {
+    font-family: var(--font-pixel); font-size: 0.38rem;
+    color: #aaa; margin-top: 8px;
+}
+
+/* ── CTA ── */
+.cta-section { border-top: 4px solid #fff; background: #0000aa; }
+.cta-box {
+    margin-top: 48px; padding: 48px 32px; text-align: center;
+    background: #000; border: 4px solid #fff; box-shadow: 8px 8px 0 0 #333;
+}
+.cta-box h2 {
+    font-family: var(--font-pixel); font-size: clamp(0.7rem, 2vw, 1rem);
+    color: var(--red); line-height: 1.8; text-shadow: 2px 2px 0 #000;
+}
+.cta-box p {
+    font-family: var(--font-pixel); font-size: 0.5rem;
+    color: #fff; margin-top: 16px;
+    max-width: 540px; margin-left: auto; margin-right: auto; line-height: 2.2;
+}
+.cta-buttons {
+    display: flex; gap: 12px; justify-content: center;
+    margin-top: 28px; flex-wrap: wrap;
+}
+.cta-cmd { margin-top: 24px; }
+.cta-cmd code {
+    font-family: 'Consolas', 'Cascadia Code', monospace; font-size: 14px;
+    color: var(--cyan); padding: 10px 20px; display: inline-block;
+    background: #0000aa; border: 4px solid #fff;
+    user-select: all; word-break: break-all; box-shadow: 4px 4px 0 0 #333;
+}
+
+/* ── Footer ── */
+footer {
+    position: relative; z-index: 1;
+    border-top: 4px solid #fff;
+    padding: 32px 24px; text-align: center; background: #000;
+}
+.footer-text {
+    font-family: var(--font-pixel); font-size: 0.38rem;
+    color: #aaa; letter-spacing: 0.1em;
+}
+.footer-links {
+    display: flex; gap: 16px; justify-content: center; margin-top: 12px;
+}
+.footer-link {
+    font-family: var(--font-pixel); font-size: 0.38rem;
+    color: var(--yellow); text-decoration: none;
+}
+.footer-link:hover { color: #fff; background: var(--cyan); }
+.footer-bottom {
+    margin-top: 16px;
+    font-family: var(--font-pixel); font-size: 0.35rem;
+    color: var(--cyan);
+    animation: eb-fast-blink 1s step-end infinite;
+}
+
+/* ── Retro Scrollbar ── */
+::-webkit-scrollbar { width: 16px; }
+::-webkit-scrollbar-track { background: #000; border-left: 4px solid #fff; }
+::-webkit-scrollbar-thumb { background: #fff; border: 4px solid #000; }
+::-webkit-scrollbar-thumb:hover { background: var(--cyan); }
+
+/* ── Animations ── */
+@keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+@keyframes blink { 0%,100% { opacity: 1; } 50% { opacity: 0; } }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes glitch {
+    0%,100% { transform: translate(0); } 20% { transform: translate(-2px, 1px); }
+    40% { transform: translate(2px, -1px); } 60% { transform: translate(-1px, 2px); }
+    80% { transform: translate(1px, -2px); }
+}
+
+/* ── Reveal ── */
+.reveal {
+    opacity: 0; transform: translateY(20px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+.reveal.visible { opacity: 1; transform: translateY(0); }
+
+.cursor {
+    display: inline-block; width: 12px; height: 16px;
+    background: var(--yellow); margin-left: 4px;
+    animation: blink 0.8s step-end infinite; vertical-align: middle;
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+    .hero h1 { font-size: 1rem; }
+    .stats-bar { flex-direction: column; }
+    .stat-cell { border-right: none; border-bottom: 4px solid #fff; }
+    .stat-cell:last-child { border-bottom: none; }
+    .hero-buttons { flex-direction: column; align-items: center; }
+    .product-grid { grid-template-columns: 1fr; }
+    .pipe-step { gap: 16px; }
+    .t-label { width: 56px; font-size: 0.36rem; }
+    .terminal-body { padding: 16px; font-size: 0.45rem; }
+    .results-grid { grid-template-columns: repeat(2, 1fr); }
+    .nav-tag { display: none; }
+}
+@media (max-width: 480px) {
+    .results-grid { grid-template-columns: 1fr; }
+}
+
+* {
+    cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16'%3E%3Crect x='0' y='0' width='8' height='12' fill='%2355ffff'/%3E%3C/svg%3E") 0 0, auto !important;
+}
+    </style>
+</head>
+<body>
+
+<div class="scanlines"></div>
+<div class="crt"></div>
+
+<!-- Nav -->
+<nav>
+    <div class="nav-left">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="image-rendering:pixelated">
+            <rect x="8" y="2" width="8" height="2" fill="#00f0ff"/>
+            <rect x="6" y="4" width="2" height="2" fill="#00f0ff"/>
+            <rect x="16" y="4" width="2" height="2" fill="#00f0ff"/>
+            <rect x="4" y="6" width="2" height="2" fill="#00f0ff"/>
+            <rect x="18" y="6" width="2" height="2" fill="#00f0ff"/>
+            <rect x="4" y="8" width="2" height="8" fill="#00f0ff"/>
+            <rect x="18" y="8" width="2" height="8" fill="#00f0ff"/>
+            <rect x="6" y="16" width="2" height="2" fill="#00f0ff"/>
+            <rect x="16" y="16" width="2" height="2" fill="#00f0ff"/>
+            <rect x="8" y="18" width="8" height="2" fill="#00f0ff"/>
+            <rect x="10" y="10" width="4" height="4" fill="#00f0ff"/>
+            <rect x="0" y="8" width="2" height="2" fill="#00f0ff" opacity="0.3"/>
+            <rect x="0" y="12" width="2" height="2" fill="#00f0ff" opacity="0.3"/>
+            <rect x="22" y="8" width="2" height="2" fill="#00f0ff" opacity="0.3"/>
+            <rect x="22" y="12" width="2" height="2" fill="#00f0ff" opacity="0.3"/>
+        </svg>
+        <span class="nav-brand">O SERIES</span>
+        <span class="nav-tag">PLATFORM</span>
+    </div>
+    <div class="nav-right">
+        <a href="#products" class="nav-link"><span>PRODUCTS</span></a>
+        <a href="#how" class="nav-link"><span>ARCHITECTURE</span></a>
+        <a href="/platform/login.html" class="nav-link">
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="none" style="image-rendering:pixelated">
+                <rect x="6" y="0" width="4" height="2" fill="currentColor"/>
+                <rect x="4" y="2" width="8" height="4" fill="currentColor"/>
+                <rect x="6" y="6" width="4" height="2" fill="currentColor"/>
+                <rect x="2" y="8" width="12" height="2" fill="currentColor"/>
+                <rect x="0" y="10" width="16" height="4" fill="currentColor"/>
+            </svg>
+            <span>LOGIN</span>
+        </a>
+        <a href="/platform/signup.html" class="nav-btn">GET STARTED</a>
+    </div>
+</nav>
+
+<!-- ═════════════════ HERO ═════════════════ -->
+<section class="hero">
+    <!-- Two-product hero sprite: Text agent ↔ Image agent -->
+    <svg class="hero-sprite" width="200" height="80" viewBox="0 0 200 80" fill="none" style="image-rendering:pixelated">
+        <!-- Agent A (OGENTI - text, left, pink) -->
+        <rect x="16" y="12" width="8" height="2" fill="#ff55ff"/>
+        <rect x="14" y="14" width="2" height="2" fill="#ff55ff"/>
+        <rect x="24" y="14" width="2" height="2" fill="#ff55ff"/>
+        <rect x="12" y="16" width="2" height="10" fill="#ff55ff"/>
+        <rect x="26" y="16" width="2" height="10" fill="#ff55ff"/>
+        <rect x="14" y="26" width="2" height="2" fill="#ff55ff"/>
+        <rect x="24" y="26" width="2" height="2" fill="#ff55ff"/>
+        <rect x="16" y="28" width="8" height="2" fill="#ff55ff"/>
+        <rect x="18" y="20" width="4" height="4" fill="#ff55ff"/>
+        <rect x="16" y="18" width="2" height="2" fill="#fff"/>
+        <rect x="22" y="18" width="2" height="2" fill="#fff"/>
+        <rect x="16" y="32" width="8" height="2" fill="#ff55ff"/>
+        <rect x="14" y="34" width="12" height="2" fill="#884488"/>
+        <rect x="16" y="36" width="8" height="12" fill="#ff55ff"/>
+        <rect x="20" y="8" width="2" height="4" fill="#ff55ff"/>
+        <text x="12" y="60" fill="#ff55ff" font-family="'Press Start 2P',monospace" font-size="4" opacity="0.8">TXT</text>
+
+        <!-- Center: O SERIES hub -->
+        <rect x="70" y="16" width="60" height="28" fill="#0000aa" stroke="#fff" stroke-width="2" rx="0"/>
+        <text x="80" y="28" fill="#fff" font-family="'Press Start 2P',monospace" font-size="5" letter-spacing=".1em">O SERIES</text>
+        <text x="78" y="38" fill="#55ffff" font-family="'Press Start 2P',monospace" font-size="3.5" letter-spacing=".08em">COMPRESS ALL</text>
+
+        <!-- Protocol beam left -->
+        <rect x="36" y="24" width="4" height="2" fill="#ff55ff" opacity="0.3"/>
+        <rect x="44" y="24" width="6" height="2" fill="#ff55ff" opacity="0.5"/>
+        <rect x="54" y="24" width="10" height="2" fill="#ff55ff" opacity="0.7"/>
+        <rect x="40" y="22" width="4" height="6" fill="#ff55ff" opacity="0.4"/>
+        <rect x="50" y="22" width="4" height="6" fill="#ffe040" opacity="0.5"/>
+        <rect x="60" y="22" width="4" height="6" fill="#ff55ff" opacity="0.6"/>
+
+        <!-- Protocol beam right -->
+        <rect x="134" y="24" width="10" height="2" fill="#55ffff" opacity="0.7"/>
+        <rect x="148" y="24" width="6" height="2" fill="#55ffff" opacity="0.5"/>
+        <rect x="158" y="24" width="4" height="2" fill="#55ffff" opacity="0.3"/>
+        <rect x="136" y="22" width="4" height="6" fill="#55ffff" opacity="0.6"/>
+        <rect x="146" y="22" width="4" height="6" fill="#00ff88" opacity="0.5"/>
+        <rect x="156" y="22" width="4" height="6" fill="#55ffff" opacity="0.4"/>
+
+        <!-- Agent B (OVISEN - image, right, cyan) -->
+        <rect x="168" y="12" width="8" height="2" fill="#55ffff"/>
+        <rect x="166" y="14" width="2" height="2" fill="#55ffff"/>
+        <rect x="176" y="14" width="2" height="2" fill="#55ffff"/>
+        <rect x="164" y="16" width="2" height="10" fill="#55ffff"/>
+        <rect x="178" y="16" width="2" height="10" fill="#55ffff"/>
+        <rect x="166" y="26" width="2" height="2" fill="#55ffff"/>
+        <rect x="176" y="26" width="2" height="2" fill="#55ffff"/>
+        <rect x="168" y="28" width="8" height="2" fill="#55ffff"/>
+        <rect x="170" y="20" width="4" height="4" fill="#55ffff"/>
+        <rect x="168" y="18" width="2" height="2" fill="#fff"/>
+        <rect x="174" y="18" width="2" height="2" fill="#fff"/>
+        <rect x="168" y="32" width="8" height="2" fill="#55ffff"/>
+        <rect x="166" y="34" width="12" height="2" fill="#005566"/>
+        <rect x="168" y="36" width="8" height="12" fill="#55ffff"/>
+        <rect x="172" y="8" width="2" height="4" fill="#55ffff"/>
+        <text x="164" y="60" fill="#55ffff" font-family="'Press Start 2P',monospace" font-size="4" opacity="0.8">IMG</text>
+
+        <!-- sparkle particles -->
+        <rect x="48" y="16" width="2" height="2" fill="#ffe040" opacity="0.6"/>
+        <rect x="150" y="16" width="2" height="2" fill="#ffe040" opacity="0.4"/>
+        <rect x="95" y="48" width="2" height="2" fill="#ff60a0" opacity="0.5"/>
+    </svg>
+
+    <h1>
+        ONE PLATFORM.<br>
+        <span class="glow">TEXT.</span>
+        <span class="glow-cyan">IMAGE.</span>
+        <span class="glow-green">COMPRESSED.</span><span class="cursor"></span>
+    </h1>
+
+    <p class="hero-sub">
+        O Series is the AI-to-AI compression platform.
+        OGENTI compresses text protocols. OVISEN compresses image embeddings.
+        Same MARL engine. Two output formats. Pay-per-token pricing.
+    </p>
+
+    <div class="hero-buttons">
+        <a href="/platform/signup.html" class="btn-retro primary">GET STARTED</a>
+        <a href="#products" class="btn-retro secondary">SEE PRODUCTS</a>
+    </div>
+
+    <div class="stats-bar">
+        <div class="stat-cell">
+            <div class="stat-val">2</div>
+            <div class="stat-label">PRODUCTS</div>
+        </div>
+        <div class="stat-cell">
+            <div class="stat-val">2.7<span class="unit">x</span></div>
+            <div class="stat-label">TEXT COMPRESS</div>
+        </div>
+        <div class="stat-cell">
+            <div class="stat-val">4<span class="unit">x</span></div>
+            <div class="stat-label">IMAGE COMPRESS</div>
+        </div>
+        <div class="stat-cell">
+            <div class="stat-val">8.4<span class="unit">%</span></div>
+            <div class="stat-label">EVAL ACC</div>
+        </div>
+        <div class="stat-cell">
+            <div class="stat-val">.OGT</div>
+            <div class="stat-label">TEXT FORMAT</div>
+        </div>
+        <div class="stat-cell">
+            <div class="stat-val">.OGE</div>
+            <div class="stat-label">IMAGE FORMAT</div>
+        </div>
+    </div>
+
+    <div class="scroll-hint">
+        <span>SCROLL</span>
+    </div>
+</section>
+
+<!-- ═════════════════ PRODUCTS ═════════════════ -->
+<section class="products-section" id="products">
+    <div class="section-wrap reveal">
+        <span class="section-tag">// TWO PRODUCTS, ONE ENGINE</span>
+        <h2 class="section-title">THE O SERIES PRODUCT LINE</h2>
+        <p class="section-desc">
+            Both products share the same MARL training engine, credit system,
+            and AES-256-GCM encrypted adapter format. Choose what you need to compress.
+        </p>
+
+        <div class="product-grid">
+            <!-- OGENTI -->
+            <div class="product-card">
+                <div class="product-badge" style="color:var(--pink);border-color:var(--pink);background:#000;">TEXT</div>
+                <h3 style="color:var(--pink);">OGENTI</h3>
+                <p class="product-sub">
+                    AI-to-AI text compression protocol. Agents learn emergent protocol tokens via MARL. Up to 2.7× compression measured on 0.5B model, avg 1.8× on complex tasks.
+                </p>
+                <ul class="product-specs">
+                    <li style="color:var(--pink);">Multi-model: Llama-3, Qwen-2.5, Mistral, Gemma</li>
+                    <li>LoRA R=8 adapter training via MAPPO</li>
+                    <li>5-phase progressive curriculum (Warmup → Universalize)</li>
+                    <li>~300 emergent protocol tokens</li>
+                    <li>~3MB LoRA + 17M Universal Adapter</li>
+                    <li>AES-256-GCM encrypted .OGT output</li>
+                </ul>
+                <span class="product-ext" style="color:var(--pink);border-color:var(--pink);">.OGT</span>
+            </div>
+
+            <!-- OVISEN -->
+            <div class="product-card">
+                <div class="product-badge" style="color:var(--cyan);border-color:var(--cyan);background:#000;">IMAGE</div>
+                <h3 style="color:var(--cyan);">OVISEN</h3>
+                <p class="product-sub">
+                    AI-to-AI image embedding compressor. Converts raw images into high-dimensional compressed embeddings. Downstream AI agents never need the raw pixels.
+                </p>
+                <ul class="product-specs">
+                    <li style="color:var(--cyan);">Vision models: CLIP, SigLIP, DINOv2, EVA-02</li>
+                    <li>Frozen backbone + learnable CompressionHead</li>
+                    <li>Cooperative encoder-decoder MARL training</li>
+                    <li>Configurable target dimensions (32D-512D)</li>
+                    <li>Fidelity + compression + task reward signals</li>
+                    <li>AES-256-GCM encrypted .OGE output</li>
+                </ul>
+                <span class="product-ext" style="color:var(--cyan);border-color:var(--cyan);">.OGE</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ═════════════════ PROBLEM ═════════════════ -->
+<section class="problem-section" id="problem">
+    <div class="section-wrap reveal">
+        <span class="section-tag">// THE PROBLEM</span>
+        <h2 class="section-title">AI AGENTS WASTE RESOURCES COMMUNICATING IN HUMAN FORMATS</h2>
+        <p class="section-desc">
+            Text agents burn tokens on grammar. Vision agents transmit raw megapixel images.
+            Neither is necessary for AI-to-AI communication.
+        </p>
+
+        <div class="card-grid">
+            <div class="card-retro">
+                <div class="card-icon">
+                    <svg width="32" height="32" viewBox="0 0 32 32" style="image-rendering:pixelated">
+                        <rect x="10" y="4" width="12" height="2" fill="#ffe040"/>
+                        <rect x="8" y="6" width="2" height="2" fill="#ffe040"/>
+                        <rect x="22" y="6" width="2" height="2" fill="#ffe040"/>
+                        <rect x="6" y="8" width="2" height="8" fill="#ffe040"/>
+                        <rect x="24" y="8" width="2" height="8" fill="#ffe040"/>
+                        <rect x="8" y="16" width="2" height="2" fill="#cc9900"/>
+                        <rect x="22" y="16" width="2" height="2" fill="#cc9900"/>
+                        <rect x="10" y="18" width="12" height="2" fill="#cc9900"/>
+                        <rect x="14" y="8" width="4" height="2" fill="#cc9900"/>
+                        <rect x="12" y="10" width="2" height="2" fill="#cc9900"/>
+                        <rect x="14" y="12" width="4" height="2" fill="#cc9900"/>
+                        <rect x="18" y="14" width="2" height="2" fill="#cc9900"/>
+                        <rect x="14" y="16" width="4" height="2" fill="#cc9900"/>
+                        <rect x="10" y="22" width="2" height="4" fill="#ff4060"/>
+                        <rect x="14" y="20" width="2" height="6" fill="#ff8830"/>
+                        <rect x="14" y="22" width="2" height="2" fill="#ffe040"/>
+                        <rect x="20" y="22" width="2" height="4" fill="#ff4060"/>
+                    </svg>
+                </div>
+                <h3>TOKEN WASTE</h3>
+                <p>Text agents burn API tokens with natural language overhead. Every "please" and "sure" is money on fire. OGENTI compresses up to 2.7× with emergent protocol tokens.</p>
+            </div>
+            <div class="card-retro">
+                <div class="card-icon">
+                    <svg width="32" height="32" viewBox="0 0 32 32" style="image-rendering:pixelated">
+                        <rect x="4" y="4" width="24" height="2" fill="#55ffff"/>
+                        <rect x="4" y="6" width="2" height="20" fill="#55ffff"/>
+                        <rect x="26" y="6" width="2" height="20" fill="#55ffff"/>
+                        <rect x="4" y="26" width="24" height="2" fill="#55ffff"/>
+                        <rect x="8" y="10" width="4" height="4" fill="#55ffff" opacity="0.3"/>
+                        <rect x="14" y="8" width="6" height="6" fill="#55ffff" opacity="0.4"/>
+                        <rect x="22" y="10" width="4" height="4" fill="#55ffff" opacity="0.3"/>
+                        <rect x="10" y="16" width="8" height="6" fill="#55ffff" opacity="0.5"/>
+                        <rect x="12" y="14" width="4" height="2" fill="#ff4060" opacity="0.6"/>
+                    </svg>
+                </div>
+                <h3>RAW PIXEL WASTE</h3>
+                <p>Vision agents transmit full images when only embeddings matter. A 5MB photo can be a 256-dim vector. OVISEN makes the conversion.</p>
+            </div>
+            <div class="card-retro">
+                <div class="card-icon">
+                    <svg width="32" height="32" viewBox="0 0 32 32" style="image-rendering:pixelated">
+                        <rect x="4" y="8" width="8" height="2" fill="#ff4060"/>
+                        <rect x="4" y="10" width="2" height="4" fill="#ff4060"/>
+                        <rect x="10" y="10" width="2" height="4" fill="#ff4060"/>
+                        <rect x="4" y="14" width="8" height="2" fill="#ff4060"/>
+                        <rect x="20" y="12" width="8" height="2" fill="#ff4060"/>
+                        <rect x="20" y="14" width="2" height="4" fill="#ff4060"/>
+                        <rect x="26" y="14" width="2" height="4" fill="#ff4060"/>
+                        <rect x="20" y="18" width="8" height="2" fill="#ff4060"/>
+                        <rect x="14" y="10" width="2" height="2" fill="#ffe040"/>
+                        <rect x="16" y="12" width="2" height="2" fill="#ffe040"/>
+                        <rect x="18" y="14" width="2" height="2" fill="#ffe040"/>
+                    </svg>
+                </div>
+                <h3>NO UNIFIED PROTOCOL</h3>
+                <p>There's no TCP/IP for AI. Every framework invents its own format. O Series provides a standard: .OGT for text, .OGE for images.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ═════════════════ DEMO ═════════════════ -->
+<section class="demo-section" id="demo">
+    <div class="section-wrap reveal">
+        <span class="section-tag">// LIVE PROTOCOL</span>
+        <h2 class="section-title">SEE THE COMPRESSION</h2>
+        <p class="section-desc">
+            OGENTI: Natural language in, compressed protocol out.
+            OVISEN: Raw image in, compressed embedding out.
+        </p>
+
+        <div class="terminal-box" id="demoBox">
+            <div class="terminal-titlebar">
+                <svg class="terminal-dot" viewBox="0 0 8 8" style="image-rendering:pixelated"><rect width="8" height="8" fill="#ff4060"/></svg>
+                <svg class="terminal-dot" viewBox="0 0 8 8" style="image-rendering:pixelated"><rect width="8" height="8" fill="#ffe040"/></svg>
+                <svg class="terminal-dot" viewBox="0 0 8 8" style="image-rendering:pixelated"><rect width="8" height="8" fill="#00ff88"/></svg>
+                <span class="terminal-filename">o_series_session.log</span>
+            </div>
+            <div class="terminal-body" id="demoBody"></div>
+        </div>
+    </div>
+</section>
+
+<!-- ═════════════════ ARCHITECTURE ═════════════════ -->
+<section class="pipeline-section" id="how">
+    <div class="section-wrap reveal">
+        <span class="section-tag">// SHARED ARCHITECTURE</span>
+        <h2 class="section-title">MARL TRAINING ENGINE — SAME FOR BOTH</h2>
+        <p class="section-desc">
+            Both OGENTI and OVISEN use the same multi-agent reinforcement learning pipeline.
+            Two cooperative agents (encoder + decoder) optimize competing objectives.
+        </p>
+
+        <div class="pipeline">
+            <div class="pipe-step">
+                <div class="pipe-num">1</div>
+                <div class="pipe-body">
+                    <h3>SELECT BACKBONE</h3>
+                    <div class="pipe-tag">OGENTI: Llama / Qwen / Gemma &nbsp;|&nbsp; OVISEN: CLIP / SigLIP / DINOv2</div>
+                    <p>Choose a pre-trained model as the frozen backbone. The platform freezes all base weights — only the compression head is trained.</p>
+                    <span class="pipe-badge">BACKBONE: <span class="val">FROZEN</span></span>
+                </div>
+            </div>
+            <div class="pipe-step">
+                <div class="pipe-num">2</div>
+                <div class="pipe-body">
+                    <h3>UPLOAD DATASET</h3>
+                    <div class="pipe-tag">TEXT: CONVERSATIONS, CODE, DOMAIN &nbsp;|&nbsp; IMAGE: IMAGENET, COCO, CUSTOM</div>
+                    <p>Select from built-in datasets or upload your own. The platform handles cleaning, formatting, and batching automatically.</p>
+                    <span class="pipe-badge">FORMAT: <span class="val">AUTO-DETECT</span></span>
+                </div>
+            </div>
+            <div class="pipe-step">
+                <div class="pipe-num">3</div>
+                <div class="pipe-body">
+                    <h3>MARL TRAINING (PPO)</h3>
+                    <div class="pipe-tag">ENCODER + DECODER CO-EVOLVE VIA REWARD SIGNALS</div>
+                    <p>Two agents train cooperatively. The encoder compresses; the decoder reconstructs. Reward = fidelity x compression x task-performance. PPO optimizes both simultaneously.</p>
+                    <span class="pipe-badge">REWARD: <span class="val">MULTI-OBJECTIVE</span></span>
+                </div>
+            </div>
+            <div class="pipe-step">
+                <div class="pipe-num">4</div>
+                <div class="pipe-body">
+                    <h3>EXPORT ADAPTER</h3>
+                    <div class="pipe-tag">OGENTI -> .OGT &nbsp;|&nbsp; OVISEN -> .OGE</div>
+                    <p>Trained weights are distilled into a portable adapter file. AES-256-GCM encrypted. Any compatible model can load the adapter and speak the protocol instantly.</p>
+                    <span class="pipe-badge">ENCRYPTION: <span class="val">AES-256-GCM</span></span>
+                </div>
+            </div>
+            <div class="pipe-step">
+                <div class="pipe-num">5</div>
+                <div class="pipe-body">
+                    <h3>DEPLOY & INFER</h3>
+                    <div class="pipe-tag">REST API &nbsp;|&nbsp; PAY-PER-TOKEN &nbsp;|&nbsp; AUTO-ROUTING</div>
+                    <p>Every adapter gets a scalable REST API endpoint. The router automatically selects the cheapest compatible model. You only pay for compressed tokens generated.</p>
+                    <span class="pipe-badge">BILLING: <span class="val">PAY-PER-TOKEN</span></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ═════════════════ TECH STACK ═════════════════ -->
+<section class="tech-section" id="stack">
+    <div class="section-wrap reveal">
+        <span class="section-tag">// PLATFORM</span>
+        <h2 class="section-title">THE O SERIES CLOUD PLATFORM</h2>
+
+        <div class="tech-grid">
+            <div class="tech-card">
+                <h4>DATASET MANAGER</h4>
+                <p>Upload text logs or image datasets. Auto-clean, auto-format, auto-batch for MARL training.</p>
+                <span class="tech-tag">INGESTION</span>
+            </div>
+            <div class="tech-card">
+                <h4>1-CLICK TRAINING</h4>
+                <p>Select backbone + dataset + episodes. The platform provisions RunPod A100 clusters and runs the full PPO pipeline.</p>
+                <span class="tech-tag">TRAINING</span>
+            </div>
+            <div class="tech-card">
+                <h4>LIVE TELEMETRY</h4>
+                <p>Watch agents learn in real-time. WebSocket streams reward curves, fidelity scores, compression ratios, and PPO loss.</p>
+                <span class="tech-tag">MONITORING</span>
+            </div>
+            <div class="tech-card">
+                <h4>.OGT + .OGE FORMATS</h4>
+                <p>Portable encrypted adapters. .OGT for text protocols, .OGE for image embeddings. AES-256-GCM with unique keys.</p>
+                <span class="tech-tag">EXPORT</span>
+            </div>
+            <div class="tech-card">
+                <h4>API + ROUTER</h4>
+                <p>Every adapter gets a REST API. The built-in Router Agent auto-selects the cheapest compatible model for each request.</p>
+                <span class="tech-tag">DEPLOYMENT</span>
+            </div>
+            <div class="tech-card">
+                <h4>PAY-PER-TOKEN</h4>
+                <p>No GPU lock-in. Buy credits, spend on training and inference. Massive scale = massive savings through compression.</p>
+                <span class="tech-tag">BILLING</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ═════════════════ RESULTS ═════════════════ -->
+<section class="results-section" id="results">
+    <div class="section-wrap reveal">
+        <span class="section-tag">// OUTPUT</span>
+        <h2 class="section-title">WHAT YOU GET</h2>
+        <p class="section-desc">
+            Train on your own data through the dashboard.
+            Get portable adapters that work with any compatible model.
+        </p>
+
+        <div class="results-grid">
+            <div class="result-tile">
+                <div class="result-val">2.7<span class="u">x</span></div>
+                <div class="result-label">TEXT COMPRESS</div>
+                <div class="result-sub">OGENTI .OGT (0.5B)</div>
+            </div>
+            <div class="result-tile">
+                <div class="result-val">4<span class="u">x</span></div>
+                <div class="result-label">IMAGE COMPRESS</div>
+                <div class="result-sub">OVISEN .OGE (target)</div>
+            </div>
+            <div class="result-tile">
+                <div class="result-val">8.4<span class="u">%</span></div>
+                <div class="result-label">EVAL ACC</div>
+                <div class="result-sub">semantic (0.5B CPU)</div>
+            </div>
+            <div class="result-tile">
+                <div class="result-val">~3<span class="u">MB</span></div>
+                <div class="result-label">LORA SIZE</div>
+                <div class="result-sub">per model</div>
+            </div>
+            <div class="result-tile">
+                <div class="result-val">6</div>
+                <div class="result-label">VISION MODELS</div>
+                <div class="result-sub">CLIP/SigLIP/DINOv2</div>
+            </div>
+            <div class="result-tile">
+                <div class="result-val">256</div>
+                <div class="result-label">AES KEY</div>
+                <div class="result-sub">bit encryption</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ═════════════════ BENCHMARK ═════════════════ -->
+<section class="results-section" id="benchmark" style="border-top:1px solid rgba(85,255,255,0.15);">
+    <div class="section-wrap reveal">
+        <span class="section-tag">// MEASURED DATA — QWEN 2.5 0.5B, CPU, 300 EPISODES</span>
+        <h2 class="section-title">OGENTI BENCHMARK RESULTS</h2>
+        <p class="section-desc">
+            Real numbers from a 0.5B parameter model trained entirely on CPU.
+            5-phase curriculum, MAPPO training, LoRA rank=8. No cherrypicking.
+        </p>
+
+        <!-- Phase Results Table -->
+        <div style="overflow-x:auto;margin:2rem 0;">
+            <table style="width:100%;border-collapse:collapse;font-family:'Share Tech Mono',monospace;font-size:0.85rem;">
+                <thead>
+                    <tr style="border-bottom:2px solid var(--pink);color:var(--pink);text-align:left;">
+                        <th style="padding:0.6rem;">PHASE</th>
+                        <th style="padding:0.6rem;">NAME</th>
+                        <th style="padding:0.6rem;">EPISODES</th>
+                        <th style="padding:0.6rem;">AVG COMP</th>
+                        <th style="padding:0.6rem;">BEST COMP</th>
+                        <th style="padding:0.6rem;">AVG ACC</th>
+                        <th style="padding:0.6rem;">BEST ACC</th>
+                    </tr>
+                </thead>
+                <tbody style="color:var(--cyan);">
+                    <tr style="border-bottom:1px solid rgba(85,255,255,0.1);">
+                        <td style="padding:0.5rem;">0</td><td>Warmup (SL)</td><td>60</td>
+                        <td>0.7×</td><td>1.7×</td><td>7.09%</td><td style="color:var(--green);">53.4%</td>
+                    </tr>
+                    <tr style="border-bottom:1px solid rgba(85,255,255,0.1);">
+                        <td style="padding:0.5rem;">1</td><td>Simple (RL)</td><td>80</td>
+                        <td>0.9×</td><td>1.7×</td><td>3.80%</td><td>17.7%</td>
+                    </tr>
+                    <tr style="border-bottom:1px solid rgba(85,255,255,0.1);background:rgba(255,64,96,0.08);">
+                        <td style="padding:0.5rem;color:var(--pink);">2</td><td style="color:var(--pink);">Complex (RL)</td><td>60</td>
+                        <td style="color:var(--green);">1.8×</td><td style="color:var(--green);">2.7×</td><td>5.37%</td><td>16.2%</td>
+                    </tr>
+                    <tr style="border-bottom:1px solid rgba(85,255,255,0.1);">
+                        <td style="padding:0.5rem;">3</td><td>Generalize</td><td>50</td>
+                        <td>1.3×</td><td>1.8×</td><td>3.0%</td><td>6.2%</td>
+                    </tr>
+                    <tr>
+                        <td style="padding:0.5rem;">4</td><td>Universalize</td><td>50</td>
+                        <td>1.3×</td><td>2.4×</td><td>0.5%</td><td>4.6%</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Eval Results -->
+        <div style="overflow-x:auto;margin:2rem 0;">
+            <p style="color:var(--pink);font-family:'Share Tech Mono',monospace;font-size:0.75rem;margin-bottom:0.8rem;">
+                HELD-OUT EVALUATION (5 episodes, separate from training data)
+            </p>
+            <table style="width:100%;max-width:600px;border-collapse:collapse;font-family:'Share Tech Mono',monospace;font-size:0.85rem;">
+                <thead>
+                    <tr style="border-bottom:2px solid var(--cyan);color:var(--cyan);text-align:left;">
+                        <th style="padding:0.5rem;">EVAL</th>
+                        <th style="padding:0.5rem;">EPISODE</th>
+                        <th style="padding:0.5rem;">ACCURACY</th>
+                        <th style="padding:0.5rem;">COMPRESSION</th>
+                    </tr>
+                </thead>
+                <tbody style="color:rgba(85,255,255,0.85);">
+                    <tr style="border-bottom:1px solid rgba(85,255,255,0.1);">
+                        <td style="padding:0.4rem;">#1</td><td>50</td><td>3.73%</td><td>0.5×</td>
+                    </tr>
+                    <tr style="border-bottom:1px solid rgba(85,255,255,0.1);">
+                        <td style="padding:0.4rem;">#2</td><td>100</td><td>6.79%</td><td>0.8×</td>
+                    </tr>
+                    <tr style="border-bottom:1px solid rgba(85,255,255,0.1);">
+                        <td style="padding:0.4rem;">#3</td><td>150</td><td>2.83%</td><td style="color:var(--green);">1.5×</td>
+                    </tr>
+                    <tr style="border-bottom:1px solid rgba(85,255,255,0.1);">
+                        <td style="padding:0.4rem;">#4</td><td>200</td><td>6.46%</td><td>0.8×</td>
+                    </tr>
+                    <tr>
+                        <td style="padding:0.4rem;">#5</td><td>250</td><td style="color:var(--green);">8.42%</td><td>0.9×</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Config Summary -->
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1rem;margin-top:2rem;">
+            <div class="result-tile">
+                <div class="result-val" style="font-size:1.2rem;">Qwen 2.5</div>
+                <div class="result-label">BASE MODEL</div>
+                <div class="result-sub">0.5B-Instruct</div>
+            </div>
+            <div class="result-tile">
+                <div class="result-val" style="font-size:1.2rem;">2.9<span class="u">M</span></div>
+                <div class="result-label">TRAINABLE</div>
+                <div class="result-sub">0.11% of 494M</div>
+            </div>
+            <div class="result-tile">
+                <div class="result-val" style="font-size:1.2rem;">300</div>
+                <div class="result-label">EPISODES</div>
+                <div class="result-sub">5 phases × MAPPO</div>
+            </div>
+            <div class="result-tile">
+                <div class="result-val" style="font-size:1.2rem;">~5<span class="u">hr</span></div>
+                <div class="result-label">CPU TIME</div>
+                <div class="result-sub">float32, no GPU</div>
+            </div>
+            <div class="result-tile">
+                <div class="result-val" style="font-size:1.2rem;">16.9<span class="u">M</span></div>
+                <div class="result-label">ADAPTER</div>
+                <div class="result-sub">Universal PPH+PRH</div>
+            </div>
+            <div class="result-tile">
+                <div class="result-val" style="font-size:1.2rem;">~300</div>
+                <div class="result-label">PROTO TOKENS</div>
+                <div class="result-sub">emergent vocabulary</div>
+            </div>
+        </div>
+
+        <p style="color:rgba(85,255,255,0.5);font-family:'Share Tech Mono',monospace;font-size:0.7rem;margin-top:2rem;text-align:center;">
+            0.5B CPU benchmark is a proof-of-concept. Production models (3B-7B + GPU) are expected to significantly outperform these numbers.
+        </p>
+    </div>
+</section>
+
+<!-- ═════════════════ CTA ═════════════════ -->
+<section class="cta-section">
+    <div class="section-wrap">
+        <div class="cta-box reveal">
+            <h2>BUILD YOUR OWN COMPRESSION ADAPTERS</h2>
+            <p>
+                Pick a modality — text or image. Choose your backbone.
+                Select a dataset. Buy credits.
+                We handle the GPUs — you get an encrypted adapter.
+            </p>
+            <div class="cta-buttons">
+                <a href="/platform/signup.html" class="btn-retro primary">CREATE ACCOUNT</a>
+                <a href="/platform/billing.html" class="btn-retro secondary">VIEW PRICING</a>
+            </div>
+            <div class="cta-cmd">
+                <code>pip install oseries &amp;&amp; oseries.attach(your_model, adapter="my_adapter.ogt")</code>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer>
+    <div class="footer-text">O SERIES v0.2 // OGENTI (TEXT .OGT) + OVISEN (IMAGE .OGE) // MARL + MULTI-MODEL + LORA + AES-256</div>
+    <div class="footer-links">
+        <a href="/platform/signup.html" class="footer-link">SIGN UP</a>
+        <a href="/platform/billing.html" class="footer-link">PRICING</a>
+        <a href="/platform/login.html" class="footer-link">LOGIN</a>
+        <a href="/privacy.html" class="footer-link">PRIVACY</a>
+        <a href="/terms.html" class="footer-link">TERMS</a>
+    </div>
+    <div class="footer-bottom">PRESS START TO CONTINUE_</div>
+</footer>
+
+<script>
+(function(){
+    'use strict';
+
+    // ── Scroll Reveal ──
+    var reveals = document.querySelectorAll('.reveal');
+    var obs = new IntersectionObserver(function(entries) {
+        entries.forEach(function(e) {
+            if (e.isIntersecting) e.target.classList.add('visible');
+        });
+    }, { threshold: 0.12, rootMargin: '0px 0px -30px 0px' });
+    reveals.forEach(function(el) { obs.observe(el); });
+
+    // ── Protocol Demo (alternates OGENTI text + OVISEN image demos) ──
+    var DEMOS = [
+        {
+            type: 'OGENTI',
+            input: '"Translate the following English text to French: The weather is beautiful today and I would like to go for a walk in the park."',
+            tokens: ['\u27E8TASK:TRANS\u27E9', '\u27E8EN\u2192FR\u27E9', '\u27E8SEM:weather+beauty+walk+park\u27E9'],
+            output: '"Le temps est magnifique aujourd\'hui et j\'aimerais me promener dans le parc."',
+            inTk: 28, outTk: 10, format: '.OGT'
+        },
+        {
+            type: 'OVISEN',
+            input: '[photo_2048x1536.jpg — 4.2MB raw JPEG — street scene with cars and pedestrians]',
+            tokens: ['\u27E8VIS:CLIP-L/14\u27E9', '\u27E8DIM:768\u2192256\u27E9', '\u27E8EMB:[0.234, -0.891, 0.442, ...]\u27E9'],
+            output: '[256-dim compressed embedding — cosine fidelity: 0.97 — 3x compression — 1.2KB]',
+            inTk: '4.2MB', outTk: '1.2KB', format: '.OGE'
+        },
+        {
+            type: 'OGENTI',
+            input: '"Write a Python function that returns the second largest unique value from a list of integers. Handle edge cases."',
+            tokens: ['\u27E8TASK:CODE\u27E9', '\u27E8PY:fn\u27E9', '\u27E8SPEC:list\u21922nd_max+edge\u27E9'],
+            output: '"def second_largest(nums): return sorted(set(nums), reverse=True)[1] if len(set(nums))>=2 else None"',
+            inTk: 26, outTk: 10, format: '.OGT'
+        },
+        {
+            type: 'OVISEN',
+            input: '[medical_scan_4096x4096.png — 12.1MB raw — chest X-ray with bilateral infiltrates]',
+            tokens: ['\u27E8VIS:DINOv2-L\u27E9', '\u27E8DIM:1024\u2192128\u27E9', '\u27E8EMB:[0.112, 0.843, -0.221, ...]\u27E9'],
+            output: '[128-dim compressed embedding — cosine fidelity: 0.95 — 8x compression — 0.5KB]',
+            inTk: '12.1MB', outTk: '0.5KB', format: '.OGE'
+        }
+    ];
+
+    var demoIdx = 0;
+    var demoTimer = null;
+
+    function runDemo() {
+        var body = document.getElementById('demoBody');
+        if (!body) return;
+        if (demoTimer) clearTimeout(demoTimer);
+
+        var d = DEMOS[demoIdx];
+        body.innerHTML = '';
+        body.style.opacity = '1';
+
+        var typeColor = d.type === 'OGENTI' ? 'var(--pink)' : 'var(--cyan)';
+        var compLabel = d.type === 'OGENTI'
+            ? d.outTk + ' tokens // ' + Math.round(parseInt(d.inTk)/parseInt(d.outTk)) + 'x compression'
+            : d.outTk + ' // ' + d.format;
+        var savedLabel = d.type === 'OGENTI'
+            ? '<strong>' + (parseInt(d.inTk) - parseInt(d.outTk)) + ' tokens saved</strong> per exchange'
+            : '<strong>Image \u2192 embedding in ' + d.outTk + '</strong> — no raw pixels needed';
+
+        var acc = '';
+        var steps = [
+            { t: 0, h:
+                '<div class="t-row"><span class="t-label" style="color:' + typeColor + '">' + d.type + '</span><span class="t-content" style="color:' + typeColor + ';font-size:11px;letter-spacing:.1em;">\u25B8 ' + d.format + ' FORMAT</span></div>' +
+                '<div class="t-row"><span class="t-label input">&gt; INPUT</span><span class="t-content">' + d.input + '</span></div>' +
+                '<div class="t-row"><span class="t-label input"></span><span class="t-meta">' + d.inTk + (d.type === 'OGENTI' ? ' tokens' : ' raw') + '</span></div>'
+            },
+            { t: 1000, h:
+                '<div class="t-arrow">| ENCODER \u03B1 |</div>' +
+                '<div class="t-row"><span class="t-label encode">&gt; PROTO</span><span class="t-content highlight-cyan">' +
+                    d.tokens.map(function(t,i){ return '<span class="t-token" style="animation:fadeIn 0.3s '+(i*0.12)+'s both">' + t + '</span>'; }).join(' ') +
+                '</span></div>' +
+                '<div class="t-row"><span class="t-label encode"></span><span class="t-meta" style="color:var(--cyan-dim)">' + compLabel + '</span></div>'
+            },
+            { t: 2200, h:
+                '<div class="t-arrow">| DECODER \u03B2 |</div>' +
+                '<div class="t-row"><span class="t-label decode">&gt; OUT</span><span class="t-content highlight-green">' + d.output + '</span></div>'
+            },
+            { t: 3200, h:
+                '<div class="t-row"><span class="t-label saved">&gt; SAVED</span><span class="t-content highlight-purple">' + savedLabel + '</span></div>'
+            }
+        ];
+
+        steps.forEach(function(step) {
+            setTimeout(function() {
+                acc += step.h;
+                body.innerHTML = acc;
+            }, step.t);
+        });
+
+        demoTimer = setTimeout(function() {
+            demoIdx = (demoIdx + 1) % DEMOS.length;
+            body.style.opacity = '0';
+            setTimeout(runDemo, 400);
+        }, 5500);
+    }
+
+    var demoObs = new IntersectionObserver(function(entries) {
+        entries.forEach(function(e) {
+            if (e.isIntersecting) { runDemo(); demoObs.disconnect(); }
+        });
+    }, { threshold: 0.25 });
+    var demoBox = document.getElementById('demoBox');
+    if (demoBox) demoObs.observe(demoBox);
+
+    // ── Nav scroll ──
+    var navEl = document.querySelector('nav');
+    window.addEventListener('scroll', function() {
+        navEl.style.borderBottomColor = window.scrollY > 60
+            ? 'rgba(0,240,255,0.15)' : 'var(--border)';
+    }, { passive: true });
+
+    // ── Smooth scroll ──
+    document.querySelectorAll('a[href^="#"]').forEach(function(a) {
+        a.addEventListener('click', function(e) {
+            e.preventDefault();
+            var t = document.querySelector(a.getAttribute('href'));
+            if (t) t.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
+    });
+
+    // ── Pixel sparkle on mouse ──
+    document.addEventListener('click', function(e) {
+        for (var i = 0; i < 6; i++) {
+            var s = document.createElement('div');
+            s.style.cssText = 'position:fixed;width:4px;height:4px;pointer-events:none;z-index:10000;image-rendering:pixelated;background:' +
+                ['#00f0ff','#b060ff','#00ff88','#ffe040','#ff60a0','#ff8830'][i] + ';';
+            s.style.left = e.clientX + 'px';
+            s.style.top = e.clientY + 'px';
+            document.body.appendChild(s);
+            var angle = (Math.PI * 2 / 6) * i;
+            var speed = 40 + Math.random() * 30;
+            var dx = Math.cos(angle) * speed;
+            var dy = Math.sin(angle) * speed;
+            (function(el, dx, dy) {
+                var x = 0, y = 0, opacity = 1;
+                function tick() {
+                    x += dx * 0.06;
+                    y += dy * 0.06 + 0.5;
+                    opacity -= 0.025;
+                    el.style.transform = 'translate(' + x + 'px,' + y + 'px)';
+                    el.style.opacity = Math.max(0, opacity);
+                    if (opacity > 0) requestAnimationFrame(tick);
+                    else el.remove();
+                }
+                requestAnimationFrame(tick);
+            })(s, dx, dy);
+        }
+    });
+})();
+</script>
+
+</body>
+</html>
