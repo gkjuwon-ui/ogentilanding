@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SER1ES — AI Training Protocol Platform</title>
-    <meta name="description" content="SER1ES: the AI training protocol platform. OGENTI compresses text. OVISEN compresses images. PHIREN guards hallucination. PARHEN blocks sycophancy. MURHEN fixes lost-in-the-middle. Train, deploy, pay-per-token.">
+    <meta name="description" content="SER1ES: the AI training protocol platform. OGENTI compresses text. OVISEN compresses images. PHIREN guards hallucination. PARHEN blocks sycophancy. MURHEN fixes lost-in-the-middle. S-SER1ES performs neural surgery. Train, deploy, pay-per-token.">
     <meta property="og:title" content="SER1ES — AI Training Protocol Platform">
-    <meta property="og:description" content="Five products, one platform. O-Ser1es compression, P-Ser1es factuality & anti-sycophancy, M-Ser1es position-agnostic recall. MARL-trained, AES-256 encrypted.">
+    <meta property="og:description" content="Six products, one platform. O-Ser1es compression, P-Ser1es factuality & anti-sycophancy, M-Ser1es position-agnostic recall, S-Ser1es neural surgery. MARL-trained, AES-256 encrypted.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://oseries.io">
     <meta name="twitter:card" content="summary_large_image">
@@ -40,6 +40,7 @@
     --phiren: #55ff55;
     --parhen: #ffaa55;
     --murhen: #ffff55;
+    --sseries: #ff5577;
     --font-pixel: 'Press Start 2P', monospace;
     --px: 4px;
 }
@@ -649,7 +650,8 @@ footer {
         <span class="glow-cyan">IMAGE.</span>
         <span class="glow-green">TRUTH.</span>
         <span style="color:var(--parhen);text-shadow:4px 4px 0 #000;">GRIT.</span>
-        <span style="color:var(--murhen);text-shadow:4px 4px 0 #000;">RECALL.</span><span class="cursor"></span>
+        <span style="color:var(--murhen);text-shadow:4px 4px 0 #000;">RECALL.</span>
+        <span style="color:var(--sseries);text-shadow:4px 4px 0 #000;">SURGERY.</span><span class="cursor"></span>
     </h1>
 
     <p class="hero-sub">
@@ -657,7 +659,8 @@ footer {
         OGENTI compresses text. OVISEN compresses images.
         PHIREN detects hallucinations. PARHEN blocks sycophancy.
         MURHEN fixes lost-in-the-middle.
-        Same MARL engine. Five output formats. Pay-per-token.
+        S-SER1ES performs neural surgery.
+        Same MARL engine. Six output formats. Pay-per-token.
     </p>
 
     <div class="hero-buttons">
@@ -667,7 +670,7 @@ footer {
 
     <div class="stats-bar">
         <div class="stat-cell">
-            <div class="stat-val">5</div>
+            <div class="stat-val">6</div>
             <div class="stat-label">PRODUCTS</div>
         </div>
         <div class="stat-cell">
@@ -697,6 +700,10 @@ footer {
         <div class="stat-cell">
             <div class="stat-val">.MRH</div>
             <div class="stat-label">RECALL FORMAT</div>
+        </div>
+        <div class="stat-cell">
+            <div class="stat-val">.SRS</div>
+            <div class="stat-label">SURGERY FORMAT</div>
         </div>
         <div class="stat-cell">
             <div class="stat-val">256<span class="unit">b</span></div>
@@ -812,6 +819,31 @@ footer {
 
                 <p style="font-family:var(--font-pixel);font-size:0.38rem;color:var(--text-dim);line-height:2.2;margin-top:8px;">
                     200K context window means nothing if you only remember the first and last 5%. MURHEN fixes that.
+                </p>
+            </div>
+
+            <!-- S-SER1ES -->
+            <div class="product-card">
+                <div class="product-badge" style="color:var(--sseries);border-color:var(--sseries);background:#000;">SURGERY</div>
+                <h3 style="color:var(--sseries);">S-SER1ES</h3>
+                <p class="product-sub">
+                    Neural surgery engine. Find dumb neurons via blame attribution and fix them with Masked DPO — surgical precision, no catastrophic forgetting.
+                </p>
+
+                <div style="border-top:2px solid rgba(255,85,119,0.3);padding-top:12px;margin-top:12px;margin-bottom:16px;">
+                    <h4 style="font-family:var(--font-pixel);font-size:0.5rem;color:var(--sseries);margin-bottom:8px;">NEURAL SURGERY ENGINE</h4>
+                    <ul class="product-specs">
+                        <li style="color:var(--sseries);">Blame Attribution: gradient + activation + consistency</li>
+                        <li>Top 1-5% "dumb neurons" identified and isolated</li>
+                        <li>Masked DPO — only blamed params are updated</li>
+                        <li>Anti-forgetting: KL divergence + anchor tests</li>
+                        <li>ENHANCED / IMPROVED / MARGINAL / FAILED</li>
+                    </ul>
+                    <span class="product-ext" style="color:var(--sseries);border-color:var(--sseries);font-size:0.4rem;padding:4px 10px;border-width:2px;">.SRS</span>
+                </div>
+
+                <p style="font-family:var(--font-pixel);font-size:0.38rem;color:var(--text-dim);line-height:2.2;margin-top:8px;">
+                    Why retrain 100% of parameters when only 1-5% are broken? S-SER1ES operates with surgical precision.
                 </p>
             </div>
         </div>
@@ -1115,7 +1147,7 @@ footer {
 
 <!-- Footer -->
 <footer>
-    <div class="footer-text">SER1ES v0.4 // OGENTI (.OGT) + OVISEN (.OGE) + PHIREN (.PHR) + PARHEN (.PRH) + MURHEN (.MRH) // MARL + MULTI-MODEL + LORA + AES-256</div>
+    <div class="footer-text">SER1ES v0.5 // OGENTI (.OGT) + OVISEN (.OGE) + PHIREN (.PHR) + PARHEN (.PRH) + MURHEN (.MRH) + S-SER1ES (.SRS) // MARL + MULTI-MODEL + LORA + AES-256</div>
     <div class="footer-links">
         <a href="/platform/signup.html" class="footer-link">SIGN UP</a>
         <a href="/platform/billing.html" class="footer-link">PRICING</a>
