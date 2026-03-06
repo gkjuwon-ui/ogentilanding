@@ -18,7 +18,7 @@
     <style>
 /* ============================================================
    SER1ES — 8-bit Retro Landing
-   OGENTI + OVISEN + PHIREN + PARHEN + MURHEN
+   OGENTI + OVISEN + PHIREN + PARHEN + MURHEN + SYRHEN
    ============================================================ */
 :root {
     --bg: #000000;
@@ -702,7 +702,7 @@ footer {
             <div class="stat-label">RECALL FORMAT</div>
         </div>
         <div class="stat-cell">
-            <div class="stat-val">.SRS</div>
+            <div class="stat-val">.SYH</div>
             <div class="stat-label">SURGERY FORMAT</div>
         </div>
         <div class="stat-cell">
@@ -719,10 +719,10 @@ footer {
 <!-- ═════════════════ PRODUCTS ═════════════════ -->
 <section class="products-section" id="products">
     <div class="section-wrap reveal">
-        <span class="section-tag">// THREE SER1ES, ONE ENGINE</span>
+        <span class="section-tag">// FOUR SER1ES, SIX PRODUCTS</span>
         <h2 class="section-title">THE SER1ES PRODUCT LINE</h2>
         <p class="section-desc">
-            Three ser1es, one MARL training engine. Same credit system,
+            Four ser1es, one MARL training engine. Same credit system,
             same AES-256-GCM encryption. Different missions.
         </p>
 
@@ -831,7 +831,7 @@ footer {
                 </p>
 
                 <div style="border-top:2px solid rgba(255,85,119,0.3);padding-top:12px;margin-top:12px;margin-bottom:16px;">
-                    <h4 style="font-family:var(--font-pixel);font-size:0.5rem;color:var(--sseries);margin-bottom:8px;">NEURAL SURGERY ENGINE</h4>
+                    <h4 style="font-family:var(--font-pixel);font-size:0.5rem;color:var(--sseries);margin-bottom:8px;">SYRHEN — NEURAL SURGERY</h4>
                     <ul class="product-specs">
                         <li style="color:var(--sseries);">Blame Attribution: gradient + activation + consistency</li>
                         <li>Top 1-5% "dumb neurons" identified and isolated</li>
@@ -839,7 +839,7 @@ footer {
                         <li>Anti-forgetting: KL divergence + anchor tests</li>
                         <li>ENHANCED / IMPROVED / MARGINAL / FAILED</li>
                     </ul>
-                    <span class="product-ext" style="color:var(--sseries);border-color:var(--sseries);font-size:0.4rem;padding:4px 10px;border-width:2px;">.SRS</span>
+                    <span class="product-ext" style="color:var(--sseries);border-color:var(--sseries);font-size:0.4rem;padding:4px 10px;border-width:2px;">.SYH</span>
                 </div>
 
                 <p style="font-family:var(--font-pixel);font-size:0.38rem;color:var(--text-dim);line-height:2.2;margin-top:8px;">
@@ -858,6 +858,8 @@ footer {
         <p class="section-desc">
             Text agents burn tokens. Vision agents transmit raw pixels.
             Language models hallucinate, flip under pressure,
+            and forget the middle. Fine-tuning breaks what already works.
+            SER1ES addresses all five.
             and forget the middle. SER1ES solves all five.
         </p>
 
@@ -938,6 +940,23 @@ footer {
                 <h3>LOST IN THE MIDDLE</h3>
                 <p>200K context window, but only start and end are recalled. MURHEN flattens the U-curve for uniform position recall.</p>
             </div>
+            <div class="card-retro">
+                <div class="card-icon">
+                    <svg width="32" height="32" viewBox="0 0 32 32" style="image-rendering:pixelated">
+                        <rect x="10" y="4" width="12" height="2" fill="#ff5577"/>
+                        <rect x="8" y="6" width="2" height="4" fill="#ff5577"/>
+                        <rect x="22" y="6" width="2" height="4" fill="#ff5577"/>
+                        <rect x="14" y="12" width="4" height="2" fill="#ff5577"/>
+                        <rect x="12" y="14" width="2" height="6" fill="#ff5577"/>
+                        <rect x="18" y="14" width="2" height="6" fill="#ff5577"/>
+                        <rect x="14" y="20" width="4" height="2" fill="#55ff55"/>
+                        <rect x="6" y="24" width="20" height="4" fill="#ff5577" opacity="0.3"/>
+                        <rect x="14" y="24" width="4" height="4" fill="#55ff55"/>
+                    </svg>
+                </div>
+                <h3>CATASTROPHIC FORGETTING</h3>
+                <p>Full fine-tuning improves one skill but breaks ten others. SYRHEN surgically fixes only the 1-5% of neurons that are underperforming.</p>
+            </div>
         </div>
     </div>
 </section>
@@ -953,6 +972,7 @@ footer {
             PHIREN: Claims in, verdicts out.
             PARHEN: Pressure in, conviction out.
             MURHEN: Long context in, full recall out.
+            SYRHEN: Model in, surgical adapter out.
         </p>
 
         <div class="terminal-box" id="demoBox">
@@ -982,7 +1002,7 @@ footer {
                 <div class="pipe-num">1</div>
                 <div class="pipe-body">
                     <h3>SELECT BACKBONE</h3>
-                    <div class="pipe-tag">OGENTI: Llama/Qwen/Gemma | OVISEN: CLIP/SigLIP/DINOv2 | PHIREN/PARHEN/MURHEN: Llama/Qwen/Mistral</div>
+                    <div class="pipe-tag">OGENTI: Llama/Qwen/Gemma | OVISEN: CLIP/SigLIP/DINOv2 | PHIREN/PARHEN/MURHEN: Llama/Qwen/Mistral | SYRHEN: Llama/Qwen</div>
                     <p>Choose a pre-trained model as the frozen backbone. Only the task-specific head is trained.</p>
                     <span class="pipe-badge">BACKBONE: <span class="val">FROZEN</span></span>
                 </div>
@@ -1009,7 +1029,7 @@ footer {
                 <div class="pipe-num">4</div>
                 <div class="pipe-body">
                     <h3>EXPORT ADAPTER</h3>
-                    <div class="pipe-tag">OGENTI &rarr; .OGT | OVISEN &rarr; .OGE | PHIREN &rarr; .PHR | PARHEN &rarr; .PRH | MURHEN &rarr; .MRH</div>
+                    <div class="pipe-tag">OGENTI &rarr; .OGT | OVISEN &rarr; .OGE | PHIREN &rarr; .PHR | PARHEN &rarr; .PRH | MURHEN &rarr; .MRH | SYRHEN &rarr; .SYH</div>
                     <p>Trained weights are distilled into a portable adapter. AES-256-GCM encrypted. Load on any compatible model.</p>
                     <span class="pipe-badge">ENCRYPTION: <span class="val">AES-256-GCM</span></span>
                 </div>
@@ -1050,8 +1070,8 @@ footer {
                 <span class="tech-tag">MONITORING</span>
             </div>
             <div class="tech-card">
-                <h4>.OGT .OGE .PHR .PRH .MRH</h4>
-                <p>Five encrypted adapter formats. Text, image, factuality, anti-sycophancy, recall. AES-256-GCM with per-adapter keys.</p>
+                <h4>.OGT .OGE .PHR .PRH .MRH .SYH</h4>
+                <p>Six encrypted adapter formats. Text, image, factuality, anti-sycophancy, recall, neural surgery. AES-256-GCM with per-adapter keys.</p>
                 <span class="tech-tag">EXPORT</span>
             </div>
             <div class="tech-card">
@@ -1105,14 +1125,19 @@ footer {
                 <div class="result-sub">MURHEN .MRH</div>
             </div>
             <div class="result-tile">
+                <div class="result-val" style="color:var(--sseries);">~1<span class="u">%</span></div>
+                <div class="result-label">SURGERY PRECISION</div>
+                <div class="result-sub">SYRHEN .SYH</div>
+            </div>
+            <div class="result-tile">
                 <div class="result-val">~3<span class="u">MB</span></div>
                 <div class="result-label">LORA SIZE</div>
                 <div class="result-sub">per adapter</div>
             </div>
             <div class="result-tile">
-                <div class="result-val">5</div>
+                <div class="result-val">6</div>
                 <div class="result-label">FORMATS</div>
-                <div class="result-sub">.OGT .OGE .PHR .PRH .MRH</div>
+                <div class="result-sub">.OGT .OGE .PHR .PRH .MRH .SYH</div>
             </div>
             <div class="result-tile">
                 <div class="result-val">256</div>
@@ -1130,7 +1155,7 @@ footer {
             <h2>BUILD YOUR OWN TRAINING ADAPTERS</h2>
             <p>
                 Pick a product — text compression, image compression, hallucination detection,
-                anti-sycophancy, or position recall.
+                anti-sycophancy, position recall, or neural surgery.
                 Choose your backbone. Select a dataset. Buy credits.
                 We handle the GPUs — you get an encrypted adapter.
             </p>
@@ -1147,7 +1172,7 @@ footer {
 
 <!-- Footer -->
 <footer>
-    <div class="footer-text">SER1ES v0.5 // OGENTI (.OGT) + OVISEN (.OGE) + PHIREN (.PHR) + PARHEN (.PRH) + MURHEN (.MRH) + S-SER1ES (.SRS) // MARL + MULTI-MODEL + LORA + AES-256</div>
+    <div class="footer-text">SER1ES v0.5 // OGENTI (.OGT) + OVISEN (.OGE) + PHIREN (.PHR) + PARHEN (.PRH) + MURHEN (.MRH) + SYRHEN (.SYH) // MARL + MULTI-MODEL + LORA + AES-256</div>
     <div class="footer-links">
         <a href="/platform/signup.html" class="footer-link">SIGN UP</a>
         <a href="/platform/billing.html" class="footer-link">PRICING</a>
